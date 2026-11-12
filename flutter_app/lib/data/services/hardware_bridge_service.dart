@@ -55,12 +55,12 @@ class HardwareBridgeService {
   }
 
   Future<String> getAppVersion() async {
-    if (!_isAndroidNative) return '2.0.0';
+    if (!_isAndroidNative) return '2.1.0';
     try {
       final ver = await _methodChannel.invokeMethod<String>('getAppVersion');
-      return (ver != null && ver.trim().isNotEmpty) ? ver.trim() : '2.0.0';
+      return (ver != null && ver.trim().isNotEmpty) ? ver.trim() : '2.1.0';
     } catch (_) {
-      return '2.0.0';
+      return '2.1.0';
     }
   }
 

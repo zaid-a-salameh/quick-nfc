@@ -99,7 +99,7 @@ class HomeViewModel extends ChangeNotifier {
   List<PlaceSuggestion> _placeSuggestions = const <PlaceSuggestion>[];
   List<PlaceSuggestion> get placeSuggestions => _placeSuggestions;
 
-  String _currentAppVersion = '2.0.0';
+  String _currentAppVersion = '2.1.0';
   String get currentAppVersion => _currentAppVersion;
 
   AppReleaseInfo? _availableUpdate;

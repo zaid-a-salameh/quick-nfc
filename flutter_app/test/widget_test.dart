@@ -46,7 +46,7 @@ class FakeHardwareBridgeService extends HardwareBridgeService {
   Future<bool> isNetworkConnected() async => true;
 
   @override
-  Future<String> getAppVersion() async => '2.0.0';
+  Future<String> getAppVersion() async => '2.1.0';
 
   @override
   Future<void> triggerLightHaptic() async {}
@@ -524,10 +524,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Version pill is visible with current version v2.0.0
+      // Version pill is visible with current version v2.1.0
       final pillFinder = find.byKey(const Key('btn_check_update'));
       expect(pillFinder, findsOneWidget);
-      expect(find.text('v2.0.0'), findsOneWidget);
+      expect(find.text('v2.1.0'), findsOneWidget);
 
       // Tap pill when no update available -> triggers manual check toast
       await tester.tap(pillFinder);
@@ -541,7 +541,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       // Second toast appears: app is up to date
-      expect(find.text('App is up to date (2.0.0)'), findsOneWidget);
+      expect(find.text('App is up to date (2.1.0)'), findsOneWidget);
       await tester.pump(const Duration(seconds: 3));
 
       // Simulate update detected (starts repeating glow animation)

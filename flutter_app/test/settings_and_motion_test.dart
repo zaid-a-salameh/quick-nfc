@@ -39,7 +39,7 @@ class _StubHardwareBridgeService extends HardwareBridgeService {
   Future<bool> isNetworkConnected() async => true;
 
   @override
-  Future<String> getAppVersion() async => '2.0.0';
+  Future<String> getAppVersion() async => '2.1.0';
 
   @override
   Future<void> triggerLightHaptic() async {}
