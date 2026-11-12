@@ -765,4 +765,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Clair';
+
+  @override
+  String get settingsAnimationsLabel => 'Animations';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Activer ou désactiver les effets de mouvement dans l\'app';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Écriture enchaînée';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Prêt pour la carte suivante 1,5 s après un succès';
 }

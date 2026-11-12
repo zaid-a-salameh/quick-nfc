@@ -732,4 +732,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'ライト';
+
+  @override
+  String get settingsAnimationsLabel => 'アニメーション';
+
+  @override
+  String get settingsAnimationsSub => 'アプリ全体のモーションと切り替え効果をオン・オフ';
+
+  @override
+  String get settingsSequentialWriteLabel => '連続書き込み';
+
+  @override
+  String get settingsSequentialWriteSub => '書き込み成功の1.5秒後に自動で次のカード待機へ戻る';
 }

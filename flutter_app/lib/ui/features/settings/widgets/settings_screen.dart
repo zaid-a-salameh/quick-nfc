@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/ambient_glow_scaffold.dart';
 import '../../../core/widgets/glass_card.dart';
@@ -195,7 +196,10 @@ class _SettingsScreenState extends State<SettingsScreen>
                                 child: Center(
                                   child: AnimatedRotation(
                                     turns: isRtl ? 0.5 : 0.0,
-                                    duration: const Duration(milliseconds: 260),
+                                    duration: AppMotion.duration(
+                                      context,
+                                      const Duration(milliseconds: 260),
+                                    ),
                                     curve: Curves.easeOutCubic,
                                     child: Icon(
                                       Icons.arrow_back_rounded,
@@ -208,7 +212,10 @@ class _SettingsScreenState extends State<SettingsScreen>
                             ),
                             const SizedBox(width: 14),
                             AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 260),
+                              duration: AppMotion.duration(
+                                context,
+                                const Duration(milliseconds: 260),
+                              ),
                               child: Text(
                                 l10n.settingsTitle,
                                 key: ValueKey<String>(
@@ -229,7 +236,10 @@ class _SettingsScreenState extends State<SettingsScreen>
                       // Content Scroll View with Smooth Animated Switcher
                       Expanded(
                         child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 340),
+                          duration: AppMotion.duration(
+                            context,
+                            const Duration(milliseconds: 340),
+                          ),
                           switchInCurve: Curves.easeOutCubic,
                           switchOutCurve: Curves.easeInCubic,
                           transitionBuilder:
@@ -448,8 +458,11 @@ class _SettingsScreenState extends State<SettingsScreen>
                                                 turns: _isLanguageDropdownOpen
                                                     ? 0.5
                                                     : 0.0,
-                                                duration: const Duration(
-                                                  milliseconds: 420,
+                                                duration: AppMotion.duration(
+                                                  context,
+                                                  const Duration(
+                                                    milliseconds: 420,
+                                                  ),
                                                 ),
                                                 curve: Curves.easeInOutCubic,
                                                 child: Icon(
@@ -466,8 +479,10 @@ class _SettingsScreenState extends State<SettingsScreen>
 
                                       // Animated Dropdown Menu List (Smoother, Slower Unfold)
                                       AnimatedSize(
-                                        duration:
-                                            const Duration(milliseconds: 450),
+                                        duration: AppMotion.duration(
+                                          context,
+                                          const Duration(milliseconds: 450),
+                                        ),
                                         curve: Curves.easeInOutCubic,
                                         alignment: Alignment.topCenter,
                                         child: _isLanguageDropdownOpen
@@ -668,6 +683,48 @@ class _SettingsScreenState extends State<SettingsScreen>
                                           ),
                                         ],
                                       ),
+
+                                      const SizedBox(height: 18),
+                                      Divider(
+                                        height: 1,
+                                        color: AppColors.borderGlass,
+                                      ),
+                                      const SizedBox(height: 14),
+
+                                      // 3. Animations Toggle
+                                      _buildToggleSettingRow(
+                                        switchKey:
+                                            const Key('switch_animations'),
+                                        icon: Icons.animation_rounded,
+                                        title: l10n.settingsAnimationsLabel,
+                                        subtitle: l10n.settingsAnimationsSub,
+                                        isArabic: isArabic,
+                                        value: vm.animationsEnabled,
+                                        onChanged: vm.setAnimationsEnabled,
+                                      ),
+
+                                      const SizedBox(height: 14),
+                                      Divider(
+                                        height: 1,
+                                        color: AppColors.borderGlass,
+                                      ),
+                                      const SizedBox(height: 14),
+
+                                      // 4. Sequential Card Writing Toggle
+                                      _buildToggleSettingRow(
+                                        switchKey: const Key(
+                                          'switch_sequential_write',
+                                        ),
+                                        icon: Icons.layers_outlined,
+                                        title:
+                                            l10n.settingsSequentialWriteLabel,
+                                        subtitle:
+                                            l10n.settingsSequentialWriteSub,
+                                        isArabic: isArabic,
+                                        value: vm.sequentialWriteEnabled,
+                                        onChanged:
+                                            vm.setSequentialWriteEnabled,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -827,6 +884,85 @@ class _SettingsScreenState extends State<SettingsScreen>
           fontSize: 13,
           fontWeight: FontWeight.w800,
           letterSpacing: 0.2,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildToggleSettingRow({
+    required Key switchKey,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required bool isArabic,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => onChanged(!value),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: AppColors.primaryLight,
+                  size: 20,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: isArabic ? 'Cairo' : 'Inter',
+                      color: AppColors.textPrimary,
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontFamily: isArabic ? 'Cairo' : 'Inter',
+                      color: AppColors.textMuted,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            Switch(
+              key: switchKey,
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: Colors.white,
+              activeTrackColor: AppColors.primary,
+              inactiveThumbColor: AppColors.textMuted,
+              inactiveTrackColor: AppColors.subtleButtonBg,
+              trackOutlineColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) =>
+                    states.contains(WidgetState.selected)
+                        ? Colors.transparent
+                        : AppColors.borderGlass,
+              ),
+            ),
+          ],
         ),
       ),
     );

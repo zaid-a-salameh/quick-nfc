@@ -761,4 +761,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Claro';
+
+  @override
+  String get settingsAnimationsLabel => 'Animações';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Ativa ou desativa os efeitos de movimento no app';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Escrita sequencial';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Prepara o próximo cartão 1,5 s após concluir com sucesso';
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_motion.dart';
 
 Future<T?> showAppMorphDialog<T>({
   required BuildContext context,
@@ -15,7 +16,10 @@ Future<T?> showAppMorphDialog<T>({
     barrierDismissible: barrierDismissible,
     barrierLabel: barrierLabel,
     barrierColor: Colors.transparent,
-    transitionDuration: const Duration(milliseconds: 250),
+    transitionDuration: AppMotion.duration(
+      context,
+      const Duration(milliseconds: 250),
+    ),
     pageBuilder: (
       BuildContext dialogContext,
       Animation<double> animation,

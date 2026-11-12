@@ -755,4 +755,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'فاتح';
+
+  @override
+  String get settingsAnimationsLabel => 'التأثيرات الحركية';
+
+  @override
+  String get settingsAnimationsSub =>
+      'تشغيل أو إيقاف الأنيميشن في جميع أنحاء التطبيق';
+
+  @override
+  String get settingsSequentialWriteLabel => 'الكتابة المتتابعة';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'العودة تلقائياً لوضع الكتابة بعد 1.5 ثانية من النجاح';
 }

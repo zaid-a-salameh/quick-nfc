@@ -233,5 +233,9 @@
   "settingsThemeSub": "Wähle dein bevorzugtes App-Design",
   "settingsThemeSystem": "System",
   "settingsThemeDark": "Dunkel",
-  "settingsThemeLight": "Hell"
+  "settingsThemeLight": "Hell",
+  "settingsAnimationsLabel": "Animationen",
+  "settingsAnimationsSub": "Bewegungs- und Übergangseffekte ein- oder ausschalten",
+  "settingsSequentialWriteLabel": "Fortlaufendes Schreiben",
+  "settingsSequentialWriteSub": "Nach Erfolg automatisch in 1,5 s für die nächste Karte bereit"
 }

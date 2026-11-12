@@ -755,4 +755,18 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'लाइट';
+
+  @override
+  String get settingsAnimationsLabel => 'एनिमेशन';
+
+  @override
+  String get settingsAnimationsSub =>
+      'पूरे ऐप में मोशन और ट्रांज़िशन प्रभाव चालू या बंद करें';
+
+  @override
+  String get settingsSequentialWriteLabel => 'क्रमिक लेखन';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'सफलता के 1.5 सेकंड बाद स्वतः अगले कार्ड के लिए तैयार';
 }

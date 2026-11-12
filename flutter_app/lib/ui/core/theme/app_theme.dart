@@ -53,8 +53,12 @@ abstract final class AppTheme {
       highlightColor: Colors.transparent,
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: _AdaptivePageTransitionsBuilder(
+            ZoomPageTransitionsBuilder(),
+          ),
+          TargetPlatform.iOS: _AdaptivePageTransitionsBuilder(
+            CupertinoPageTransitionsBuilder(),
+          ),
         },
       ),
     );
@@ -89,10 +93,40 @@ abstract final class AppTheme {
       highlightColor: Colors.transparent,
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: _AdaptivePageTransitionsBuilder(
+            ZoomPageTransitionsBuilder(),
+          ),
+          TargetPlatform.iOS: _AdaptivePageTransitionsBuilder(
+            CupertinoPageTransitionsBuilder(),
+          ),
         },
       ),
+    );
+  }
+}
+
+class _AdaptivePageTransitionsBuilder extends PageTransitionsBuilder {
+  const _AdaptivePageTransitionsBuilder(this.delegate);
+
+  final PageTransitionsBuilder delegate;
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
+      return child;
+    }
+    return delegate.buildTransitions(
+      route,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
     );
   }
 }

@@ -233,5 +233,9 @@
   "settingsThemeSub": "お好みのテーマを選択",
   "settingsThemeSystem": "システム連動",
   "settingsThemeDark": "ダーク",
-  "settingsThemeLight": "ライト"
+  "settingsThemeLight": "ライト",
+  "settingsAnimationsLabel": "アニメーション",
+  "settingsAnimationsSub": "アプリ全体のモーションと切り替え効果をオン・オフ",
+  "settingsSequentialWriteLabel": "連続書き込み",
+  "settingsSequentialWriteSub": "書き込み成功の1.5秒後に自動で次のカード待機へ戻る"
 }

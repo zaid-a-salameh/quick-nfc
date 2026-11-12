@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import '../../../../domain/models/toast_message.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/ambient_glow_scaffold.dart';
 import '../../nfc/view_models/nfc_view_model.dart';
@@ -99,14 +100,23 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   void _scrollToBottomSmoothly() {
     _smoothScrollTimer?.cancel();
-    _smoothScrollTimer = Timer(const Duration(milliseconds: 220), () {
-      if (!mounted || !_scrollController.hasClients) return;
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 650),
-        curve: Curves.easeInOutCubic,
-      );
-    });
+    final reduced = AppMotion.isReduced(context);
+    _smoothScrollTimer = Timer(
+      reduced ? Duration.zero : const Duration(milliseconds: 220),
+      () {
+        if (!mounted || !_scrollController.hasClients) return;
+        final maxExtent = _scrollController.position.maxScrollExtent;
+        if (AppMotion.isReduced(context)) {
+          _scrollController.jumpTo(maxExtent);
+        } else {
+          _scrollController.animateTo(
+            maxExtent,
+            duration: const Duration(milliseconds: 650),
+            curve: Curves.easeInOutCubic,
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -164,10 +174,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   Future<void> _openSettings() async {
     _unfocusAll();
+    final reduced = AppMotion.isReduced(context);
     await Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => SettingsScreen(viewModel: widget.homeViewModel),
-      ),
+      reduced
+          ? PageRouteBuilder<void>(
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+              pageBuilder: (_, _, _) =>
+                  SettingsScreen(viewModel: widget.homeViewModel),
+            )
+          : MaterialPageRoute<void>(
+              builder: (_) => SettingsScreen(viewModel: widget.homeViewModel),
+            ),
     );
     if (mounted) {
       _unfocusAll();
@@ -343,7 +361,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               onOpenPermLock: _handleOpenPermLockModal,
                             ),
                             AnimatedSize(
-                              duration: const Duration(milliseconds: 200),
+                              duration: AppMotion.duration(
+                                context,
+                                const Duration(milliseconds: 200),
+                              ),
                               curve: Curves.easeOutCubic,
                               alignment: Alignment.topCenter,
                               child: ResultCard(

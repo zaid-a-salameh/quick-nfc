@@ -1517,6 +1517,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Light'**
   String get settingsThemeLight;
+
+  /// No description provided for @settingsAnimationsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Animations'**
+  String get settingsAnimationsLabel;
+
+  /// No description provided for @settingsAnimationsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn motion and transition effects on or off'**
+  String get settingsAnimationsSub;
+
+  /// No description provided for @settingsSequentialWriteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sequential Write'**
+  String get settingsSequentialWriteLabel;
+
+  /// No description provided for @settingsSequentialWriteSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-ready next card 1.5s after a successful write'**
+  String get settingsSequentialWriteSub;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_motion.dart';
 
 class GlassCard extends StatelessWidget {
   const GlassCard({
@@ -26,7 +27,10 @@ class GlassCard extends StatelessWidget {
     final effectiveBorderColor = borderColor ?? AppColors.borderGlass;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 320),
+      duration: AppMotion.routeDuration(
+        context,
+        const Duration(milliseconds: 320),
+      ),
       curve: Curves.easeOutCubic,
       margin: margin,
       padding: padding,

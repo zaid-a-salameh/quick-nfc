@@ -233,5 +233,9 @@
   "settingsThemeSub": "पसंदीदा ऐप थीम चुनें",
   "settingsThemeSystem": "सिस्टम",
   "settingsThemeDark": "डार्क",
-  "settingsThemeLight": "लाइट"
+  "settingsThemeLight": "लाइट",
+  "settingsAnimationsLabel": "एनिमेशन",
+  "settingsAnimationsSub": "पूरे ऐप में मोशन और ट्रांज़िशन प्रभाव चालू या बंद करें",
+  "settingsSequentialWriteLabel": "क्रमिक लेखन",
+  "settingsSequentialWriteSub": "सफलता के 1.5 सेकंड बाद स्वतः अगले कार्ड के लिए तैयार"
 }

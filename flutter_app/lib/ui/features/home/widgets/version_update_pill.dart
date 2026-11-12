@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/pressable_scale.dart';
 
 class VersionUpdatePill extends StatefulWidget {
@@ -39,22 +40,33 @@ class _VersionUpdatePillState extends State<VersionUpdatePill>
     _glowAnimation = Tween<double>(begin: 0.35, end: 0.90).animate(
       CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
     );
+  }
 
-    if (widget.hasUpdate) {
-      _glowController.repeat(reverse: true);
-    }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncGlowAnimation();
   }
 
   @override
   void didUpdateWidget(VersionUpdatePill oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.hasUpdate != oldWidget.hasUpdate) {
-      if (widget.hasUpdate) {
+      _syncGlowAnimation();
+    }
+  }
+
+  void _syncGlowAnimation() {
+    final reduced = AppMotion.isReduced(context);
+    if (widget.hasUpdate && !reduced) {
+      if (!_glowController.isAnimating) {
         _glowController.repeat(reverse: true);
-      } else {
-        _glowController.stop();
-        _glowController.reset();
       }
+    } else {
+      if (_glowController.isAnimating) {
+        _glowController.stop();
+      }
+      _glowController.reset();
     }
   }
 
@@ -82,7 +94,9 @@ class _VersionUpdatePillState extends State<VersionUpdatePill>
         child: AnimatedBuilder(
           animation: _glowAnimation,
           builder: (context, _) {
-            final glowAlpha = widget.hasUpdate ? _glowAnimation.value : 0.0;
+            final glowAlpha = widget.hasUpdate
+                ? (AppMotion.isReduced(context) ? 0.65 : _glowAnimation.value)
+                : 0.0;
 
             return Container(
               height: 38,

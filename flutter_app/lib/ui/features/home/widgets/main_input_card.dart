@@ -5,6 +5,7 @@ import '../../../../domain/models/link_mode_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/pressable_scale.dart';
 import '../../../core/widgets/sliding_segmented_control.dart';
@@ -74,7 +75,10 @@ class _MainInputCardState extends State<MainInputCard> {
         Scrollable.ensureVisible(
           targetCtx,
           alignment: 0.0,
-          duration: const Duration(milliseconds: 320),
+          duration: AppMotion.duration(
+            context,
+            const Duration(milliseconds: 320),
+          ),
           curve: Curves.easeOutCubic,
         );
       });
@@ -101,7 +105,10 @@ class _MainInputCardState extends State<MainInputCard> {
           Scrollable.ensureVisible(
             targetCtx,
             alignment: 0.0,
-            duration: const Duration(milliseconds: 280),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 280),
+            ),
             curve: Curves.easeOutCubic,
           );
         }
@@ -156,11 +163,17 @@ class _MainInputCardState extends State<MainInputCard> {
 
           // Directional Mode Stage
           AnimatedSize(
-            duration: const Duration(milliseconds: 240),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 240),
+            ),
             curve: Curves.easeOutCubic,
             alignment: Alignment.topCenter,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 230),
+              duration: AppMotion.duration(
+                context,
+                const Duration(milliseconds: 230),
+              ),
               switchInCurve: Curves.easeOutCubic,
               switchOutCurve: Curves.easeInCubic,
               layoutBuilder: (

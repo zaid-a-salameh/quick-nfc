@@ -766,4 +766,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Claro';
+
+  @override
+  String get settingsAnimationsLabel => 'Animaciones';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Activa o desactiva los efectos de movimiento en la app';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Escritura secuencial';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Volver automáticamente a escribir 1.5 s tras el éxito';
 }

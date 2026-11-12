@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_motion.dart';
 
 class SegmentedTabItem {
   const SegmentedTabItem({
@@ -77,13 +78,19 @@ class SlidingSegmentedControl extends StatelessWidget {
         children: <Widget>[
           AnimatedAlign(
             alignment: AlignmentDirectional(xAlign, 0.0),
-            duration: const Duration(milliseconds: 280),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 280),
+            ),
             curve: Curves.easeOutCubic,
             child: FractionallySizedBox(
               widthFactor: 1.0 / count,
               heightFactor: 1.0,
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 280),
+                duration: AppMotion.duration(
+                  context,
+                  const Duration(milliseconds: 280),
+                ),
                 curve: Curves.easeOutCubic,
                 decoration: BoxDecoration(
                   gradient: effectivePillGradient,
@@ -122,7 +129,10 @@ class SlidingSegmentedControl extends StatelessWidget {
                                   const SizedBox(height: 5),
                                 ],
                                 AnimatedDefaultTextStyle(
-                                  duration: const Duration(milliseconds: 200),
+                                  duration: AppMotion.duration(
+                                    context,
+                                    const Duration(milliseconds: 200),
+                                  ),
                                   curve: Curves.easeOut,
                                   style: TextStyle(
                                     fontFamily: Theme.of(context)
@@ -157,7 +167,10 @@ class SlidingSegmentedControl extends StatelessWidget {
                                 ],
                                 Flexible(
                                   child: AnimatedDefaultTextStyle(
-                                    duration: const Duration(milliseconds: 200),
+                                    duration: AppMotion.duration(
+                                      context,
+                                      const Duration(milliseconds: 200),
+                                    ),
                                     curve: Curves.easeOut,
                                     style: TextStyle(
                                       fontFamily: Theme.of(context)

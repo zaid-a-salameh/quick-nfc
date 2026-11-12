@@ -4,6 +4,7 @@ import '../../../../data/services/hardware_bridge_service.dart';
 import '../../../../domain/models/nfc_models.dart';
 import '../../../../domain/models/toast_message.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/morph_dialog.dart';
 import '../view_models/nfc_view_model.dart';
 import 'erase_confirm_view.dart';
@@ -129,14 +130,20 @@ class _NfcModalDialogState extends State<NfcModalDialog> {
                       begin: vm.wifiCloneMorphTick > 0 ? 0.96 : 1.0,
                       end: 1.0,
                     ),
-                    duration: const Duration(milliseconds: 340),
+                    duration: AppMotion.duration(
+                      context,
+                      const Duration(milliseconds: 340),
+                    ),
                     curve: Curves.easeOutBack,
                     builder: (context, scaleVal, child) => Transform.scale(
                       scale: scaleVal,
                       child: child,
                     ),
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 260),
+                      duration: AppMotion.duration(
+                        context,
+                        const Duration(milliseconds: 260),
+                      ),
                       curve: Curves.easeOutCubic,
                       padding: const EdgeInsets.fromLTRB(22, 24, 22, 20),
                       decoration: BoxDecoration(
@@ -159,10 +166,16 @@ class _NfcModalDialogState extends State<NfcModalDialog> {
                         ],
                       ),
                       child: AnimatedSize(
-                        duration: const Duration(milliseconds: 240),
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 240),
+                        ),
                         curve: Curves.easeOutCubic,
                         child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 220),
+                          duration: AppMotion.duration(
+                            context,
+                            const Duration(milliseconds: 220),
+                          ),
                           switchInCurve: Curves.easeOutCubic,
                           switchOutCurve: Curves.easeInCubic,
                           child: _buildActiveSubView(vm),

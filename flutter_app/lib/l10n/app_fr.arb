@@ -233,5 +233,9 @@
   "settingsThemeSub": "Choisissez votre thème préféré",
   "settingsThemeSystem": "Système",
   "settingsThemeDark": "Sombre",
-  "settingsThemeLight": "Clair"
+  "settingsThemeLight": "Clair",
+  "settingsAnimationsLabel": "Animations",
+  "settingsAnimationsSub": "Activer ou désactiver les effets de mouvement dans l'app",
+  "settingsSequentialWriteLabel": "Écriture enchaînée",
+  "settingsSequentialWriteSub": "Prêt pour la carte suivante 1,5 s après un succès"
 }

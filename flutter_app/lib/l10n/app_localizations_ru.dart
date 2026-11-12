@@ -754,4 +754,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Светлая';
+
+  @override
+  String get settingsAnimationsLabel => 'Анимации';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Включение и отключение анимаций во всём приложении';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Последовательная запись';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Автовозврат к записи через 1,5 с после успеха';
 }

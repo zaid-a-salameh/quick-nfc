@@ -85,6 +85,7 @@ class _ReviewLinkGeneratorAppState extends State<ReviewLinkGeneratorApp>
     } else {
       _nfcViewModel = NfcViewModel(
         hardwareBridge: bridge,
+        isSequentialWriteEnabled: () => _homeViewModel.sequentialWriteEnabled,
         onUrlTagRead: (String url) async {
           final navContext = _navigatorKey.currentContext;
           if (navContext == null) return;
@@ -144,19 +145,29 @@ class _ReviewLinkGeneratorAppState extends State<ReviewLinkGeneratorApp>
           theme: AppTheme.buildLightTheme(locale),
           darkTheme: AppTheme.buildDarkTheme(locale),
           themeMode: themeMode,
-          themeAnimationDuration: const Duration(milliseconds: 320),
+          themeAnimationDuration: _homeViewModel.animationsEnabled
+              ? const Duration(milliseconds: 320)
+              : Duration.zero,
           builder: (BuildContext context, Widget? child) {
             AppColors.isLight = effectiveLight;
-            return Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                ?child,
-                ValueListenableBuilder<ToastMessage?>(
-                  valueListenable: _homeViewModel.toastNotifier,
-                  builder: (context, toast, _) =>
-                      ToastBannerOverlay(toast: toast),
-                ),
-              ],
+            final baseMediaQuery = MediaQuery.of(context);
+            final disableAnimations = baseMediaQuery.disableAnimations ||
+                !_homeViewModel.animationsEnabled;
+            return MediaQuery(
+              data: baseMediaQuery.copyWith(
+                disableAnimations: disableAnimations,
+              ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  ?child,
+                  ValueListenableBuilder<ToastMessage?>(
+                    valueListenable: _homeViewModel.toastNotifier,
+                    builder: (context, toast, _) =>
+                        ToastBannerOverlay(toast: toast),
+                  ),
+                ],
+              ),
             );
           },
           home: HomeScreen(

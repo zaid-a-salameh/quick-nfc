@@ -751,4 +751,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsAnimationsLabel => 'Animations';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Turn motion and transition effects on or off';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Sequential Write';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Auto-ready next card 1.5s after a successful write';
 }

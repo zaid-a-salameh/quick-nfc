@@ -310,5 +310,9 @@
   "settingsThemeSub": "Choose your preferred app theme",
   "settingsThemeSystem": "System",
   "settingsThemeDark": "Dark",
-  "settingsThemeLight": "Light"
+  "settingsThemeLight": "Light",
+  "settingsAnimationsLabel": "Animations",
+  "settingsAnimationsSub": "Turn motion and transition effects on or off",
+  "settingsSequentialWriteLabel": "Sequential Write",
+  "settingsSequentialWriteSub": "Auto-ready next card 1.5s after a successful write"
 }

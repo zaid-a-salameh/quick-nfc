@@ -233,5 +233,9 @@
   "settingsThemeSub": "Escolha o tema do aplicativo",
   "settingsThemeSystem": "Sistema",
   "settingsThemeDark": "Escuro",
-  "settingsThemeLight": "Claro"
+  "settingsThemeLight": "Claro",
+  "settingsAnimationsLabel": "Animações",
+  "settingsAnimationsSub": "Ativa ou desativa os efeitos de movimento no app",
+  "settingsSequentialWriteLabel": "Escrita sequencial",
+  "settingsSequentialWriteSub": "Prepara o próximo cartão 1,5 s após concluir com sucesso"
 }

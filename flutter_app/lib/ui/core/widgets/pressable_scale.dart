@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_motion.dart';
+
 class PressableScale extends StatefulWidget {
   const PressableScale({
     super.key,
@@ -39,8 +41,13 @@ class _PressableScaleState extends State<PressableScale> {
       onTapCancel: () => _setPressed(false),
       onTap: widget.enabled ? widget.onTap : null,
       child: AnimatedScale(
-        scale: (_pressed && widget.enabled) ? widget.pressedScale : 1.0,
-        duration: const Duration(milliseconds: 120),
+        scale: (!AppMotion.isReduced(context) && _pressed && widget.enabled)
+            ? widget.pressedScale
+            : 1.0,
+        duration: AppMotion.duration(
+          context,
+          const Duration(milliseconds: 120),
+        ),
         curve: Curves.easeOutCubic,
         child: widget.child,
       ),

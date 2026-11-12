@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_motion.dart';
+
 class LangRollText extends StatelessWidget {
   const LangRollText(
     this.text, {
@@ -19,7 +21,10 @@ class LangRollText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 210),
+      duration: AppMotion.duration(
+        context,
+        const Duration(milliseconds: 210),
+      ),
       switchInCurve: Curves.easeOutCubic,
       switchOutCurve: Curves.easeInCubic,
       transitionBuilder: (Widget child, Animation<double> animation) {

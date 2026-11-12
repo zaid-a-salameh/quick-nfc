@@ -9,14 +9,31 @@ class NfcViewModel extends ChangeNotifier {
   NfcViewModel({
     required this._hardwareBridge,
     this.onUrlTagRead,
-  }) {
+    bool Function()? isSequentialWriteEnabled,
+  }) : _sequentialWriteProvider = isSequentialWriteEnabled {
     _eventsSub = _hardwareBridge.nfcEvents.listen(_handleHardwareEvent);
   }
 
   final HardwareBridgeService _hardwareBridge;
   final Future<void> Function(String url)? onUrlTagRead;
+  final bool Function()? _sequentialWriteProvider;
 
   StreamSubscription<NfcHardwareEvent>? _eventsSub;
+  Timer? _sequentialRearmTimer;
+
+  bool get isSequentialWriteEnabled =>
+      _sequentialWriteProvider?.call() ?? false;
+
+  bool get isSequentialAutoRearming =>
+      isSequentialWriteEnabled &&
+      _sensorState == NfcSensorState.success &&
+      (_operation == NfcOperation.writeUrl ||
+          _operation == NfcOperation.writeWifi);
+
+  void _cancelSequentialRearmTimer() {
+    _sequentialRearmTimer?.cancel();
+    _sequentialRearmTimer = null;
+  }
 
   final TextEditingController pinController = TextEditingController();
   final TextEditingController wifiSsidController = TextEditingController();
@@ -157,6 +174,7 @@ class NfcViewModel extends ChangeNotifier {
   // ---- Entry Points ----
 
   Future<void> prepareWriteUrl(String url) async {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.sensor;
     _operation = NfcOperation.writeUrl;
@@ -176,6 +194,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   Future<void> prepareReadCard() async {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.sensor;
     _operation = NfcOperation.read;
@@ -194,6 +213,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   void preparePinProtection() {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.pin;
     _pinMode = PinMode.lock;
@@ -242,6 +262,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   void preparePermLockConfirm() {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.permConfirm;
     _operation = NfcOperation.permLock;
@@ -276,6 +297,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   void prepareEraseConfirm() {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.eraseConfirm;
     _operation = NfcOperation.erase;
@@ -310,6 +332,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   void prepareWifiWizard() {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = true;
     _subView = NfcSubView.wifiWizard;
     _operation = NfcOperation.writeWifi;
@@ -470,6 +493,7 @@ class NfcViewModel extends ChangeNotifier {
   // ---- Write Another / Retry / Back & Cancel ----
 
   Future<void> handleNextCardAction() async {
+    _cancelSequentialRearmTimer();
     _successDetail = null;
     _errorCode = null;
 
@@ -503,6 +527,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   Future<void> handleRetryAction() async {
+    _cancelSequentialRearmTimer();
     _errorCode = null;
     switch (_operation) {
       case NfcOperation.writeUrl:
@@ -615,6 +640,7 @@ class NfcViewModel extends ChangeNotifier {
   }
 
   Future<void> closeAndResetSession() async {
+    _cancelSequentialRearmTimer();
     _isDialogVisible = false;
     _writeBatchCount = 0;
     _permLockBatchCount = 0;
@@ -647,6 +673,7 @@ class NfcViewModel extends ChangeNotifier {
 
     switch (event.type) {
       case NfcHardwareEventType.writeSuccess:
+        _cancelSequentialRearmTimer();
         _writeBatchCount = event.count > _writeBatchCount
             ? event.count
             : (_writeBatchCount + 1);
@@ -656,6 +683,18 @@ class NfcViewModel extends ChangeNotifier {
             ? 'WRITE_WIFI'
             : null;
         notifyListeners();
+        if (isSequentialAutoRearming) {
+          _sequentialRearmTimer = Timer(
+            const Duration(milliseconds: 1500),
+            () {
+              _sequentialRearmTimer = null;
+              if (!_isDialogVisible || _sensorState != NfcSensorState.success) {
+                return;
+              }
+              unawaited(handleNextCardAction());
+            },
+          );
+        }
 
       case NfcHardwareEventType.wifiRead:
         final creds = event.wifiCredentials;
@@ -732,6 +771,7 @@ class NfcViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _cancelSequentialRearmTimer();
     _eventsSub?.cancel();
     pinController.dispose();
     wifiSsidController.dispose();

@@ -5,6 +5,9 @@ class PreferencesService {
 
   static const String _keyLanguage = 'app_lang';
   static const String _keyThemeMode = 'app_theme_mode';
+  static const String _keyAnimationsEnabled = 'app_animations_enabled';
+  static const String _keySequentialWriteEnabled =
+      'app_sequential_write_enabled';
   static const String _keyOnboardingCompleted =
       'review_link_flutter_onboarding_v1';
 
@@ -69,5 +72,18 @@ class PreferencesService {
 
   Future<void> markOnboardingCompleted() async {
     await _prefs.setBool(_keyOnboardingCompleted, true);
+  }
+
+  bool get isAnimationsEnabled => _prefs.getBool(_keyAnimationsEnabled) ?? true;
+
+  Future<void> setAnimationsEnabled(bool enabled) async {
+    await _prefs.setBool(_keyAnimationsEnabled, enabled);
+  }
+
+  bool get isSequentialWriteEnabled =>
+      _prefs.getBool(_keySequentialWriteEnabled) ?? false;
+
+  Future<void> setSequentialWriteEnabled(bool enabled) async {
+    await _prefs.setBool(_keySequentialWriteEnabled, enabled);
   }
 }

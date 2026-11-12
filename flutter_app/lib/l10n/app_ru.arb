@@ -233,5 +233,9 @@
   "settingsThemeSub": "Выберите тему оформления",
   "settingsThemeSystem": "Системная",
   "settingsThemeDark": "Тёмная",
-  "settingsThemeLight": "Светлая"
+  "settingsThemeLight": "Светлая",
+  "settingsAnimationsLabel": "Анимации",
+  "settingsAnimationsSub": "Включение и отключение анимаций во всём приложении",
+  "settingsSequentialWriteLabel": "Последовательная запись",
+  "settingsSequentialWriteSub": "Автовозврат к записи через 1,5 с после успеха"
 }

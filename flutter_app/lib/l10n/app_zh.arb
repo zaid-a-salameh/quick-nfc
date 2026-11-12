@@ -233,5 +233,9 @@
   "settingsThemeSub": "选择您喜爱的应用主题",
   "settingsThemeSystem": "跟随系统",
   "settingsThemeDark": "深色",
-  "settingsThemeLight": "浅色"
+  "settingsThemeLight": "浅色",
+  "settingsAnimationsLabel": "动画效果",
+  "settingsAnimationsSub": "开启或关闭整个应用中的动态与过渡效果",
+  "settingsSequentialWriteLabel": "连续写入",
+  "settingsSequentialWriteSub": "写入成功 1.5 秒后自动返回准备写入状态"
 }

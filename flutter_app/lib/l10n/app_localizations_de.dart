@@ -763,4 +763,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsThemeLight => 'Hell';
+
+  @override
+  String get settingsAnimationsLabel => 'Animationen';
+
+  @override
+  String get settingsAnimationsSub =>
+      'Bewegungs- und Übergangseffekte ein- oder ausschalten';
+
+  @override
+  String get settingsSequentialWriteLabel => 'Fortlaufendes Schreiben';
+
+  @override
+  String get settingsSequentialWriteSub =>
+      'Nach Erfolg automatisch in 1,5 s für die nächste Karte bereit';
 }

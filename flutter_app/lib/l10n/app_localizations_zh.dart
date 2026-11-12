@@ -732,4 +732,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsThemeLight => '浅色';
+
+  @override
+  String get settingsAnimationsLabel => '动画效果';
+
+  @override
+  String get settingsAnimationsSub => '开启或关闭整个应用中的动态与过渡效果';
+
+  @override
+  String get settingsSequentialWriteLabel => '连续写入';
+
+  @override
+  String get settingsSequentialWriteSub => '写入成功 1.5 秒后自动返回准备写入状态';
 }

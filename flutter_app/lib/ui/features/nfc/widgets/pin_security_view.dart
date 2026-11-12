@@ -5,6 +5,7 @@ import '../../../../domain/models/toast_message.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/lang_roll_text.dart';
 import '../../../core/widgets/pressable_scale.dart';
 import '../../../core/widgets/sliding_segmented_control.dart';
@@ -49,7 +50,10 @@ class _PinSecurityViewState extends State<PinSecurityView> {
       children: <Widget>[
         // Morphing Lock / Unlock Emblem
         AnimatedContainer(
-          duration: const Duration(milliseconds: 260),
+          duration: AppMotion.duration(
+            context,
+            const Duration(milliseconds: 260),
+          ),
           curve: Curves.easeOutCubic,
           width: 64,
           height: 64,
@@ -68,7 +72,10 @@ class _PinSecurityViewState extends State<PinSecurityView> {
           ),
           child: Center(
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 220),
+              duration: AppMotion.duration(
+                context,
+                const Duration(milliseconds: 220),
+              ),
               transitionBuilder: (child, anim) => RotationTransition(
                 turns: Tween<double>(begin: 0.92, end: 1.0).animate(anim),
                 child: ScaleTransition(
@@ -235,7 +242,10 @@ class _PinSecurityViewState extends State<PinSecurityView> {
                 key: const Key('btn_pin_submit'),
                 onTap: () => _submit(l10n),
                 child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 240),
+                  duration: AppMotion.duration(
+                    context,
+                    const Duration(milliseconds: 240),
+                  ),
                   height: 48,
                   decoration: BoxDecoration(
                     gradient: isLock

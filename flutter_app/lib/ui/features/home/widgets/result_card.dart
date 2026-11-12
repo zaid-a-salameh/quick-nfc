@@ -4,6 +4,7 @@ import '../../../../domain/models/link_mode_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/glass_card.dart';
 import '../../../core/widgets/lang_roll_text.dart';
 import '../../../core/widgets/pressable_scale.dart';
@@ -71,11 +72,17 @@ class ResultCard extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: AnimatedSize(
-                duration: const Duration(milliseconds: 260),
+                duration: AppMotion.duration(
+                  context,
+                  const Duration(milliseconds: 260),
+                ),
                 curve: Curves.easeOutCubic,
                 alignment: Alignment.topLeft,
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 190),
+                  duration: AppMotion.duration(
+                    context,
+                    const Duration(milliseconds: 190),
+                  ),
                   switchInCurve: Curves.easeOut,
                   switchOutCurve: Curves.easeIn,
                   layoutBuilder: (currentChild, previousChildren) {
@@ -279,7 +286,10 @@ class _SecondaryActionBtn extends StatelessWidget {
       key: btnKey,
       onTap: onTap,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+        duration: AppMotion.duration(
+          context,
+          const Duration(milliseconds: 200),
+        ),
         height: 50,
         decoration: BoxDecoration(
           color: highlightSuccess

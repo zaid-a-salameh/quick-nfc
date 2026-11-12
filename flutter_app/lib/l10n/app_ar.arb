@@ -233,5 +233,9 @@
   "settingsThemeSub": "اختر نمط مظهر التطبيق المفضل",
   "settingsThemeSystem": "تابع للجهاز",
   "settingsThemeDark": "داكن",
-  "settingsThemeLight": "فاتح"
+  "settingsThemeLight": "فاتح",
+  "settingsAnimationsLabel": "التأثيرات الحركية",
+  "settingsAnimationsSub": "تشغيل أو إيقاف الأنيميشن في جميع أنحاء التطبيق",
+  "settingsSequentialWriteLabel": "الكتابة المتتابعة",
+  "settingsSequentialWriteSub": "العودة تلقائياً لوضع الكتابة بعد 1.5 ثانية من النجاح"
 }

@@ -233,5 +233,9 @@
   "settingsThemeSub": "Elige el tema de la aplicación",
   "settingsThemeSystem": "Sistema",
   "settingsThemeDark": "Oscuro",
-  "settingsThemeLight": "Claro"
+  "settingsThemeLight": "Claro",
+  "settingsAnimationsLabel": "Animaciones",
+  "settingsAnimationsSub": "Activa o desactiva los efectos de movimiento en la app",
+  "settingsSequentialWriteLabel": "Escritura secuencial",
+  "settingsSequentialWriteSub": "Volver automáticamente a escribir 1.5 s tras el éxito"
 }

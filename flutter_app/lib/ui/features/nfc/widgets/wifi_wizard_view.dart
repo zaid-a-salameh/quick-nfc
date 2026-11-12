@@ -6,6 +6,7 @@ import '../../../../domain/models/wifi_credentials.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/lang_roll_text.dart';
 import '../../../core/widgets/pressable_scale.dart';
 import '../../qr/qr_modal_dialog.dart';
@@ -143,11 +144,11 @@ class WifiWizardView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildStepNode(1, step),
-              _buildStepConnector(step > 1),
-              _buildStepNode(2, step),
-              _buildStepConnector(step > 2),
-              _buildStepNode(3, step),
+              _buildStepNode(context, 1, step),
+              _buildStepConnector(context, step > 1),
+              _buildStepNode(context, 2, step),
+              _buildStepConnector(context, step > 2),
+              _buildStepNode(context, 3, step),
             ],
           ),
           const SizedBox(height: 16),
@@ -177,10 +178,16 @@ class WifiWizardView extends StatelessWidget {
 
           // Directional Step Pane
           AnimatedSize(
-            duration: const Duration(milliseconds: 240),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 240),
+            ),
             curve: Curves.easeOutCubic,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 240),
+              duration: AppMotion.duration(
+                context,
+                const Duration(milliseconds: 240),
+              ),
               switchInCurve: Curves.easeOutCubic,
               switchOutCurve: Curves.easeInCubic,
               transitionBuilder: (child, anim) {
@@ -610,7 +617,10 @@ class WifiWizardView extends StatelessWidget {
                 ),
                 AnimatedRotation(
                   turns: viewModel.isWifiDropdownOpen ? 0.5 : 0.0,
-                  duration: const Duration(milliseconds: 200),
+                  duration: AppMotion.duration(
+                    context,
+                    const Duration(milliseconds: 200),
+                  ),
                   child: Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.amberWifiLight,
@@ -622,7 +632,10 @@ class WifiWizardView extends StatelessWidget {
           ),
         ),
         AnimatedSize(
-          duration: const Duration(milliseconds: 220),
+          duration: AppMotion.duration(
+            context,
+            const Duration(milliseconds: 220),
+          ),
           curve: Curves.easeOutCubic,
           child: !viewModel.isWifiDropdownOpen
               ? const SizedBox.shrink()
@@ -730,12 +743,15 @@ class WifiWizardView extends StatelessWidget {
     }
   }
 
-  Widget _buildStepNode(int stepNumber, int currentStep) {
+  Widget _buildStepNode(BuildContext context, int stepNumber, int currentStep) {
     final isCurrent = stepNumber == currentStep;
     final isCompleted = stepNumber < currentStep;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 220),
+      duration: AppMotion.duration(
+        context,
+        const Duration(milliseconds: 220),
+      ),
       width: 26,
       height: 26,
       decoration: BoxDecoration(
@@ -767,9 +783,12 @@ class WifiWizardView extends StatelessWidget {
     );
   }
 
-  Widget _buildStepConnector(bool active) {
+  Widget _buildStepConnector(BuildContext context, bool active) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 240),
+      duration: AppMotion.duration(
+        context,
+        const Duration(milliseconds: 240),
+      ),
       width: 30,
       height: 2.2,
       margin: const EdgeInsets.symmetric(horizontal: 5),

@@ -6,6 +6,7 @@ import '../../../../domain/models/toast_message.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/icons/app_svg_icons.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_motion.dart';
 import '../../../core/widgets/pressable_scale.dart';
 import '../../qr/qr_modal_dialog.dart';
 import '../view_models/nfc_view_model.dart';
@@ -40,6 +41,11 @@ class _NfcSensorViewState extends State<NfcSensorView>
       duration: const Duration(milliseconds: 2000),
     );
     widget.viewModel.addListener(_syncPulseTicker);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _syncPulseTicker();
   }
 
@@ -55,12 +61,18 @@ class _NfcSensorViewState extends State<NfcSensorView>
 
   void _syncPulseTicker() {
     if (!mounted) return;
-    if (_isScanningState(widget.viewModel.sensorState)) {
+    final reduced = AppMotion.isReduced(context);
+    if (_isScanningState(widget.viewModel.sensorState) && !reduced) {
       if (!_pulseController.isAnimating) {
         _pulseController.repeat();
       }
-    } else if (_pulseController.isAnimating) {
-      _pulseController.stop();
+    } else {
+      if (_pulseController.isAnimating) {
+        _pulseController.stop();
+      }
+      if (reduced) {
+        _pulseController.reset();
+      }
     }
   }
 
@@ -387,7 +399,10 @@ class _NfcSensorViewState extends State<NfcSensorView>
               begin: vm.permLockThumpTick > 0 ? 1.12 : 1.0,
               end: 1.0,
             ),
-            duration: const Duration(milliseconds: 420),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 420),
+            ),
             curve: Curves.elasticOut,
             builder: (context, scaleVal, child) => Transform.scale(
               scale: scaleVal,
@@ -406,11 +421,12 @@ class _NfcSensorViewState extends State<NfcSensorView>
                   builder: (BuildContext context, Widget? centerChild) {
                     final t1 = _pulseController.value;
                     final t2 = (_pulseController.value + 0.5) % 1.0;
+                    final showPulse = isScanning && !AppMotion.isReduced(context);
 
                     return Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
-                        if (isScanning) ...<Widget>[
+                        if (showPulse) ...<Widget>[
                           _buildPulseRing(t1, accent),
                           _buildPulseRing(t2, accent),
                         ] else ...<Widget>[
@@ -442,7 +458,10 @@ class _NfcSensorViewState extends State<NfcSensorView>
                     );
                   },
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 260),
+                    duration: AppMotion.duration(
+                      context,
+                      const Duration(milliseconds: 260),
+                    ),
                     width: 82,
                     height: 82,
                     decoration: BoxDecoration(
@@ -458,7 +477,10 @@ class _NfcSensorViewState extends State<NfcSensorView>
                     ),
                     child: Center(
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 200),
+                        ),
                         transitionBuilder: (c, a) => ScaleTransition(
                           scale: a,
                           child: FadeTransition(opacity: a, child: c),
@@ -592,6 +614,36 @@ class _NfcSensorViewState extends State<NfcSensorView>
             vm.operation == NfcOperation.writeWifi);
 
     if (isWifiSuccess) {
+      if (vm.isSequentialAutoRearming) {
+        return PressableScale(
+          key: const Key('btn_wifi_success_done'),
+          onTap: () async {
+            final handledInternally = await vm.handleCancelOrBack();
+            if (!handledInternally) {
+              widget.onRequestCloseModal();
+            }
+          },
+          child: Container(
+            width: double.infinity,
+            height: 46,
+            decoration: BoxDecoration(
+              color: AppColors.subtleButtonBg,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: AppColors.borderGlass),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              cancelLabel,
+              style: TextStyle(
+                color: AppColors.textSub,
+                fontSize: 13.5,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        );
+      }
+
       final anotherLabel = vm.isWifiCloneMode
           ? l10n.nfcBtnWifiCloneAnother
           : l10n.nfcBtnWifiAnother;
@@ -875,6 +927,16 @@ class _NfcSensorViewState extends State<NfcSensorView>
       }
 
       // Default URL Write success
+      if (vm.isSequentialAutoRearming) {
+        return Row(
+          children: <Widget>[
+            Expanded(
+              child: _buildCancelBtn(vm, cancelLabel),
+            ),
+          ],
+        );
+      }
+
       return Row(
         children: <Widget>[
           Expanded(

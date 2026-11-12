@@ -29,6 +29,8 @@ class HomeViewModel extends ChangeNotifier {
         _updaterService = updaterService ?? GithubUpdaterService(),
         _selectedLanguageCode = preferencesService.getSavedLanguageCode(),
         _selectedThemeMode = preferencesService.getSavedThemeMode(),
+        _animationsEnabled = preferencesService.isAnimationsEnabled,
+        _sequentialWriteEnabled = preferencesService.isSequentialWriteEnabled,
         _locale = Locale(preferencesService.getSavedLanguageCode());
 
   final PreferencesService _preferencesService;
@@ -49,6 +51,12 @@ class HomeViewModel extends ChangeNotifier {
 
   String _selectedThemeMode;
   String get selectedThemeMode => _selectedThemeMode;
+
+  bool _animationsEnabled;
+  bool get animationsEnabled => _animationsEnabled;
+
+  bool _sequentialWriteEnabled;
+  bool get sequentialWriteEnabled => _sequentialWriteEnabled;
 
   ThemeMode get themeMode {
     switch (_selectedThemeMode) {
@@ -238,6 +246,22 @@ class HomeViewModel extends ChangeNotifier {
     if (_selectedThemeMode == validMode) return;
     _selectedThemeMode = validMode;
     await _preferencesService.setThemeMode(validMode);
+    unawaited(_hardwareBridge.triggerLightHaptic());
+    notifyListeners();
+  }
+
+  Future<void> setAnimationsEnabled(bool enabled) async {
+    if (_animationsEnabled == enabled) return;
+    _animationsEnabled = enabled;
+    await _preferencesService.setAnimationsEnabled(enabled);
+    unawaited(_hardwareBridge.triggerLightHaptic());
+    notifyListeners();
+  }
+
+  Future<void> setSequentialWriteEnabled(bool enabled) async {
+    if (_sequentialWriteEnabled == enabled) return;
+    _sequentialWriteEnabled = enabled;
+    await _preferencesService.setSequentialWriteEnabled(enabled);
     unawaited(_hardwareBridge.triggerLightHaptic());
     notifyListeners();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/app_motion.dart';
 
 class AmbientGlowScaffold extends StatelessWidget {
   const AmbientGlowScaffold({
@@ -13,7 +14,10 @@ class AmbientGlowScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 320),
+      duration: AppMotion.routeDuration(
+        context,
+        const Duration(milliseconds: 320),
+      ),
       curve: Curves.easeOutCubic,
       color: AppColors.bg,
       child: Scaffold(

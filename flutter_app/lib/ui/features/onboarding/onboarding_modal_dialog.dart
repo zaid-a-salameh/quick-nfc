@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../core/icons/app_svg_icons.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_motion.dart';
 import '../../core/widgets/morph_dialog.dart';
 import '../../core/widgets/pressable_scale.dart';
 
@@ -117,7 +118,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 390),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 280),
+                duration: AppMotion.duration(
+                  context,
+                  const Duration(milliseconds: 280),
+                ),
                 curve: Curves.easeOutCubic,
                 padding: const EdgeInsets.fromLTRB(22, 26, 22, 20),
                 decoration: BoxDecoration(
@@ -172,7 +176,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                       children: <Widget>[
                         // Morphing Top Hero Icon
                     AnimatedContainer(
-                      duration: const Duration(milliseconds: 280),
+                      duration: AppMotion.duration(
+                        context,
+                        const Duration(milliseconds: 280),
+                      ),
                       curve: Curves.easeOutCubic,
                       width: 66,
                       height: 66,
@@ -189,7 +196,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                       ),
                       child: Center(
                         child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 220),
+                          duration: AppMotion.duration(
+                            context,
+                            const Duration(milliseconds: 220),
+                          ),
                           transitionBuilder: (child, anim) => ScaleTransition(
                             scale: anim,
                             child: FadeTransition(opacity: anim, child: child),
@@ -218,10 +228,16 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
 
                     // Directional Slide Content
                     AnimatedSize(
-                      duration: const Duration(milliseconds: 240),
+                      duration: AppMotion.duration(
+                        context,
+                        const Duration(milliseconds: 240),
+                      ),
                       curve: Curves.easeOutCubic,
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 250),
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 250),
+                        ),
                         switchInCurve: Curves.easeOutCubic,
                         switchOutCurve: Curves.easeInCubic,
                         transitionBuilder: (child, anim) {
@@ -285,7 +301,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                         }
                       },
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 260),
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 260),
+                        ),
                         width: double.infinity,
                         height: 50,
                         decoration: BoxDecoration(
@@ -352,7 +371,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
     return GestureDetector(
       onTap: () => _goToStep(index),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
+        duration: AppMotion.duration(
+          context,
+          const Duration(milliseconds: 220),
+        ),
         width: 28,
         height: 28,
         decoration: BoxDecoration(
@@ -388,7 +410,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
 
   Widget _buildStepLine(bool active, Color accent) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 240),
+      duration: AppMotion.duration(
+        context,
+        const Duration(milliseconds: 240),
+      ),
       width: 34,
       height: 2.5,
       margin: const EdgeInsets.symmetric(horizontal: 6),

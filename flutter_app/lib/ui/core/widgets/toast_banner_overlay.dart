@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../domain/models/toast_message.dart';
 import '../icons/app_svg_icons.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_motion.dart';
 
 class ToastBannerOverlay extends StatelessWidget {
   const ToastBannerOverlay({
@@ -58,7 +59,10 @@ class ToastBannerOverlay extends StatelessWidget {
       child: IgnorePointer(
         child: Center(
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 240),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 240),
+            ),
             switchInCurve: Curves.easeOutBack,
             switchOutCurve: Curves.easeInCubic,
             transitionBuilder: (Widget child, Animation<double> animation) {
