@@ -352,7 +352,7 @@
         initScrollReveal();
 
 
-        const CURRENT_VERSION = 'v2.1.0';
+        const CURRENT_VERSION = 'v2.1.1';
         const navSupportBtn = $('navSupportBtn');
         const navBrandBadge = $('navBrandBadge');
         const appVersionText = $('appVersionText');

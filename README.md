@@ -6,7 +6,7 @@
 
 **Fast, lightweight, and open-source contactless NFC tool with instant Google Reviews setup, Wi-Fi card encoding, PIN hardware security, and printable QR codes.**
 
-[![Release](https://img.shields.io/badge/release-v2.1.0-7c3aed?style=flat-square)](https://github.com/zaid-a-salameh/quick-nfc/releases/latest)
+[![Release](https://img.shields.io/badge/release-v2.1.1-7c3aed?style=flat-square)](https://github.com/zaid-a-salameh/quick-nfc/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/zaid-a-salameh/quick-nfc/total?style=flat-square&color=2ea44f)](https://github.com/zaid-a-salameh/quick-nfc/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Web-success?style=flat-square)](https://quicknfc.link/)

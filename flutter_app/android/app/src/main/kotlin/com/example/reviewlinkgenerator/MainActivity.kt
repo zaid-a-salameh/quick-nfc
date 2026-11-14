@@ -117,11 +117,6 @@ class MainActivity : FlutterActivity() {
                         result.success(status)
                     }
 
-                    "isNfcAvailable" -> {
-                        val adapter = nfcAdapter
-                        result.success(adapter != null && adapter.isEnabled)
-                    }
-
                     "isNetworkConnected" -> {
                         result.success(checkNetworkConnected())
                     }
@@ -248,9 +243,9 @@ class MainActivity : FlutterActivity() {
     private fun resolveAppVersion(): String {
         return try {
             val pInfo = packageManager.getPackageInfo(packageName, 0)
-            pInfo.versionName ?: "1.2.1"
+            pInfo.versionName ?: "2.1.1"
         } catch (_: Exception) {
-            "1.2.1"
+            "2.1.1"
         }
     }
 
@@ -453,8 +448,7 @@ class MainActivity : FlutterActivity() {
         return msg.contains("tag was lost") ||
             msg.contains("tag lost") ||
             msg.contains("connection lost") ||
-            msg.contains("broken pipe") ||
-            (msg.contains("transceive failed") && !msg.contains("auth"))
+            msg.contains("broken pipe")
     }
 
     private fun handleWriteTag(tag: Tag) {
@@ -473,19 +467,26 @@ class MainActivity : FlutterActivity() {
 
             val ndef = Ndef.get(tag)
             if (ndef != null) {
-                ndef.connect()
-                if (!ndef.isWritable) {
-                    ndef.close()
-                    notifyNfcError("LOCKED")
+                var errorCode: String? = null
+                try {
+                    ndef.connect()
+                    if (!ndef.isWritable) {
+                        errorCode = "LOCKED"
+                    } else if (ndef.maxSize < message.byteArrayLength) {
+                        errorCode = "CAPACITY"
+                    } else {
+                        ndef.writeNdefMessage(message)
+                    }
+                } finally {
+                    try {
+                        ndef.close()
+                    } catch (_: Exception) {
+                    }
+                }
+                if (errorCode != null) {
+                    notifyNfcError(errorCode)
                     return
                 }
-                if (ndef.maxSize < message.byteArrayLength) {
-                    ndef.close()
-                    notifyNfcError("CAPACITY")
-                    return
-                }
-                ndef.writeNdefMessage(message)
-                ndef.close()
                 lastWriteTimestamp = System.currentTimeMillis()
                 lastWrittenTagId = tagId?.clone()
                 writtenTagsCount++
@@ -501,9 +502,15 @@ class MainActivity : FlutterActivity() {
             } else {
                 val formatable = NdefFormatable.get(tag)
                 if (formatable != null) {
-                    formatable.connect()
-                    formatable.format(message)
-                    formatable.close()
+                    try {
+                        formatable.connect()
+                        formatable.format(message)
+                    } finally {
+                        try {
+                            formatable.close()
+                        } catch (_: Exception) {
+                        }
+                    }
                     lastWriteTimestamp = System.currentTimeMillis()
                     lastWrittenTagId = tagId?.clone()
                     writtenTagsCount++
@@ -521,10 +528,10 @@ class MainActivity : FlutterActivity() {
                 }
             }
         } catch (e: Exception) {
-            if (isTagLost(e)) {
-                notifyNfcError("TAG_LOST")
-            } else if (checkIfNtagPasswordProtected(tag)) {
+            if (checkIfNtagPasswordProtected(tag)) {
                 notifyNfcError("LOCKED")
+            } else if (isTagLost(e)) {
+                notifyNfcError("TAG_LOST")
             } else {
                 notifyNfcError("WRITE_FAILED")
             }
@@ -532,28 +539,29 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkIfNtagPasswordProtected(tag: Tag): Boolean {
-        var isLocked = false
         val nfca = try {
             NfcA.get(tag)
         } catch (_: Exception) {
             null
-        }
-        if (nfca != null) {
+        } ?: return false
+
+        return try {
+            nfca.connect()
+            val cfg = getNtagConfig(tag, nfca, allowHeuristicFallback = true)
+            if (cfg != null) {
+                val readResp = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
+                readResp != null && readResp.size >= 4 && (readResp[3].toInt() and 0xFF) != 0xFF
+            } else {
+                false
+            }
+        } catch (_: Exception) {
+            false
+        } finally {
             try {
-                nfca.connect()
-                val cfg = getNtagConfig(tag, nfca)
-                if (cfg != null) {
-                    val readResp = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
-                    if (readResp != null && readResp.size >= 4 && (readResp[3].toInt() and 0xFF) != 0xFF) {
-                        isLocked = true
-                    }
-                }
                 nfca.close()
             } catch (_: Exception) {
-                isLocked = true
             }
         }
-        return isLocked
     }
 
     private fun buildWscPayload(ssid: String, password: String, encType: String): ByteArray {
@@ -637,19 +645,26 @@ class MainActivity : FlutterActivity() {
 
             val ndef = Ndef.get(tag)
             if (ndef != null) {
-                ndef.connect()
-                if (!ndef.isWritable) {
-                    ndef.close()
-                    notifyNfcError("LOCKED")
+                var errorCode: String? = null
+                try {
+                    ndef.connect()
+                    if (!ndef.isWritable) {
+                        errorCode = "LOCKED"
+                    } else if (ndef.maxSize < wscMessage.byteArrayLength) {
+                        errorCode = "CAPACITY"
+                    } else {
+                        ndef.writeNdefMessage(wscMessage)
+                    }
+                } finally {
+                    try {
+                        ndef.close()
+                    } catch (_: Exception) {
+                    }
+                }
+                if (errorCode != null) {
+                    notifyNfcError(errorCode)
                     return
                 }
-                if (ndef.maxSize < wscMessage.byteArrayLength) {
-                    ndef.close()
-                    notifyNfcError("CAPACITY")
-                    return
-                }
-                ndef.writeNdefMessage(wscMessage)
-                ndef.close()
                 lastWriteTimestamp = System.currentTimeMillis()
                 lastWrittenTagId = tagId?.clone()
                 writtenTagsCount++
@@ -665,9 +680,15 @@ class MainActivity : FlutterActivity() {
             } else {
                 val formatable = NdefFormatable.get(tag)
                 if (formatable != null) {
-                    formatable.connect()
-                    formatable.format(wscMessage)
-                    formatable.close()
+                    try {
+                        formatable.connect()
+                        formatable.format(wscMessage)
+                    } finally {
+                        try {
+                            formatable.close()
+                        } catch (_: Exception) {
+                        }
+                    }
                     lastWriteTimestamp = System.currentTimeMillis()
                     lastWrittenTagId = tagId?.clone()
                     writtenTagsCount++
@@ -685,10 +706,10 @@ class MainActivity : FlutterActivity() {
                 }
             }
         } catch (e: Exception) {
-            if (isTagLost(e)) {
-                notifyNfcError("TAG_LOST")
-            } else if (checkIfNtagPasswordProtected(tag)) {
+            if (checkIfNtagPasswordProtected(tag)) {
                 notifyNfcError("LOCKED")
+            } else if (isTagLost(e)) {
+                notifyNfcError("TAG_LOST")
             } else {
                 notifyNfcError("WRITE_FAILED")
             }
@@ -974,14 +995,24 @@ class MainActivity : FlutterActivity() {
 
             val ndef = Ndef.get(tag)
             if (ndef != null) {
-                ndef.connect()
-                if (!ndef.isWritable) {
-                    ndef.close()
-                    notifyNfcError("LOCKED")
+                var errorCode: String? = null
+                try {
+                    ndef.connect()
+                    if (!ndef.isWritable) {
+                        errorCode = "LOCKED"
+                    } else {
+                        ndef.writeNdefMessage(emptyMessage)
+                    }
+                } finally {
+                    try {
+                        ndef.close()
+                    } catch (_: Exception) {
+                    }
+                }
+                if (errorCode != null) {
+                    notifyNfcError(errorCode)
                     return
                 }
-                ndef.writeNdefMessage(emptyMessage)
-                ndef.close()
                 lastWriteTimestamp = System.currentTimeMillis()
                 lastWrittenTagId = tagId?.clone()
                 writtenTagsCount++
@@ -999,9 +1030,15 @@ class MainActivity : FlutterActivity() {
 
             val formatable = NdefFormatable.get(tag)
             if (formatable != null) {
-                formatable.connect()
-                formatable.format(emptyMessage)
-                formatable.close()
+                try {
+                    formatable.connect()
+                    formatable.format(emptyMessage)
+                } finally {
+                    try {
+                        formatable.close()
+                    } catch (_: Exception) {
+                    }
+                }
                 lastWriteTimestamp = System.currentTimeMillis()
                 lastWrittenTagId = tagId?.clone()
                 writtenTagsCount++
@@ -1019,29 +1056,24 @@ class MainActivity : FlutterActivity() {
 
             val nfca = NfcA.get(tag)
             if (nfca != null) {
-                nfca.connect()
-                val cfg = getNtagConfig(tag, nfca)
-                if (cfg != null) {
-                    val clearTlvCmd = byteArrayOf(
-                        0xA2.toByte(),
-                        0x04.toByte(),
-                        0x03.toByte(),
-                        0x00.toByte(),
-                        0xFE.toByte(),
-                        0x00.toByte()
-                    )
-                    val resp1 = nfca.transceive(clearTlvCmd)
-                    val clearNextPageCmd = byteArrayOf(
-                        0xA2.toByte(),
-                        0x05.toByte(),
-                        0x00.toByte(),
-                        0x00.toByte(),
-                        0x00.toByte(),
-                        0x00.toByte()
-                    )
-                    val resp2 = nfca.transceive(clearNextPageCmd)
-                    nfca.close()
-                    if (resp1 != null && resp2 != null) {
+                var cfgFound = false
+                var writeOk = false
+                try {
+                    nfca.connect()
+                    val cfg = getNtagConfig(tag, nfca, allowHeuristicFallback = true)
+                    if (cfg != null) {
+                        cfgFound = true
+                        val ok1 = transceiveWritePage(nfca, 0x04, 0x03, 0x00, 0xFE.toByte(), 0x00)
+                        writeOk = ok1 && transceiveWritePage(nfca, 0x05, 0x00, 0x00, 0x00, 0x00)
+                    }
+                } finally {
+                    try {
+                        nfca.close()
+                    } catch (_: Exception) {
+                    }
+                }
+                if (cfgFound) {
+                    if (writeOk) {
                         lastWriteTimestamp = System.currentTimeMillis()
                         lastWrittenTagId = tagId?.clone()
                         writtenTagsCount++
@@ -1056,14 +1088,20 @@ class MainActivity : FlutterActivity() {
                         )
                         return
                     }
-                } else {
-                    nfca.close()
+                    if (checkIfNtagPasswordProtected(tag)) {
+                        notifyNfcError("LOCKED")
+                    } else {
+                        notifyNfcError("WRITE_FAILED")
+                    }
+                    return
                 }
             }
 
             notifyNfcError("UNSUPPORTED")
         } catch (e: Exception) {
-            if (isTagLost(e)) {
+            if (checkIfNtagPasswordProtected(tag)) {
+                notifyNfcError("LOCKED")
+            } else if (isTagLost(e)) {
                 notifyNfcError("TAG_LOST")
             } else {
                 notifyNfcError("WRITE_FAILED")
@@ -1071,35 +1109,48 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private data class NtagConfig(val auth0Page: Int, val pwdPage: Int, val packPage: Int, val typeName: String)
+    private data class NtagConfig(
+        val auth0Page: Int,
+        val accessPage: Int,
+        val pwdPage: Int,
+        val packPage: Int,
+        val typeName: String
+    )
 
-    private fun getNtagConfig(tag: Tag, nfca: NfcA): NtagConfig? {
+    private fun getNtagConfig(
+        tag: Tag,
+        nfca: NfcA,
+        allowHeuristicFallback: Boolean = false
+    ): NtagConfig? {
         try {
             val verResp = nfca.transceive(byteArrayOf(0x60.toByte()))
-            if (verResp != null && verResp.size == 8) {
+            if (verResp != null && verResp.size == 8 && (verResp[2].toInt() and 0xFF) == 0x04) {
                 val storageSize = verResp[6].toInt() and 0xFF
                 when (storageSize) {
-                    0x0F -> return NtagConfig(41, 43, 44, "NTAG213")
-                    0x11 -> return NtagConfig(131, 133, 134, "NTAG215")
-                    0x13 -> return NtagConfig(227, 229, 230, "NTAG216")
+                    0x0F -> return NtagConfig(41, 42, 43, 44, "NTAG213")
+                    0x11 -> return NtagConfig(131, 132, 133, 134, "NTAG215")
+                    0x13 -> return NtagConfig(227, 228, 229, 230, "NTAG216")
                 }
             }
         } catch (_: Exception) {
             try {
                 nfca.close()
                 nfca.connect()
+                nfca.timeout = 3000
             } catch (_: Exception) {
             }
         }
+
+        if (!allowHeuristicFallback) return null
 
         try {
             val ndef = Ndef.get(tag)
             if (ndef != null) {
                 val max = ndef.maxSize
                 when {
-                    max in 800..920 -> return NtagConfig(227, 229, 230, "NTAG216")
-                    max in 450..540 -> return NtagConfig(131, 133, 134, "NTAG215")
-                    max in 120..180 -> return NtagConfig(41, 43, 44, "NTAG213")
+                    max in 800..920 -> return NtagConfig(227, 228, 229, 230, "NTAG216")
+                    max in 450..540 -> return NtagConfig(131, 132, 133, 134, "NTAG215")
+                    max in 120..180 -> return NtagConfig(41, 42, 43, 44, "NTAG213")
                 }
             }
         } catch (_: Exception) {
@@ -1115,85 +1166,83 @@ class MainActivity : FlutterActivity() {
         return hash.copyOfRange(0, 4)
     }
 
-    private fun deriveLegacyPasswordBytes(pin: String): ByteArray {
-        val trimmed = pin.trim()
-        if (trimmed.length == 4) {
-            return trimmed.toByteArray(Charsets.UTF_8)
-        }
-        val md = MessageDigest.getInstance("SHA-256")
-        val hash = md.digest(trimmed.toByteArray(Charsets.UTF_8))
-        return hash.copyOfRange(0, 4)
+    private fun transceiveWritePage(
+        nfca: NfcA,
+        page: Int,
+        b0: Byte,
+        b1: Byte,
+        b2: Byte,
+        b3: Byte
+    ): Boolean {
+        val cmd = byteArrayOf(0xA2.toByte(), page.toByte(), b0, b1, b2, b3)
+        val resp = nfca.transceive(cmd)
+        return resp != null && (resp.isEmpty() || (resp[0].toInt() and 0x0F) == 0x0A)
     }
 
     private fun handlePwdLockTag(tag: Tag, pin: String) {
+        var nfca: NfcA? = null
         try {
-            val nfca = NfcA.get(tag)
+            nfca = NfcA.get(tag)
             if (nfca == null) {
                 notifyNfcError("PWD_UNSUPPORTED")
                 return
             }
             nfca.connect()
             nfca.timeout = 3000
-            val cfg = getNtagConfig(tag, nfca)
+            val cfg = getNtagConfig(tag, nfca, allowHeuristicFallback = false)
             if (cfg == null) {
-                nfca.close()
                 notifyNfcError("PWD_UNSUPPORTED")
                 return
             }
-            val pwdBytes = deriveNfcToolsPasswordBytes(pin)
 
-            var isAlreadyLocked = false
-            try {
-                val readResp = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
-                if (readResp != null && readResp.size >= 4) {
-                    val currentAuth0 = readResp[3].toInt() and 0xFF
-                    if (currentAuth0 != 0xFF) {
-                        isAlreadyLocked = true
-                    }
-                }
-            } catch (_: Exception) {
-                isAlreadyLocked = true
+            val cfgPages = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
+            if (cfgPages == null || cfgPages.size < 8) {
+                notifyNfcError("PWD_FAILED")
+                return
             }
 
-            if (isAlreadyLocked) {
-                var authSuccess = false
+            val auth0B0 = cfgPages[0]
+            val auth0B1 = cfgPages[1]
+            val auth0B2 = cfgPages[2]
+            val currentAuth0 = cfgPages[3].toInt() and 0xFF
+            val accessB0 = (cfgPages[4].toInt() and 0x78).toByte()
+            val accessB1 = cfgPages[5]
+            val accessB2 = cfgPages[6]
+            val accessB3 = cfgPages[7]
+
+            val pwdBytes = deriveNfcToolsPasswordBytes(pin)
+
+            if (currentAuth0 != 0xFF) {
                 val authCmd = byteArrayOf(0x1B.toByte(), pwdBytes[0], pwdBytes[1], pwdBytes[2], pwdBytes[3])
-                try {
-                    val resp = nfca.transceive(authCmd)
-                    if (resp != null && resp.size >= 2) authSuccess = true
+                val authResp = try {
+                    nfca.transceive(authCmd)
                 } catch (_: Exception) {
+                    notifyNfcError("ALREADY_LOCKED")
+                    return
                 }
-
-                if (!authSuccess) {
-                    val legacyPwd = deriveLegacyPasswordBytes(pin)
-                    try {
-                        nfca.close()
-                        nfca.connect()
-                        nfca.timeout = 3000
-                        val authCmdLegacy = byteArrayOf(0x1B.toByte(), legacyPwd[0], legacyPwd[1], legacyPwd[2], legacyPwd[3])
-                        val resp = nfca.transceive(authCmdLegacy)
-                        if (resp != null && resp.size >= 2) authSuccess = true
-                    } catch (_: Exception) {
-                    }
-                }
-
-                if (!authSuccess) {
-                    nfca.close()
+                if (authResp == null || authResp.size < 2) {
                     notifyNfcError("ALREADY_LOCKED")
                     return
                 }
             }
 
-            val writePwdCmd = byteArrayOf(0xA2.toByte(), cfg.pwdPage.toByte(), pwdBytes[0], pwdBytes[1], pwdBytes[2], pwdBytes[3])
-            nfca.transceive(writePwdCmd)
+            if (!transceiveWritePage(nfca, cfg.pwdPage, pwdBytes[0], pwdBytes[1], pwdBytes[2], pwdBytes[3]) ||
+                !transceiveWritePage(nfca, cfg.packPage, 0x00, 0x00, 0x00, 0x00) ||
+                !transceiveWritePage(nfca, cfg.accessPage, accessB0, accessB1, accessB2, accessB3) ||
+                !transceiveWritePage(nfca, cfg.auth0Page, auth0B0, auth0B1, auth0B2, 0x04.toByte())
+            ) {
+                notifyNfcError("PWD_FAILED")
+                return
+            }
 
-            val writePackCmd = byteArrayOf(0xA2.toByte(), cfg.packPage.toByte(), 0x00, 0x00, 0x00, 0x00)
-            nfca.transceive(writePackCmd)
-
-            val writeAuth0Cmd = byteArrayOf(0xA2.toByte(), cfg.auth0Page.toByte(), 0x00, 0x00, 0x00, 0x04.toByte())
-            nfca.transceive(writeAuth0Cmd)
+            val verifyPages = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
+            if (verifyPages == null || verifyPages.size < 4 || (verifyPages[3].toInt() and 0xFF) != 0x04) {
+                notifyNfcError("PWD_FAILED")
+                return
+            }
 
             nfca.close()
+            nfca = null
             triggerSuccessVibration()
             stopNfcSession()
             emitEvent(
@@ -1208,127 +1257,131 @@ class MainActivity : FlutterActivity() {
             } else {
                 notifyNfcError("PWD_FAILED")
             }
+        } finally {
+            try {
+                nfca?.close()
+            } catch (_: Exception) {
+            }
         }
     }
 
     private fun handlePwdUnlockTag(tag: Tag, pin: String) {
+        var nfca: NfcA? = null
         try {
-            val nfca = NfcA.get(tag)
+            nfca = NfcA.get(tag)
             if (nfca == null) {
                 notifyNfcError("PWD_UNSUPPORTED")
                 return
             }
             nfca.connect()
             nfca.timeout = 3000
-            val cfg = getNtagConfig(tag, nfca)
+            val cfg = getNtagConfig(tag, nfca, allowHeuristicFallback = false)
             if (cfg == null) {
-                nfca.close()
                 notifyNfcError("PWD_UNSUPPORTED")
                 return
             }
 
-            var isLocked = false
-            try {
-                val readResp = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
-                if (readResp != null && readResp.size >= 4) {
-                    val currentAuth0 = readResp[3].toInt() and 0xFF
-                    if (currentAuth0 != 0xFF) {
-                        isLocked = true
-                    }
-                }
+            var cfgPages: ByteArray? = try {
+                nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
             } catch (_: Exception) {
-                isLocked = true
-            }
-
-            if (!isLocked) {
-                nfca.close()
-                triggerSuccessVibration()
-                stopNfcSession()
-                emitEvent(
-                    mapOf(
-                        "event" to "pwd_success",
-                        "action" to "ALREADY_UNLOCKED"
-                    )
-                )
-                return
-            }
-
-            val md5Pwd = deriveNfcToolsPasswordBytes(pin)
-            val legacyPwd = deriveLegacyPasswordBytes(pin)
-            var authenticated = false
-
-            try {
-                val authCmd1 = byteArrayOf(0x1B.toByte(), md5Pwd[0], md5Pwd[1], md5Pwd[2], md5Pwd[3])
-                val resp1 = nfca.transceive(authCmd1)
-                if (resp1 != null && resp1.size >= 2) {
-                    authenticated = true
-                }
-            } catch (_: Exception) {
-                authenticated = false
-            }
-
-            if (!authenticated) {
                 try {
                     nfca.close()
                     nfca.connect()
                     nfca.timeout = 3000
-                    val authCmd2 = byteArrayOf(0x1B.toByte(), legacyPwd[0], legacyPwd[1], legacyPwd[2], legacyPwd[3])
-                    val resp2 = nfca.transceive(authCmd2)
-                    if (resp2 != null && resp2.size >= 2) {
-                        authenticated = true
+                } catch (reconnectEx: Exception) {
+                    if (isTagLost(reconnectEx)) {
+                        notifyNfcError("TAG_LOST")
+                    } else {
+                        notifyNfcError("PWD_FAILED")
                     }
-                } catch (_: Exception) {
-                    authenticated = false
+                    return
+                }
+                null
+            }
+
+            if (cfgPages != null && cfgPages.size >= 8) {
+                val currentAuth0 = cfgPages[3].toInt() and 0xFF
+                if (currentAuth0 == 0xFF) {
+                    nfca.close()
+                    nfca = null
+                    triggerSuccessVibration()
+                    stopNfcSession()
+                    emitEvent(
+                        mapOf(
+                            "event" to "pwd_success",
+                            "action" to "ALREADY_UNLOCKED"
+                        )
+                    )
+                    return
                 }
             }
 
-            if (authenticated) {
-                val disableCmd = byteArrayOf(0xA2.toByte(), cfg.auth0Page.toByte(), 0x00, 0x00, 0x00, 0xFF.toByte())
-                nfca.transceive(disableCmd)
-
-                try {
-                    val resetPwdCmd = byteArrayOf(
-                        0xA2.toByte(), cfg.pwdPage.toByte(),
-                        0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte()
-                    )
-                    nfca.transceive(resetPwdCmd)
-                } catch (_: Exception) {
-                }
-
-                try {
-                    val resetPackCmd = byteArrayOf(0xA2.toByte(), cfg.packPage.toByte(), 0x00, 0x00, 0x00, 0x00)
-                    nfca.transceive(resetPackCmd)
-                } catch (_: Exception) {
-                }
-
-                if (cfg.auth0Page != 41) {
-                    try {
-                        val p41 = nfca.transceive(byteArrayOf(0x30.toByte(), 41.toByte()))
-                        if (p41 != null && (p41[0].toInt() and 0xFF) == 0xFF) {
-                            nfca.transceive(byteArrayOf(0xA2.toByte(), 41.toByte(), 0x00, 0x00, 0x00, 0x00))
-                        }
-                    } catch (_: Exception) {
-                    }
-                }
-
-                nfca.close()
-                triggerSuccessVibration()
-                stopNfcSession()
-                emitEvent(
-                    mapOf(
-                        "event" to "pwd_success",
-                        "action" to "UNLOCKED"
-                    )
+            val pwdBytes = deriveNfcToolsPasswordBytes(pin)
+            val authResp = try {
+                nfca.transceive(
+                    byteArrayOf(0x1B.toByte(), pwdBytes[0], pwdBytes[1], pwdBytes[2], pwdBytes[3])
                 )
-            } else {
-                nfca.close()
+            } catch (_: Exception) {
                 notifyNfcError("WRONG_PWD")
+                return
             }
+
+            if (authResp == null || authResp.size < 2) {
+                notifyNfcError("WRONG_PWD")
+                return
+            }
+
+            if (cfgPages == null || cfgPages.size < 8) {
+                cfgPages = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
+                if (cfgPages == null || cfgPages.size < 8) {
+                    notifyNfcError("PWD_FAILED")
+                    return
+                }
+            }
+
+            val auth0B0 = cfgPages[0]
+            val auth0B1 = cfgPages[1]
+            val auth0B2 = cfgPages[2]
+            val accessB0 = (cfgPages[4].toInt() and 0x78).toByte()
+            val accessB1 = cfgPages[5]
+            val accessB2 = cfgPages[6]
+            val accessB3 = cfgPages[7]
+
+            if (!transceiveWritePage(nfca, cfg.auth0Page, auth0B0, auth0B1, auth0B2, 0xFF.toByte()) ||
+                !transceiveWritePage(nfca, cfg.accessPage, accessB0, accessB1, accessB2, accessB3) ||
+                !transceiveWritePage(nfca, cfg.pwdPage, 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte()) ||
+                !transceiveWritePage(nfca, cfg.packPage, 0x00, 0x00, 0x00, 0x00)
+            ) {
+                notifyNfcError("PWD_FAILED")
+                return
+            }
+
+            val verifyPages = nfca.transceive(byteArrayOf(0x30.toByte(), cfg.auth0Page.toByte()))
+            if (verifyPages == null || verifyPages.size < 4 || (verifyPages[3].toInt() and 0xFF) != 0xFF) {
+                notifyNfcError("PWD_FAILED")
+                return
+            }
+
+            nfca.close()
+            nfca = null
+            triggerSuccessVibration()
+            stopNfcSession()
+            emitEvent(
+                mapOf(
+                    "event" to "pwd_success",
+                    "action" to "UNLOCKED"
+                )
+            )
         } catch (e: Exception) {
             if (isTagLost(e)) {
                 notifyNfcError("TAG_LOST")
             } else {
-                notifyNfcError("WRONG_PWD")
+                notifyNfcError("PWD_FAILED")
+            }
+        } finally {
+            try {
+                nfca?.close()
+            } catch (_: Exception) {
             }
         }
     }
@@ -1410,7 +1463,7 @@ class MainActivity : FlutterActivity() {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/ReviewLinks")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/QuickNFC")
                     put(MediaStore.MediaColumns.IS_PENDING, 1)
                 }
             }
@@ -1437,10 +1490,10 @@ class MainActivity : FlutterActivity() {
         return try {
             val uri = Uri.parse(downloadUrl)
             val request = DownloadManager.Request(uri).apply {
-                setTitle("ReviewLinkGenerator Update")
+                setTitle("Quick NFC Update")
                 setDescription("Downloading updated APK...")
                 setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "ReviewLinkGenerator.apk")
+                setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "QuickNFC.apk")
                 setMimeType("application/vnd.android.package-archive")
             }
 

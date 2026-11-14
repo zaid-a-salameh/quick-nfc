@@ -1,7 +1,7 @@
 name: review_link_generator
 description: "Quick NFC - Smart NFC Tag & Review Link Assistant"
 publish_to: 'none'
-version: 2.1.0+21
+version: 2.1.1+22
 
 environment:
   sdk: ^3.13.7
