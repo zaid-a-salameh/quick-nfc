@@ -292,6 +292,36 @@
             }
         }
 
+        @keyframes showcaseStageEntrance {
+            0% {
+                opacity: 0;
+                transform: perspective(1100px) translate3d(0, 28px, -30px) rotateX(14deg) rotateY(-8deg) scale3d(0.9, 0.9, 1);
+            }
+            65% {
+                opacity: 1;
+                transform: perspective(1100px) translate3d(0, -3px, 0) rotateX(-1.5deg) rotateY(1deg) scale3d(1.015, 1.015, 1);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(1100px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes showcasePhoneEntrance {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 42px, 0) scale3d(0.86, 0.86, 1);
+            }
+            70% {
+                opacity: 1;
+                transform: translate3d(0, -4px, 0) scale3d(1.02, 1.02, 1);
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+            }
+        }
+
         /* Entrance Assignments with Orchestrated Delays */
         .ambient-glow {
             animation: pageGlowBloom 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
@@ -299,6 +329,11 @@
 
         .desktop-navbar {
             animation: pageNavSlideDown 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        }
+
+        .hero-spotlight-beam,
+        .hero-grid-pattern {
+            animation: pageGlowBloom 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.04s backwards;
         }
 
         .top-bar {
@@ -317,33 +352,31 @@
             animation: pageCardFloat 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.11s backwards;
         }
 
-        #howItWorksSection {
-            animation: pageSectionCascade 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+        .web-platform-hint {
+            animation: pageFadeSlideUp 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
         }
 
-        #featuresSection {
-            animation: pageSectionCascade 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.24s backwards;
+        .lamsa-stage {
+            animation: showcaseStageEntrance 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.14s backwards;
         }
 
-        #faqSection {
-            animation: pageSectionCascade 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards;
-        }
-
-        .app-footer {
-            animation: pageSectionCascade 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.36s backwards;
+        .lamsa-phone-frame {
+            animation: showcasePhoneEntrance 0.68s cubic-bezier(0.16, 1, 0.3, 1) 0.24s backwards;
         }
 
         /* Seamless Interruption Handling: When switching languages, cancel entrance keyframes */
         body.is-lang-switching .ambient-glow,
         body.is-lang-switching .desktop-navbar,
+        body.is-lang-switching .hero-spotlight-beam,
+        body.is-lang-switching .hero-grid-pattern,
         body.is-lang-switching .top-bar,
         body.is-lang-switching header,
         body.is-lang-switching .app-icon,
         body.is-lang-switching .main-input-card,
-        body.is-lang-switching .glass-card,
-        body.is-lang-switching .marketing-section,
-        body.is-lang-switching #faqSection,
-        body.is-lang-switching .app-footer {
+        body.is-lang-switching .web-platform-hint,
+        body.is-lang-switching .lamsa-stage,
+        body.is-lang-switching .lamsa-phone-frame,
+        body.is-lang-switching .glass-card {
             animation: none !important;
         }
 
@@ -351,12 +384,15 @@
         @media (prefers-reduced-motion: reduce) {
             .ambient-glow,
             .desktop-navbar,
+            .hero-spotlight-beam,
+            .hero-grid-pattern,
             .top-bar,
             header,
             .app-icon,
             .glass-card,
-            .marketing-section,
-            .app-footer {
+            .web-platform-hint,
+            .lamsa-stage,
+            .lamsa-phone-frame {
                 animation: none !important;
                 opacity: 1 !important;
                 transform: none !important;

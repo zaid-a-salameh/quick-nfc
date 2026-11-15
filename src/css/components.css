@@ -79,6 +79,8 @@
             grid-template-rows: auto;
             width: 100%;
             z-index: 50;
+            transition: height 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: height;
         }
         .mode-stage:has(.places-dropdown.show),
         .mode-stage:has(.has-dropdown-open),

@@ -1,4 +1,21 @@
 /* Desktop Marketing, Navbar, FAQ & Footer (Web Only) */
+/* Desktop Proportional Scaling (Matches 133% Zoom on Full HD+ Monitors at 100% Browser Zoom) */
+@media (min-width: 1100px) and (max-width: 1359px) {
+    html:not(:has(body.is-native-app)) {
+        zoom: 1.14;
+    }
+}
+@media (min-width: 1360px) and (max-width: 1559px) {
+    html:not(:has(body.is-native-app)) {
+        zoom: 1.24;
+    }
+}
+@media (min-width: 1560px) {
+    html:not(:has(body.is-native-app)) {
+        zoom: 1.33;
+    }
+}
+
         /* Desktop Sticky Navbar */
         .desktop-navbar {
             width: 100%;
@@ -15,7 +32,7 @@
             display: none !important;
         }
         .navbar-inner {
-            max-width: 1060px;
+            max-width: 1140px;
             margin: 0 auto;
             padding: 12px 20px;
             display: flex;
@@ -176,11 +193,731 @@
         }
 
 
-        /* Marketing Sections (Desktop Web) */
+        /* ======================================================== */
+        /* Hero Stage: Two-Column Desktop / Stacked Mobile Layout   */
+        /* ======================================================== */
+        .hero-stage {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 36px;
+            position: relative;
+            z-index: 15;
+        }
+        .hero-stage:has(.places-dropdown.show),
+        .hero-stage:has(.app-container.has-dropdown-open) {
+            z-index: 2000;
+        }
+        body.is-native-app .hero-stage {
+            max-width: 450px;
+            gap: 0;
+        }
+
+        /* Cinematic Opening Spotlight & Subtle Grid Backdrop */
+        .hero-spotlight-beam {
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(860px, 110vw);
+            height: 460px;
+            background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.16) 0%, rgba(139, 92, 246, 0.04) 45%, transparent 72%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .hero-grid-pattern {
+            position: absolute;
+            inset: -24px -16px 0;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 80%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        body.is-native-app .hero-spotlight-beam,
+        body.is-native-app .hero-grid-pattern {
+            display: none !important;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-stage {
+                margin-top: 14px;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 44px;
+            }
+            /* Keep main app tool on physical RIGHT and Lamsa showcase on physical LEFT in both LTR & RTL */
+            html:not([dir="rtl"]) .hero-stage {
+                flex-direction: row-reverse;
+            }
+            html[dir="rtl"] .hero-stage {
+                flex-direction: row;
+            }
+            .hero-stage .app-container {
+                margin: 0;
+                flex: 1 1 580px;
+                max-width: 600px;
+            }
+            .hero-stage .hero-showcase {
+                flex: 0 0 420px;
+                width: 420px;
+                margin: 18px 0 0;
+            }
+        }
+
+        /* ======================================================== */
+        /* Lamsa 3D NFC Card & Smartphone Tap Showcase              */
+        /* ======================================================== */
+        .hero-showcase {
+            --card-accent: #8b5cf6;
+            --card-accent-light: #c4b5fd;
+            --card-accent-rgb: 139, 92, 246;
+            width: 100%;
+            max-width: min(390px, 100%);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        body.is-native-app .hero-showcase {
+            display: none !important;
+        }
+
+        .lamsa-showcase-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .lamsa-live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(20, 18, 28, 0.85);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.35);
+            box-shadow: 0 4px 18px rgba(var(--card-accent-rgb), 0.14);
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #f5f5f4;
+            transition: border-color 0.45s ease, box-shadow 0.45s ease;
+        }
+        .lamsa-live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--card-accent);
+            box-shadow: 0 0 10px var(--card-accent);
+            flex-shrink: 0;
+            transition: background-color 0.45s ease;
+        }
+        .lamsa-chip-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(var(--card-accent-rgb), 0.2);
+            color: var(--card-accent-light);
+            transition: background-color 0.45s ease, color 0.45s ease;
+        }
+        .lamsa-pause-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            height: 30px;
+            padding: 0 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            scale: 1;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, scale 0.15s ease-out;
+        }
+        .lamsa-pause-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(var(--card-accent-rgb), 0.45);
+            color: #ffffff;
+        }
+        .lamsa-pause-btn:active {
+            scale: 0.96;
+        }
+        .lamsa-pause-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
+        }
+
+        .lamsa-stage {
+            position: relative;
+            width: 100%;
+            min-height: 550px;
+            perspective: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lamsa-card-halo {
+            position: absolute;
+            top: 8px;
+            inset-inline: 10px;
+            height: 225px;
+            border-radius: 32px;
+            background: radial-gradient(circle at 50% 45%, rgba(var(--card-accent-rgb), 0.28), rgba(var(--card-accent-rgb), 0.06) 60%, transparent 78%);
+            filter: blur(22px);
+            opacity: 0.8;
+            pointer-events: none;
+            transition: background 0.55s ease, opacity 0.35s ease;
+        }
+
+        /* 1. Physical NFC Card */
+        .lamsa-nfc-card {
+            position: relative;
+            width: 100%;
+            height: 235px;
+            border-radius: 24px;
+            padding: 24px 26px;
+            background: linear-gradient(135deg, #171622 0%, #0d0c14 55%, #07060a 100%);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.48);
+            box-shadow:
+                0 28px 65px rgba(0, 0, 0, 0.88),
+                0 0 36px rgba(var(--card-accent-rgb), 0.14),
+                inset 0 1px 2px rgba(255, 255, 255, 0.09);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            z-index: 10;
+            opacity: 1;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transition:
+                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                translate 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                rotate 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                scale 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.45s ease,
+                box-shadow 0.45s ease;
+        }
+        .lamsa-nfc-card.is-sliding {
+            opacity: 0;
+            translate: 52px 0;
+            rotate: 3deg;
+            scale: 0.95;
+        }
+        @supports not (translate: 0px) {
+            .lamsa-nfc-card.is-sliding {
+                transform: translateX(52px) rotate(3deg) scale(0.95);
+            }
+        }
+        .lamsa-card-gleam {
+            position: absolute;
+            top: 0;
+            left: 36px;
+            right: 36px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--card-accent-light), transparent);
+            opacity: 0.75;
+            transition: background 0.45s ease;
+        }
+        .lamsa-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            direction: ltr;
+            position: relative;
+            z-index: 2;
+        }
+        .lamsa-card-brand {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--card-accent-light) 55%, var(--card-accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+        }
+        .lamsa-card-wave {
+            width: 28px;
+            height: 28px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-accent-light);
+            filter: drop-shadow(0 0 10px rgba(var(--card-accent-rgb), 0.45));
+            flex-shrink: 0;
+        }
+        .lamsa-card-wave svg {
+            width: 26px;
+            height: 26px;
+        }
+        .lamsa-card-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .lamsa-card-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(34, 32, 52, 0.95), rgba(16, 15, 24, 0.95));
+            border: 1px solid rgba(var(--card-accent-rgb), 0.38);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 0 0 20px rgba(var(--card-accent-rgb), 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-accent-light);
+            transition: border-color 0.45s ease, color 0.45s ease, box-shadow 0.45s ease;
+        }
+        .lamsa-card-icon-box svg {
+            width: 26px;
+            height: 26px;
+        }
+        .lamsa-card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            direction: ltr;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 2;
+        }
+        .lamsa-card-client {
+            min-width: 0;
+        }
+        .lamsa-client-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f5f3ff;
+            margin-bottom: 0;
+            text-align: right;
+        }
+        .lamsa-card-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #c4b5fd;
+            flex-shrink: 0;
+        }
+
+        /* 2. Concentric Contact Ripples */
+        .lamsa-contact-ripples {
+            position: absolute;
+            top: 104px;
+            left: 50%;
+            pointer-events: none;
+            z-index: 20;
+            display: none;
+        }
+        .lamsa-contact-ripples.is-active {
+            display: block;
+        }
+        .lamsa-ripple {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        .lamsa-ripple-1 {
+            width: 76px;
+            height: 76px;
+            top: -38px;
+            left: -38px;
+            border: 2px solid var(--card-accent);
+        }
+        .lamsa-ripple-2 {
+            width: 120px;
+            height: 120px;
+            top: -60px;
+            left: -60px;
+            border: 1px solid var(--card-accent-light);
+        }
+        .lamsa-ripple-3 {
+            width: 164px;
+            height: 164px;
+            top: -82px;
+            left: -82px;
+            border: 1px solid rgba(var(--card-accent-rgb), 0.75);
+        }
+
+        /* 3. Persistent Smartphone */
+        .lamsa-phone-wrapper {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            width: 174px;
+            height: 345px;
+            pointer-events: none;
+            z-index: 30;
+        }
+        .phone-resting-mode {
+            opacity: 1;
+            transform: translate3d(-50%, 108px, 0) scale(0.96);
+            transition: transform 0.4s ease-out;
+        }
+        .lamsa-phone-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            background: #0a0b12;
+            padding: 7px;
+            border: 3px solid #2b2f42;
+            box-shadow:
+                0 24px 65px rgba(0, 0, 0, 0.94),
+                0 0 32px rgba(var(--card-accent-rgb), 0.25);
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.45s ease;
+        }
+        .lamsa-phone-screen {
+            flex: 1;
+            width: 100%;
+            border-radius: 22px;
+            background: #07070c;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            color: #ffffff;
+        }
+        .lamsa-phone-camera {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #020305;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+        .lamsa-phone-lens {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.75);
+        }
+        .lamsa-screen-body {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lamsa-screen-standby {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 6px;
+        }
+        .lamsa-radar-circle {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(var(--card-accent-rgb), 0.12);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 22px rgba(var(--card-accent-rgb), 0.18);
+        }
+        .lamsa-radar-inner {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(var(--card-accent-rgb), 0.22);
+            border: 1px solid rgba(var(--card-accent-rgb), 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-accent-light);
+        }
+        .lamsa-radar-inner svg {
+            width: 17px;
+            height: 17px;
+        }
+        .lamsa-radar-ping {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(var(--card-accent-rgb), 0.45);
+            opacity: 0;
+        }
+        .lamsa-standby-text h4,
+        .lamsa-success-text h4 {
+            font-size: 12px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        .lamsa-standby-text p,
+        .lamsa-success-text p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--card-accent-light);
+        }
+        .lamsa-sensor-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 9px;
+            font-weight: 600;
+            color: #a8a29e;
+        }
+        .lamsa-sensor-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--card-accent);
+        }
+        .lamsa-screen-success {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .lamsa-check-circle {
+            position: relative;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.22);
+            border: 2px solid #a78bfa;
+            color: #c4b5fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 32px rgba(139, 92, 246, 0.65);
+        }
+        .lamsa-check-circle svg {
+            width: 26px;
+            height: 26px;
+        }
+        .lamsa-check-ping {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid #a78bfa;
+            opacity: 0;
+        }
+        .lamsa-phone-bar {
+            width: 52px;
+            height: 3px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.22);
+            flex-shrink: 0;
+        }
+
+        /* Card Switcher Pills */
+        .lamsa-card-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .lamsa-dot-btn {
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            scale: 1;
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, scale 0.15s ease-out;
+        }
+        .lamsa-dot-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: #ffffff;
+        }
+        .lamsa-dot-btn:active {
+            scale: 0.96;
+        }
+        .lamsa-dot-btn.active {
+            background: rgba(var(--card-accent-rgb), 0.18);
+            border-color: rgba(var(--card-accent-rgb), 0.6);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(var(--card-accent-rgb), 0.25);
+        }
+        :where(.lamsa-pause-btn, .lamsa-dot-btn, .step-card, .feat-card, .faq-item):focus-visible {
+            outline: 2px solid #a78bfa;
+            outline-offset: 3px;
+        }
+
+        /* Lamsa GPU Keyframes */
+        @keyframes phoneTapLifecycle {
+            0% {
+                opacity: 1;
+                transform: translate3d(-50%, 108px, 0) scale(0.96);
+                animation-timing-function: cubic-bezier(0.38, 0.05, 0.22, 1);
+            }
+            24% {
+                opacity: 1;
+                transform: translate3d(-50%, 0, 0) scale(1);
+                animation-timing-function: ease-out;
+            }
+            27% {
+                opacity: 1;
+                transform: translate3d(-50%, -2px, 0) scale(1.003);
+                animation-timing-function: ease-in-out;
+            }
+            30% {
+                opacity: 1;
+                transform: translate3d(-50%, 0, 0) scale(1);
+                animation-timing-function: linear;
+            }
+            72% {
+                opacity: 1;
+                transform: translate3d(-50%, 0, 0) scale(1);
+                animation-timing-function: cubic-bezier(0.38, 0.05, 0.22, 1);
+            }
+            96%, 100% {
+                opacity: 1;
+                transform: translate3d(-50%, 108px, 0) scale(0.96);
+            }
+        }
+        @keyframes standbyScreenFade {
+            0%, 18% { opacity: 1; }
+            25%, 72% { opacity: 0; }
+            82%, 100% { opacity: 1; }
+        }
+        @keyframes successScreenReveal {
+            0%, 22% { opacity: 0; transform: scale(0.94); }
+            27%, 70% { opacity: 1; transform: scale(1); }
+            76%, 100% { opacity: 0; transform: scale(0.94); }
+        }
+        @keyframes cardTapFeedback {
+            0%, 23% { transform: translateY(0) scale(1); }
+            26% { transform: translateY(3px) scale(0.988); }
+            29% { transform: translateY(-1px) scale(1.002); }
+            34%, 100% { transform: translateY(0) scale(1); }
+        }
+        @keyframes contactNfcRipple {
+            0%, 20% { opacity: 0; transform: scale(0.35); }
+            26% { opacity: 0.95; transform: scale(0.65); }
+            52% { opacity: 0.35; transform: scale(1.75); }
+            72%, 100% { opacity: 0; transform: scale(2.6); }
+        }
+        @keyframes lamsaRadarPing {
+            0% { transform: scale(0.9); opacity: 0.55; }
+            80%, 100% { transform: scale(1.55); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .lamsa-radar-ping {
+                animation: lamsaRadarPing 2.2s ease-out infinite;
+            }
+            .lamsa-phone-wrapper.animate-phone-tap {
+                animation: phoneTapLifecycle 3.4s linear forwards !important;
+                will-change: transform;
+            }
+            .lamsa-phone-wrapper.animate-phone-tap .lamsa-screen-standby {
+                animation: standbyScreenFade 3.4s ease-in-out forwards !important;
+            }
+            .lamsa-phone-wrapper.animate-phone-tap .lamsa-screen-success {
+                animation: successScreenReveal 3.4s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            }
+            .lamsa-nfc-card.is-tapping {
+                animation: cardTapFeedback 3.4s ease-out forwards !important;
+            }
+            .lamsa-contact-ripples.is-active .lamsa-ripple-1 {
+                animation: contactNfcRipple 3.4s ease-out forwards !important;
+            }
+            .lamsa-contact-ripples.is-active .lamsa-ripple-2 {
+                animation: contactNfcRipple 3.4s ease-out 0.15s forwards !important;
+            }
+            .lamsa-contact-ripples.is-active .lamsa-ripple-3 {
+                animation: contactNfcRipple 3.4s ease-out 0.3s forwards !important;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .lamsa-phone-wrapper.animate-phone-tap .lamsa-screen-standby {
+                opacity: 0;
+                transition: opacity 0.25s ease;
+            }
+            .lamsa-phone-wrapper.animate-phone-tap .lamsa-screen-success {
+                opacity: 1;
+                transition: opacity 0.25s ease;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lamsa-stage {
+                min-height: 560px;
+            }
+            .lamsa-nfc-card {
+                height: 215px;
+                padding: 20px;
+            }
+            .lamsa-phone-wrapper {
+                top: 94px;
+                width: 164px;
+                height: 325px;
+            }
+            .lamsa-contact-ripples {
+                top: 96px;
+            }
+        }
+
+        /* Marketing Sections (Desktop & Web Mobile) */
         .desktop-marketing {
             width: 100%;
-            max-width: 1060px;
-            margin-top: 50px;
+            max-width: 1140px;
+            margin-top: 48px;
+            padding-bottom: 28px;
             display: flex;
             flex-direction: column;
             gap: 60px;
@@ -238,32 +975,48 @@
             }
         }
         .step-card {
-            background: var(--card);
+            background: linear-gradient(155deg, rgba(32, 28, 26, 0.85), rgba(20, 18, 17, 0.92));
             border: 1px solid var(--border);
             border-radius: var(--radius-app);
             padding: 28px 22px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: relative;
-            transition: all 0.3s ease;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-        }
-        .step-card:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+            transform-style: preserve-3d;
+            transition:
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                translate 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                scale 0.22s ease-out,
+                transform 0.16s ease-out,
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
         }
         .step-card-num {
             position: absolute;
+            z-index: 2;
             top: 20px;
             right: 22px;
             font-size: 20px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.14);
             font-family: 'JetBrains Mono', monospace;
+            padding: 3px 9px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transition: scale 0.25s ease, translate 0.25s ease, color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
         }
-        html[lang="ar"] .step-card-num {
+        html[lang="ar"] .step-card-num,
+        html[dir="rtl"] .step-card-num {
             right: auto;
             left: 22px;
         }
@@ -277,6 +1030,10 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 18px;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transition: scale 0.28s cubic-bezier(0.16, 1, 0.3, 1), rotate 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .step-illustration-box svg {
             width: 32px;
@@ -311,17 +1068,26 @@
             }
         }
         .feat-card {
-            background: var(--card);
+            background: linear-gradient(155deg, rgba(32, 28, 26, 0.82), rgba(20, 18, 17, 0.9));
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 22px 18px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.25s;
-        }
-        .feat-card:hover {
-            border-color: rgba(139, 92, 246, 0.35);
-            transform: translateY(-2px);
+            position: relative;
+            overflow: hidden;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+            transform-style: preserve-3d;
+            transition:
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                translate 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                scale 0.22s ease-out,
+                transform 0.16s ease-out,
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
         }
         .feat-icon-badge {
             width: 44px;
@@ -333,41 +1099,25 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 14px;
-            transition: all 0.25s ease;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transition: scale 0.28s cubic-bezier(0.16, 1, 0.3, 1), rotate 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .feat-icon-badge svg {
             width: 22px;
             height: 22px;
         }
-        .feat-badge-star {
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(245, 158, 11, 0.3);
-            fill: #f59e0b;
-        }
-        .feat-badge-wifi {
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(245, 158, 11, 0.3);
-            fill: #fbbf24;
-        }
-        .feat-badge-lock {
-            background: rgba(168, 85, 247, 0.12);
-            border-color: rgba(168, 85, 247, 0.3);
-            fill: #c084fc;
-        }
-        .feat-badge-shield {
-            background: rgba(239, 68, 68, 0.12);
-            border-color: rgba(239, 68, 68, 0.3);
-            fill: #f87171;
-        }
-        .feat-badge-trash {
-            background: rgba(244, 63, 94, 0.12);
-            border-color: rgba(244, 63, 94, 0.3);
-            fill: #fb7185;
-        }
+        .feat-badge-star,
+        .feat-badge-wifi,
+        .feat-badge-nfc,
+        .feat-badge-lock,
+        .feat-badge-shield,
+        .feat-badge-trash,
         .feat-badge-open {
-            background: rgba(16, 185, 129, 0.12);
-            border-color: rgba(16, 185, 129, 0.3);
-            fill: #10b981;
+            background: rgba(139, 92, 246, 0.14);
+            border-color: rgba(139, 92, 246, 0.34);
+            fill: #a78bfa;
         }
         .feat-card-title {
             font-size: 15px;
@@ -393,18 +1143,26 @@
             }
         }
         .faq-item {
-            background: var(--card);
+            background: linear-gradient(155deg, rgba(32, 28, 26, 0.8), rgba(20, 18, 17, 0.9));
             border: 1px solid var(--border);
             border-radius: var(--radius-app);
             padding: 24px 22px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.25s ease;
-        }
-        .faq-item:hover {
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            translate: 0px;
+            rotate: 0deg;
+            scale: 1;
+            transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+            transform-style: preserve-3d;
+            transition:
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                translate 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                scale 0.22s ease-out,
+                transform 0.16s ease-out,
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
         }
         .faq-question {
             font-size: 15.5px;
@@ -417,6 +1175,101 @@
             font-size: 13.5px;
             color: var(--text-sub);
             line-height: 1.65;
+        }
+
+        /* Interactive Spotlight Glow + Specular Top Sheen + 3D Tilt on Marketing Cards */
+        .step-card::before,
+        .feat-card::before,
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(139, 92, 246, 0.16),
+                rgba(167, 139, 250, 0.04) 45%,
+                transparent 75%
+            );
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        .step-card::after,
+        .feat-card::after,
+        .faq-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(167, 139, 250, 0.55), transparent);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        .step-card > :not(.step-card-num),
+        .feat-card > *,
+        .faq-item > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .step-card:hover,
+            .feat-card:hover,
+            .faq-item:hover {
+                border-color: rgba(139, 92, 246, 0.48);
+                box-shadow: 0 20px 44px rgba(0, 0, 0, 0.5), 0 0 24px rgba(139, 92, 246, 0.14);
+                scale: 1.015;
+                transform: perspective(900px) translate3d(0, -6px, 0) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+            }
+            @supports not (translate: 0px) {
+                .step-card:hover,
+                .feat-card:hover,
+                .faq-item:hover {
+                    transform: perspective(900px) translate3d(0, -6px, 0) scale(1.015) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+                }
+            }
+            .step-card:hover::before,
+            .feat-card:hover::before,
+            .faq-item:hover::before,
+            .step-card:hover::after,
+            .feat-card:hover::after,
+            .faq-item:hover::after {
+                opacity: 1;
+            }
+            .step-card:hover .step-illustration-box,
+            .feat-card:hover .feat-icon-badge {
+                scale: 1.12;
+                rotate: -5deg;
+                border-color: rgba(167, 139, 250, 0.55);
+                box-shadow: 0 8px 22px rgba(139, 92, 246, 0.25);
+            }
+            @supports not (translate: 0px) {
+                .step-card:hover .step-illustration-box,
+                .feat-card:hover .feat-icon-badge {
+                    transform: scale(1.12) rotate(-5deg);
+                }
+            }
+            .step-card:hover .step-card-num {
+                scale: 1.08;
+                translate: 0 -2px;
+                color: #c4b5fd;
+                background: rgba(139, 92, 246, 0.16);
+                border-color: rgba(139, 92, 246, 0.35);
+            }
+        }
+
+        /* Tactile press feedback across desktop and mobile touchscreens */
+        .step-card:active,
+        .feat-card:active,
+        .faq-item:active {
+            scale: 0.985;
+            border-color: rgba(139, 92, 246, 0.45);
         }
 
         /* Footer */
@@ -500,25 +1353,277 @@
             }
         }
 
-        /* Scroll-driven Reveal Animations for Marketing Cards & Sections */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(28px) scale(0.98);
-            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.3s ease,
-                        box-shadow 0.3s ease;
-            will-change: opacity, transform;
+        /* Distinctive 3D Perspective Scroll-Driven Reveal Animations */
+        :root {
+            --scroll-fan-start: -68px;
+            --scroll-fan-end: 68px;
+            --scroll-rot-start: -5deg;
+            --scroll-rot-end: 5deg;
+            --scroll-ry-start: 24deg;
+            --scroll-ry-end: -24deg;
         }
-        .reveal-on-scroll.is-revealed {
-            opacity: 1;
-            transform: translateY(0) scale(1);
+        html[dir="rtl"],
+        html[lang="ar"] {
+            --scroll-fan-start: 68px;
+            --scroll-fan-end: -68px;
+            --scroll-rot-start: 5deg;
+            --scroll-rot-end: -5deg;
+            --scroll-ry-start: -24deg;
+            --scroll-ry-end: 24deg;
         }
-        .steps-grid .step-card:nth-child(1) { transition-delay: 0.05s; }
-        .steps-grid .step-card:nth-child(2) { transition-delay: 0.16s; }
-        .steps-grid .step-card:nth-child(3) { transition-delay: 0.27s; }
 
-        .features-grid .feat-card:nth-child(1) { transition-delay: 0.05s; }
-        .features-grid .feat-card:nth-child(2) { transition-delay: 0.13s; }
-        .features-grid .feat-card:nth-child(3) { transition-delay: 0.21s; }
-        .features-grid .feat-card:nth-child(4) { transition-delay: 0.29s; }
+        @media (prefers-reduced-motion: no-preference) {
+            @keyframes sectionHeaderScrollEntry {
+                0% {
+                    opacity: 0;
+                    translate: 0 38px;
+                    scale: 0.88;
+                    transform: perspective(900px) rotateX(18deg);
+                }
+                72% {
+                    opacity: 1;
+                    translate: 0 -2px;
+                    scale: 1.02;
+                    transform: perspective(900px) rotateX(-1.5deg);
+                }
+                100% {
+                    opacity: 1;
+                    translate: 0 0;
+                    scale: 1;
+                    transform: perspective(900px) rotateX(0deg);
+                }
+            }
+
+            @keyframes cardScrollFanStart {
+                0% {
+                    opacity: 0;
+                    translate: var(--scroll-fan-start) 56px;
+                    scale: 0.8;
+                    rotate: var(--scroll-rot-start);
+                    transform: perspective(900px) rotateX(26deg) rotateY(var(--scroll-ry-start));
+                }
+                70% {
+                    opacity: 1;
+                    translate: 0 -4px;
+                    scale: 1.015;
+                    rotate: 0deg;
+                    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.55), 0 0 28px rgba(139, 92, 246, 0.22);
+                    transform: perspective(900px) rotateX(-2deg) rotateY(0deg);
+                }
+                100% {
+                    opacity: 1;
+                    translate: 0 0;
+                    scale: 1;
+                    rotate: 0deg;
+                    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+                }
+            }
+
+            @keyframes cardScrollCenter3D {
+                0% {
+                    opacity: 0;
+                    translate: 0 56px;
+                    scale: 0.8;
+                    rotate: 0deg;
+                    transform: perspective(900px) rotateX(26deg) translate3d(0, 0, -45px);
+                }
+                70% {
+                    opacity: 1;
+                    translate: 0 -4px;
+                    scale: 1.015;
+                    rotate: 0deg;
+                    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.55), 0 0 28px rgba(139, 92, 246, 0.22);
+                    transform: perspective(900px) rotateX(-2deg) translate3d(0, 0, 0);
+                }
+                100% {
+                    opacity: 1;
+                    translate: 0 0;
+                    scale: 1;
+                    rotate: 0deg;
+                    transform: perspective(900px) rotateX(0deg) translate3d(0, 0, 0);
+                }
+            }
+
+            @keyframes cardScrollFanEnd {
+                0% {
+                    opacity: 0;
+                    translate: var(--scroll-fan-end) 56px;
+                    scale: 0.8;
+                    rotate: var(--scroll-rot-end);
+                    transform: perspective(900px) rotateX(26deg) rotateY(var(--scroll-ry-end));
+                }
+                70% {
+                    opacity: 1;
+                    translate: 0 -4px;
+                    scale: 1.015;
+                    rotate: 0deg;
+                    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.55), 0 0 28px rgba(139, 92, 246, 0.22);
+                    transform: perspective(900px) rotateX(-2deg) rotateY(0deg);
+                }
+                100% {
+                    opacity: 1;
+                    translate: 0 0;
+                    scale: 1;
+                    rotate: 0deg;
+                    transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+                }
+            }
+
+            @keyframes cardBadgeScrollPop {
+                0% {
+                    opacity: 0;
+                    scale: 0.45;
+                    rotate: -22deg;
+                }
+                70% {
+                    opacity: 1;
+                    scale: 1.12;
+                    rotate: 5deg;
+                }
+                100% {
+                    opacity: 1;
+                    scale: 1;
+                    rotate: 0deg;
+                }
+            }
+
+            /* Native CSS Scroll-Driven Animations when supported */
+            @supports ((animation-timeline: view()) and (animation-range: entry)) {
+                .section-header {
+                    animation: sectionHeaderScrollEntry auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 15% contain 12%;
+                }
+                .app-footer {
+                    animation: sectionHeaderScrollEntry auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 0% entry 85%;
+                }
+
+                .steps-grid .step-card:nth-child(3n+1),
+                .features-grid .feat-card:nth-child(3n+1) {
+                    animation: cardScrollFanStart auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 22% contain 18%;
+                }
+                .steps-grid .step-card:nth-child(3n+2),
+                .features-grid .feat-card:nth-child(3n+2) {
+                    animation: cardScrollCenter3D auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 26% contain 20%;
+                }
+                .steps-grid .step-card:nth-child(3n+3),
+                .features-grid .feat-card:nth-child(3n+3) {
+                    animation: cardScrollFanEnd auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 30% contain 22%;
+                }
+
+                .faq-grid .faq-item:nth-child(odd) {
+                    animation: cardScrollFanStart auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 20% contain 16%;
+                }
+                .faq-grid .faq-item:nth-child(even) {
+                    animation: cardScrollFanEnd auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 26% contain 20%;
+                }
+
+                .step-illustration-box,
+                .feat-icon-badge {
+                    animation: cardBadgeScrollPop auto linear backwards;
+                    animation-timeline: view();
+                    animation-range: entry 25% contain 22%;
+                }
+            }
+
+            /* IntersectionObserver Fallback for Browsers without Scroll-Driven Animations */
+            @supports not ((animation-timeline: view()) and (animation-range: entry)) {
+                .section-header,
+                .app-footer {
+                    transition:
+                        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        translate 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        scale 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .reveal-on-scroll:not(:hover) {
+                    transition:
+                        opacity 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+                        translate 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+                        scale 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+                        rotate 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.28s ease,
+                        box-shadow 0.28s ease;
+                }
+                .section-header.reveal-on-scroll:not(.is-revealed),
+                .app-footer.reveal-on-scroll:not(.is-revealed) {
+                    opacity: 0;
+                    translate: 0 38px;
+                    scale: 0.88;
+                    transform: perspective(900px) rotateX(18deg);
+                }
+                .steps-grid .step-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+1),
+                .features-grid .feat-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+1),
+                .faq-grid .faq-item.reveal-on-scroll:not(.is-revealed):nth-child(odd) {
+                    opacity: 0;
+                    translate: var(--scroll-fan-start) 60px;
+                    scale: 0.84;
+                    rotate: var(--scroll-rot-start);
+                    transform: perspective(900px) rotateX(24deg) rotateY(var(--scroll-ry-start));
+                }
+                .steps-grid .step-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+2),
+                .features-grid .feat-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+2) {
+                    opacity: 0;
+                    translate: 0 68px;
+                    scale: 0.82;
+                    transform: perspective(900px) rotateX(28deg) translate3d(0, 0, -45px);
+                    transition-delay: 0.08s;
+                }
+                .steps-grid .step-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+3),
+                .features-grid .feat-card.reveal-on-scroll:not(.is-revealed):nth-child(3n+3),
+                .faq-grid .faq-item.reveal-on-scroll:not(.is-revealed):nth-child(even) {
+                    opacity: 0;
+                    translate: var(--scroll-fan-end) 60px;
+                    scale: 0.84;
+                    rotate: var(--scroll-rot-end);
+                    transform: perspective(900px) rotateX(24deg) rotateY(var(--scroll-ry-end));
+                    transition-delay: 0.14s;
+                }
+                .reveal-on-scroll:not(:hover) .step-illustration-box,
+                .reveal-on-scroll:not(:hover) .feat-icon-badge {
+                    transition:
+                        opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s,
+                        scale 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s,
+                        rotate 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s,
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
+                }
+                .reveal-on-scroll:not(.is-revealed) .step-illustration-box,
+                .reveal-on-scroll:not(.is-revealed) .feat-icon-badge {
+                    opacity: 0;
+                    scale: 0.45;
+                    rotate: -22deg;
+                }
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .section-header,
+            .step-card,
+            .feat-card,
+            .faq-item,
+            .step-illustration-box,
+            .feat-icon-badge,
+            .app-footer,
+            .reveal-on-scroll {
+                opacity: 1 !important;
+                translate: 0 0 !important;
+                scale: 1 !important;
+                rotate: 0deg !important;
+                transform: none !important;
+                animation: none !important;
+            }
+        }

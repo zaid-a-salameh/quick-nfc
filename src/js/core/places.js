@@ -377,11 +377,14 @@
         slider.style.transform = `translate3d(${activeTab.offsetLeft}px, 0, 0)`;
     }
 
+    let modeStageHeightTimer = null;
+
     function switchMode(mode) {
         const tabLinkMode = document.getElementById('tabLinkMode');
         const tabSearchMode = document.getElementById('tabSearchMode');
         const modeLinkContent = document.getElementById('modeLinkContent');
         const modeSearchContent = document.getElementById('modeSearchContent');
+        const modeStage = document.getElementById('modeStage');
         const urlInput = document.getElementById('urlInput');
         const businessSearchInput = document.getElementById('businessSearchInput');
         const mainInputCard = document.getElementById('mainInputCard');
@@ -392,6 +395,8 @@
                                     currentContent && currentContent.classList.contains('active'));
 
         if (window.AppModes && window.AppModes.activeMode === mode && isDomActive) return;
+
+        const prevHeight = modeStage ? modeStage.offsetHeight : 0;
 
         if (window.AppModes) {
             window.AppModes.activeMode = mode;
@@ -411,6 +416,27 @@
             if (modeLinkContent) modeLinkContent.classList.remove('active');
             if (businessSearchInput && (!window.isTouchDevice || !window.isTouchDevice())) businessSearchInput.focus();
             initGoogleMapsPlaces();
+        }
+
+        if (modeStage && prevHeight > 0) {
+            if (modeStageHeightTimer) {
+                clearTimeout(modeStageHeightTimer);
+                modeStageHeightTimer = null;
+            }
+            modeStage.style.height = 'auto';
+            const targetHeight = modeStage.offsetHeight;
+            const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (targetHeight > 0 && targetHeight !== prevHeight && !prefersReducedMotion) {
+                modeStage.style.height = `${prevHeight}px`;
+                void modeStage.offsetHeight;
+                modeStage.style.height = `${targetHeight}px`;
+                modeStageHeightTimer = setTimeout(() => {
+                    modeStage.style.height = 'auto';
+                    modeStageHeightTimer = null;
+                }, 270);
+            } else {
+                modeStage.style.height = 'auto';
+            }
         }
 
         updateModeTabSlider();
