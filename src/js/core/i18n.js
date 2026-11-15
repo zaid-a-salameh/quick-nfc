@@ -3080,10 +3080,9 @@
             if (el && html !== undefined && html !== null) el.innerHTML = html;
         };
 
-        // Update HTML attributes
+        // Update HTML attributes (keep document.title unchanged across languages)
         document.documentElement.lang = lang;
         document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        if (dict.docTitle) document.title = dict.docTitle;
 
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc && dict.metaDesc) metaDesc.setAttribute('content', dict.metaDesc);
