@@ -265,9 +265,10 @@
                 max-width: 600px;
             }
             .hero-stage .hero-showcase {
-                flex: 0 0 420px;
-                width: 420px;
-                margin: 18px 0 0;
+                flex: 0 0 385px;
+                width: 385px;
+                max-width: 385px;
+                margin: 8px 0 0;
             }
         }
 
@@ -279,7 +280,7 @@
             --card-accent-light: #c4b5fd;
             --card-accent-rgb: 139, 92, 246;
             width: 100%;
-            max-width: min(390px, 100%);
+            max-width: min(385px, 100%);
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -365,7 +366,7 @@
         .lamsa-stage {
             position: relative;
             width: 100%;
-            min-height: 550px;
+            min-height: 590px;
             perspective: 1200px;
             display: flex;
             flex-direction: column;
@@ -376,7 +377,7 @@
             position: absolute;
             top: 8px;
             inset-inline: 10px;
-            height: 225px;
+            height: 215px;
             border-radius: 32px;
             background: radial-gradient(circle at 50% 45%, rgba(var(--card-accent-rgb), 0.28), rgba(var(--card-accent-rgb), 0.06) 60%, transparent 78%);
             filter: blur(22px);
@@ -389,9 +390,9 @@
         .lamsa-nfc-card {
             position: relative;
             width: 100%;
-            height: 235px;
+            height: 224px;
             border-radius: 24px;
-            padding: 24px 26px;
+            padding: 22px 24px;
             background: linear-gradient(135deg, #171622 0%, #0d0c14 55%, #07060a 100%);
             border: 1px solid rgba(var(--card-accent-rgb), 0.48);
             box-shadow:
@@ -530,7 +531,7 @@
         /* 2. Concentric Contact Ripples */
         .lamsa-contact-ripples {
             position: absolute;
-            top: 104px;
+            top: 112px;
             left: 50%;
             pointer-events: none;
             z-index: 20;
@@ -569,16 +570,16 @@
         /* 3. Persistent Smartphone */
         .lamsa-phone-wrapper {
             position: absolute;
-            top: 100px;
+            top: 108px;
             left: 50%;
-            width: 174px;
-            height: 345px;
+            width: 178px;
+            height: 348px;
             pointer-events: none;
             z-index: 30;
         }
         .phone-resting-mode {
             opacity: 1;
-            transform: translate3d(-50%, 108px, 0) scale(0.96);
+            transform: translate3d(-50%, 134px, 0) scale(0.96);
             transition: transform 0.4s ease-out;
         }
         .lamsa-phone-frame {
@@ -801,7 +802,7 @@
         @keyframes phoneTapLifecycle {
             0% {
                 opacity: 1;
-                transform: translate3d(-50%, 108px, 0) scale(0.96);
+                transform: translate3d(-50%, 134px, 0) scale(0.96);
                 animation-timing-function: cubic-bezier(0.38, 0.05, 0.22, 1);
             }
             24% {
@@ -826,7 +827,7 @@
             }
             96%, 100% {
                 opacity: 1;
-                transform: translate3d(-50%, 108px, 0) scale(0.96);
+                transform: translate3d(-50%, 134px, 0) scale(0.96);
             }
         }
         @keyframes standbyScreenFade {
@@ -896,19 +897,19 @@
 
         @media (max-width: 480px) {
             .lamsa-stage {
-                min-height: 560px;
+                min-height: 585px;
             }
             .lamsa-nfc-card {
-                height: 215px;
-                padding: 20px;
+                height: 210px;
+                padding: 18px 20px;
             }
             .lamsa-phone-wrapper {
-                top: 94px;
-                width: 164px;
-                height: 325px;
+                top: 98px;
+                width: 168px;
+                height: 328px;
             }
             .lamsa-contact-ripples {
-                top: 96px;
+                top: 102px;
             }
         }
 
