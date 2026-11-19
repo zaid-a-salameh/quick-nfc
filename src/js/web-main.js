@@ -265,6 +265,29 @@
         }
 
         // ── Language Selector Dropdown (10 Languages) ──
+        function syncFooterLangLinks(lang) {
+            document.querySelectorAll('.footer-lang-links a[data-lang]').forEach(link => {
+                const isActive = link.getAttribute('data-lang') === lang;
+                link.classList.toggle('active', isActive);
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        function syncLanguageUrl(lang) {
+            if (window.location.protocol !== 'http:' && window.location.protocol !== 'https:') return;
+            const path = window.location.pathname;
+            if (path === '/' || /^\/(ar|de|es|fr|hi|ja|pt|ru|zh)\/?$/.test(path)) {
+                const targetPath = lang === 'en' ? '/' : `/${lang}/`;
+                if (path !== targetPath && window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', targetPath + window.location.search + window.location.hash);
+                }
+            }
+        }
+
         const langDropdownContainers = document.querySelectorAll('.lang-selector-dropdown');
         langDropdownContainers.forEach(container => {
             const btn = container.querySelector('.lang-select-btn');
@@ -286,6 +309,8 @@
                     const chosen = item.getAttribute('data-lang');
                     if (chosen && window.switchLanguage) {
                         window.switchLanguage(chosen);
+                        syncFooterLangLinks(chosen);
+                        syncLanguageUrl(chosen);
                     }
                     container.classList.remove('open');
                     btn.setAttribute('aria-expanded', 'false');
@@ -312,7 +337,9 @@
         });
 
         // ── Initialize ──
-        window.applyLanguage(window.getCurrentLang(), false);
+        const initialLang = window.getCurrentLang();
+        window.applyLanguage(initialLang, false);
+        syncFooterLangLinks(initialLang);
         window.initGoogleMapsPlaces();
         if (window.updateModeTabSlider) setTimeout(window.updateModeTabSlider, 60);
         if (document.fonts && document.fonts.ready) {

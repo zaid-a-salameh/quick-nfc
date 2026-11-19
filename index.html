@@ -5,18 +5,33 @@
     <meta name="google-site-verification" content="XtvCFzfC2mJ5uXVcZOq23JEaoyu3cDdnRw9wJJPwwV4" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Quick NFC</title>
+    <title>Quick NFC | Google Review Link, QR Code &amp; NFC Writer</title>
     
     <!-- SEO & Metadata -->
-    <meta name="description" id="metaDescription" content="Quick NFC - Free & open-source NFC tool and Google Maps 5-star review link generator. Program NFC cards, Wi-Fi tags, PIN locks, and high-resolution QR codes.">
-    <meta name="keywords" content="quick nfc, كويك ان اف سي, google review link, رابط تقييم جوجل, nfc wifi card, كروت nfc واي فاي, nfc pin lock, قفل nfc برمز, ntag213, ntag215, ntag216, write nfc cards, برمجة كروت nfc, تقييم خرائط جوجل 5 نجوم, رابط تقييم مباشر">
+    <meta name="description" id="metaDescription" content="Convert Google Maps links into direct 5-star review links and printable QR codes for free in your browser, or use our Android app to write NFC &amp; Wi-Fi cards.">
+    <meta name="keywords" id="metaKeywords" content="Quick NFC, Google review link generator, convert Google Maps link to review link, Google review QR code generator, 5-star review link, write Google review link to NFC card, Wi-Fi NFC card, NTAG213, NTAG215, NTAG216, Android NFC writer">
     <meta name="theme-color" content="#7c3aed">
     <link rel="canonical" href="https://quicknfc.link/">
+
+    <!-- HREFLANG_START -->
+    <link rel="alternate" hreflang="en" href="https://quicknfc.link/">
+    <link rel="alternate" hreflang="ar" href="https://quicknfc.link/ar/">
+    <link rel="alternate" hreflang="de" href="https://quicknfc.link/de/">
+    <link rel="alternate" hreflang="es" href="https://quicknfc.link/es/">
+    <link rel="alternate" hreflang="fr" href="https://quicknfc.link/fr/">
+    <link rel="alternate" hreflang="hi" href="https://quicknfc.link/hi/">
+    <link rel="alternate" hreflang="ja" href="https://quicknfc.link/ja/">
+    <link rel="alternate" hreflang="pt" href="https://quicknfc.link/pt/">
+    <link rel="alternate" hreflang="ru" href="https://quicknfc.link/ru/">
+    <link rel="alternate" hreflang="zh" href="https://quicknfc.link/zh/">
+    <link rel="alternate" hreflang="x-default" href="https://quicknfc.link/">
+    <!-- HREFLANG_END -->
     
     <!-- Open Graph / Social Sharing & Google Rich Results -->
-    <meta property="og:title" content="Quick NFC | Fast NFC & Google Review Tool">
-    <meta property="og:description" content="Direct Google Maps 5-star review link generator, Wi-Fi NFC card setup, PIN lock security, and high-resolution QR codes.">
+    <meta property="og:title" content="Quick NFC | Google Review Link, QR Code &amp; NFC Writer">
+    <meta property="og:description" content="Convert Google Maps links into direct 5-star review links and printable QR codes for free in your browser, or use our Android app to write NFC &amp; Wi-Fi cards.">
     <meta property="og:url" content="https://quicknfc.link/">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Quick NFC">
     <meta property="og:image" content="https://quicknfc.link/assets/icons/og-image.png">
@@ -28,28 +43,35 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Quick NFC | Fast NFC & Google Review Tool">
-    <meta name="twitter:description" content="Direct Google Maps 5-star review link generator, Wi-Fi NFC card setup, PIN lock security, and high-resolution QR codes.">
+    <meta name="twitter:title" content="Quick NFC | Google Review Link, QR Code &amp; NFC Writer">
+    <meta name="twitter:description" content="Convert Google Maps links into direct 5-star review links and printable QR codes for free in your browser, or use our Android app to write NFC &amp; Wi-Fi cards.">
     <meta name="twitter:image" content="https://quicknfc.link/assets/icons/og-image.png">
     <meta name="thumbnail" content="https://quicknfc.link/assets/icons/favicon-192x192.png">
 
     <!-- Schema.org JSON-LD Structured Data for Google Search -->
-    <script type="application/ld+json">
+    <!-- JSONLD_START -->
+    <script type="application/ld+json" id="structuredDataJsonLd">
     [
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Quick NFC",
-        "alternateName": ["QuickNFC", "ReviewLinkGenerator", "Google Review Link Generator", "مولد رابط تقييم جوجل"],
-        "url": "https://quicknfc.link/"
+        "alternateName": [
+          "QuickNFC",
+          "Google Review Link Generator",
+          "Google Review QR Code Generator"
+        ],
+        "url": "https://quicknfc.link/",
+        "inLanguage": "en"
       },
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Quick NFC",
         "url": "https://quicknfc.link/",
+        "inLanguage": "en",
         "image": "https://quicknfc.link/assets/icons/og-image.png",
-        "description": "Fast & simple NFC tool with instant Google Maps review link conversion, QR codes, and contactless card management.",
+        "description": "Convert Google Maps links into direct 5-star review links and printable QR codes for free in your browser, or use our Android app to write NFC & Wi-Fi cards.",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web, Android",
         "offers": {
@@ -66,75 +88,61 @@
       {
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        "inLanguage": "en",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How do I create a direct 5-star Google review link?",
+            "name": "How do I convert a Google Maps link into a 5-star review link?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Paste your Google Maps business link or search for your place in the app. The tool automatically resolves your Google Place ID and generates a direct review URL that pops open the 5-star rating dialog automatically."
+              "text": "Paste your Google Maps link or search your business name in the Find Business tab. Quick NFC extracts your Place ID in the browser and builds a direct link that opens the 5-star review prompt—free with no signup or API key."
             }
           },
           {
             "@type": "Question",
-            "name": "كيف أحصل على رابط تقييم مباشر 5 نجوم لخرائط جوجل؟",
+            "name": "What NFC tags and cards does the Android app support?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "ضع رابط نشاطك التجاري من خرائط Google أو ابحث عن اسم المحل، وسيقوم الموقع باستخراج معرّف المكان Place ID وتوليد رابط مباشر يفتح نافذة التقييم الفوري بـ 5 نجوم للعملاء."
+              "text": "The Quick NFC Android app supports standard NTAG chips (NTAG213, NTAG215, and NTAG216) as well as compatible NFC stickers, coins, keyfobs, and PVC review cards."
             }
           },
           {
             "@type": "Question",
-            "name": "How to write Google review links to NFC cards or tags?",
+            "name": "How does Wi-Fi NFC card setup and cloning work?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Install the free Quick NFC Android APK, generate your review link, tap 'Write to NFC Tag', and hold the back of your Android phone against any writable NFC tag (NTAG213, NTAG215, or NTAG216)."
+              "text": "In the Android app, enter your Wi-Fi name and password—or scan an existing Wi-Fi NFC card to read it—then tap a blank NFC card so guests can connect with a single phone tap."
             }
           },
           {
             "@type": "Question",
-            "name": "كيف أكتب رابط التقييم على كروت وميداليات NFC؟",
+            "name": "Can I protect my NFC cards with a PIN or Read-Only lock?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "حمّل تطبيق الأندرويد المجاني Quick NFC، وأنشئ رابط التقييم، ثم اضغط على زر كتابة كارت NFC وقرّب كارت أو استيكر NFC من ظهر الهاتف ليتم قفله وبرمجته فوراً."
+              "text": "Yes. The Android app lets you set a 4-digit PIN password to lock and unlock supported NTAG cards, or apply a permanent hardware Read-Only lock for public displays."
             }
           },
           {
             "@type": "Question",
-            "name": "Can I generate a printable QR code for Google reviews?",
+            "name": "Can I generate a printable Google review QR code on this website?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, clicking the QR Code button instantly creates a high-resolution, downloadable QR code image suitable for printing on table tents, storefront stickers, receipts, and marketing stands."
+              "text": "Yes! After converting your link on the website, click Generate QR Code to download a crisp, high-resolution PNG image ready to print on table tents, counters, receipts, and packaging."
             }
           },
           {
             "@type": "Question",
-            "name": "هل يمكن عمل كود QR قابل للطباعة لتقييمات العملاء؟",
+            "name": "Is Quick NFC really free without an account or API key?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "نعم، يمكنك بنقرة واحدة توليد رمز QR عالي الدقة وتحميله كصورة جاهزة للطباعة على الطاولات، الفواتير، والملصقات في محلك التجاري."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is Quick NFC free and does it require an API key?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, it is 100% free and open-source. It does not require any Google Cloud API key, credit card, or user registration. All Place ID resolution and link formatting runs directly in your browser or Android device."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "هل هذه الأداة مجانية وهل تتطلب بطاقة بنكية أو مفتاح API؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "الأداة مجانية ومفتوحة المصدر 100%، ولا تتطلب أي بطاقة بنكية أو حساب Google Cloud أو اشتراكات شهرية، وتعمل بخصوصية تامة دون أي تتبع لروابطك."
+              "text": "Yes, Quick NFC is 100% free and open-source under the MIT license. Converting Google Maps review links and creating QR codes works right in your browser with no account, subscription, or API key."
             }
           }
         ]
       }
     ]
     </script>
+    <!-- JSONLD_END -->
 
     <!-- Google Search & Browser Favicons (Vector SVG & Static Multi-Resolution) -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -360,8 +368,9 @@
                     <path d="M18.2 3.2C20.7 5.3 21.8 8.2 21.8 11.6C21.8 15 20.7 17.9 18.2 20" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
                 </svg>
             </div>
-            <h1 id="appTitle">Quick NFC</h1>
-            <p id="appSubtitle">Fast & simple NFC tool with instant Google Maps review link conversion</p>
+            <div class="app-brand-kicker">Quick NFC</div>
+            <h1 id="appTitle">Google Review Link, QR Code &amp; NFC Tool</h1>
+            <p id="appSubtitle">Convert any Google Maps link into a direct 5-star review link &amp; printable QR code for free—plus write NFC cards with our Android app.</p>
         </header>
 
         <!-- Main Input Card -->
@@ -402,7 +411,7 @@
                         >
                     </div>
 
-                    <button type="button" class="tool-btn btn-paste" id="pasteBtn" title="Paste from clipboard">
+                    <button type="button" class="tool-btn btn-paste" id="pasteBtn" title="Paste">
                         <svg viewBox="0 0 24 24"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/></svg>
                         <span id="pasteBtnLabel">Paste</span>
                     </button>
@@ -424,12 +433,12 @@
                         type="text" 
                         id="businessSearchInput" 
                         class="search-input" 
-                        placeholder="Search place name & city..." 
+                        placeholder="Search place name &amp; city..." 
                         autocomplete="off"
                         spellcheck="false"
                     >
                     <div class="search-loading-spinner" id="searchSpinner"></div>
-                    <button type="button" class="search-clear-btn" id="searchClearBtn" title="Clear">
+                    <button type="button" class="search-clear-btn" id="searchClearBtn" title="Clear text">
                         <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                     </button>
                     <!-- Floating Places Autocomplete Dropdown -->
@@ -443,7 +452,7 @@
         <!-- Web Companion Platform Notice -->
         <div class="web-platform-hint" id="webPlatformHint">
             <span class="hint-icon">💡</span>
-            <span id="webPlatformNoticeText">Physical NFC writing &amp; Wi-Fi cards require our free <a href="https://github.com/zaid-a-salameh/quick-nfc/releases/latest/download/QuickNFC.apk">Android App</a>. This web version generates links &amp; printable QR codes.</span>
+            <span id="webPlatformNoticeText">This website converts Google review links &amp; printable QR codes in your browser. For physical NFC card writing, Wi-Fi cards &amp; PIN locks, get our free <a href="https://github.com/zaid-a-salameh/quick-nfc/releases/latest/download/QuickNFC.apk">Android App</a>.</span>
         </div>
 
         <!-- Result Card (3 Buttons only) -->
@@ -458,15 +467,15 @@
             <!-- Link Type Segmented Selector (Direct 5-Star Review vs Map Location) -->
             <div class="link-type-selector-wrapper" id="linkTypeSelectorWrapper" style="display: none;">
                 <div class="link-type-selector-header">
-                    <span id="linkTypeSelectorLabel">نوع الرابط المطلوب برمجته:</span>
+                    <span id="linkTypeSelectorLabel">Link Type to Program:</span>
                 </div>
                 <div class="link-type-segmented" id="linkTypeSegmented">
                     <div class="link-type-slider" id="linkTypeSlider"></div>
                     <button type="button" class="btn-link-type active" id="btnTypeReview" data-type="review">
-                        <span id="btnTypeReviewLabel">تقييم 5 نجوم</span>
+                        <span id="btnTypeReviewLabel">5-Star Review</span>
                     </button>
                     <button type="button" class="btn-link-type" id="btnTypeLocation" data-type="location">
-                        <span id="btnTypeLocationLabel">موقع الخريطة</span>
+                        <span id="btnTypeLocationLabel">Map Location</span>
                     </button>
                 </div>
             </div>
@@ -620,7 +629,7 @@
             <div class="section-header">
                 <span class="section-badge" id="tagHowItWorks">Workflow</span>
                 <h2 class="section-title" id="titleHowItWorks">How It Works in 3 Simple Steps</h2>
-                <p class="section-subtitle" id="subHowItWorks">Generate frictionless review links that skyrocket your 5-star customer feedback</p>
+                <p class="section-subtitle" id="subHowItWorks">Turn any Google Maps place into a direct 5-star review link, printable QR code, or tap-to-review NFC card</p>
             </div>
 
             <div class="steps-grid">
@@ -635,8 +644,8 @@
                             <path d="M30 30l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <h3 class="step-card-heading" id="step1Title">Copy or Find Link</h3>
-                    <p class="step-card-text" id="step1Desc">Copy your Google Maps link or search for your place directly.</p>
+                    <h3 class="step-card-heading" id="step1Title">Paste Link or Search Business</h3>
+                    <p class="step-card-text" id="step1Desc">Paste your Google Maps URL or search your business name right in your browser—no signup or API key needed.</p>
                 </div>
 
                 <!-- Step 2 -->
@@ -652,8 +661,8 @@
                             <circle cx="11" cy="28" r="1.2" fill="#ffffff"/>
                         </svg>
                     </div>
-                    <h3 class="step-card-heading" id="step2Title">Instant 5-Star Conversion</h3>
-                    <p class="step-card-text" id="step2Desc">The link automatically converts into an instant 5-star review prompt.</p>
+                    <h3 class="step-card-heading" id="step2Title">Instant 5-Star Link Conversion</h3>
+                    <p class="step-card-text" id="step2Desc">Your link converts into a direct Google review URL that opens the 5-star rating prompt automatically.</p>
                 </div>
 
                 <!-- Step 3 -->
@@ -671,8 +680,8 @@
                             <path d="M28 12c3.5 2.2 5.5 5.8 5.5 9.5s-2 7.3-5.5 9.5" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
                         </svg>
                     </div>
-                    <h3 class="step-card-heading" id="step3Title">Print QR or Tap NFC</h3>
-                    <p class="step-card-text" id="step3Desc">Download a print-ready QR code or write to an NFC card with one tap.</p>
+                    <h3 class="step-card-heading" id="step3Title">Download QR or Write NFC Card</h3>
+                    <p class="step-card-text" id="step3Desc">Download a printable high-resolution QR code here, or write the link to an NFC card with our Android app.</p>
                 </div>
             </div>
         </section>
@@ -680,9 +689,9 @@
         <!-- Features Highlights Grid -->
         <section class="marketing-section" id="featuresSection">
             <div class="section-header">
-                <span class="section-badge" id="tagFeatures">Advantages</span>
-                <h2 class="section-title" id="titleFeatures">Why Businesses Choose Our Tool</h2>
-                <p class="section-subtitle" id="subFeatures">Designed for speed, customer conversion, and modern contactless technology</p>
+                <span class="section-badge" id="tagFeatures">Features</span>
+                <h2 class="section-title" id="titleFeatures">Web Review Tools &amp; Android NFC Power</h2>
+                <p class="section-subtitle" id="subFeatures">Free browser-based review links and QR codes, paired with a dedicated Android app for NFC card programming</p>
             </div>
 
                         <div class="features-grid">
@@ -691,8 +700,8 @@
                     <div class="feat-icon-badge feat-badge-star">
                         <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat1Title">Direct 5-Star Pre-Selection</h4>
-                    <p class="feat-card-text" id="feat1Desc">Converts any Google Maps business link into a direct link that opens the 5-star rating popup automatically.</p>
+                    <h4 class="feat-card-title" id="feat1Title">Direct 5-Star Review Link Converter</h4>
+                    <p class="feat-card-text" id="feat1Desc">Instantly convert any Google Maps business link into a direct 5-star review link or printable high-res QR code right in your browser.</p>
                 </div>
 
                 <!-- Feature 2: Wi-Fi NFC Cards -->
@@ -700,8 +709,8 @@
                     <div class="feat-icon-badge feat-badge-wifi">
                         <svg viewBox="0 0 24 24"><path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98A16.88 16.88 0 0 0 12 4zm0 4c3.08 0 5.89 1.15 8.04 3.05L12 19.1 3.96 11.05C6.11 9.15 8.92 8 12 8z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat2Title">Wi-Fi NFC Cards & Cloning</h4>
-                    <p class="feat-card-text" id="feat2Desc">Program contactless Wi-Fi cards for guests and customers, or read and clone existing Wi-Fi cards in seconds.</p>
+                    <h4 class="feat-card-title" id="feat2Title">Wi-Fi NFC Cards &amp; Cloning (App)</h4>
+                    <p class="feat-card-text" id="feat2Desc">Use our free Android app to program tap-to-connect Wi-Fi NFC cards for guests, or read and clone existing cards in seconds.</p>
                 </div>
 
                 <!-- Feature 3: Contactless NFC Programming -->
@@ -709,8 +718,8 @@
                     <div class="feat-icon-badge feat-badge-nfc">
                         <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H4V4h16v16zM18 6h-5c-1.1 0-2 .9-2 2v2.15c-.47-.09-.97-.15-1.5-.15-3.03 0-5.5 2.47-5.5 5.5s2.47 5.5 5.5 5.5c3.03 0 5.5-2.47 5.5-5.5V10h3V6zm-8.5 13c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat3Title">Universal NFC Writing</h4>
-                    <p class="feat-card-text" id="feat3Desc">Write review URLs, websites, and menu links to standard NTAG213, NTAG215, and NTAG216 tags with one tap.</p>
+                    <h4 class="feat-card-title" id="feat3Title">Universal NFC Card Writer (App)</h4>
+                    <p class="feat-card-text" id="feat3Desc">Write Google review links, websites, and digital menus onto NTAG213, NTAG215, and NTAG216 NFC tags with one tap on Android.</p>
                 </div>
 
                 <!-- Feature 4: PIN Security -->
@@ -718,8 +727,8 @@
                     <div class="feat-icon-badge feat-badge-lock">
                         <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat4Title">PIN Protection & Unlocking</h4>
-                    <p class="feat-card-text" id="feat4Desc">Set a 4-digit PIN password to prevent unauthorized overwriting in public spaces, with full unlock support.</p>
+                    <h4 class="feat-card-title" id="feat4Title">4-Digit PIN Lock &amp; Unlock (App)</h4>
+                    <p class="feat-card-text" id="feat4Desc">Protect public NFC cards from unauthorized overwriting using a reversible 4-digit PIN lock in the Android app.</p>
                 </div>
 
                 <!-- Feature 5: Permanent Hardware Lock -->
@@ -727,8 +736,8 @@
                     <div class="feat-icon-badge feat-badge-shield">
                         <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat5Title">Permanent Hardware Lock</h4>
-                    <p class="feat-card-text" id="feat5Desc">Lock tags into irreversible Read-Only hardware mode for tamper-proof public displays and storefronts.</p>
+                    <h4 class="feat-card-title" id="feat5Title">Permanent Read-Only Lock (App)</h4>
+                    <p class="feat-card-text" id="feat5Desc">Lock NFC tags into irreversible Read-Only hardware mode via the Android app for tamper-proof storefronts and counters.</p>
                 </div>
 
                 <!-- Feature 6: Free & 10 Languages -->
@@ -736,8 +745,8 @@
                     <div class="feat-icon-badge feat-badge-open">
                         <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 3.35-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
                     </div>
-                    <h4 class="feat-card-title" id="feat6Title">100% Free & 10 Languages</h4>
-                    <p class="feat-card-text" id="feat6Desc">Open-source with no subscriptions, offline privacy, zero API keys required, and available in 10 languages.</p>
+                    <h4 class="feat-card-title" id="feat6Title">100% Free, No API Key &amp; 10 Languages</h4>
+                    <p class="feat-card-text" id="feat6Desc">Open-source MIT tool with zero signup, no Google Cloud API key required, full privacy, and native support for 10 languages.</p>
                 </div>
             </div>
         </section>
@@ -747,33 +756,33 @@
             <div class="section-header">
                 <span class="section-badge" id="tagFaq">Knowledge Base</span>
                 <h2 class="section-title" id="titleFaq">Frequently Asked Questions</h2>
-                <p class="section-subtitle" id="subFaq">Everything you need to know about Google review links, QR codes, and NFC contactless cards</p>
+                <p class="section-subtitle" id="subFaq">Answers about converting Google Maps links, generating printable QR codes, and writing NFC cards</p>
             </div>
 
                         <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="faq-question" id="faq1Q">How do I create a direct 5-star Google review link?</h3>
-                    <p class="faq-answer" id="faq1A">Search for your business name using the Find Business tab or paste your Google Maps link. The tool resolves your Place ID and crafts a direct URL that automatically prompts customers for a 5-star review.</p>
+                    <h3 class="faq-question" id="faq1Q">How do I convert a Google Maps link into a 5-star review link?</h3>
+                    <p class="faq-answer" id="faq1A">Paste your Google Maps link or search your business name in the Find Business tab. Quick NFC extracts your Place ID in the browser and builds a direct link that opens the 5-star review prompt—free with no signup or API key.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question" id="faq2Q">What NFC tags and cards are supported?</h3>
-                    <p class="faq-answer" id="faq2A">Quick NFC supports all standard NTAG chips (NTAG213, NTAG215, NTAG216) as well as compatible NFC stickers, coins, keyfobs, and PVC cards available on the market.</p>
+                    <h3 class="faq-question" id="faq2Q">What NFC tags and cards does the Android app support?</h3>
+                    <p class="faq-answer" id="faq2A">The Quick NFC Android app supports standard NTAG chips (NTAG213, NTAG215, and NTAG216) as well as compatible NFC stickers, coins, keyfobs, and PVC review cards.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question" id="faq3Q">How does Wi-Fi NFC card setup and cloning work?</h3>
-                    <p class="faq-answer" id="faq3A">Enter your Wi-Fi name and password or hold an existing Wi-Fi NFC card to read it. Touch a writable NFC card to write the configuration so guests can connect instantly without typing passwords.</p>
+                    <p class="faq-answer" id="faq3A">In the Android app, enter your Wi-Fi name and password—or scan an existing Wi-Fi NFC card to read it—then tap a blank NFC card so guests can connect with a single phone tap.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question" id="faq4Q">Can I protect my cards from unauthorized modification?</h3>
-                    <p class="faq-answer" id="faq4A">Yes, you can set a 4-digit PIN password on supported NTAG chips to protect cards from being overwritten by strangers, or permanently lock them to Read-Only mode for public displays.</p>
+                    <h3 class="faq-question" id="faq4Q">Can I protect my NFC cards with a PIN or Read-Only lock?</h3>
+                    <p class="faq-answer" id="faq4A">Yes. The Android app lets you set a 4-digit PIN password to lock and unlock supported NTAG cards, or apply a permanent hardware Read-Only lock for public displays.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question" id="faq5Q">Can I generate and download high-resolution QR codes?</h3>
-                    <p class="faq-answer" id="faq5A">Yes! Click the QR Code button to instantly create a clean, high-resolution PNG image suitable for printing on table tents, counter stickers, packaging, and business cards.</p>
+                    <h3 class="faq-question" id="faq5Q">Can I generate a printable Google review QR code on this website?</h3>
+                    <p class="faq-answer" id="faq5A">Yes! After converting your link on the website, click Generate QR Code to download a crisp, high-resolution PNG image ready to print on table tents, counters, receipts, and packaging.</p>
                 </div>
                 <div class="faq-item">
-                    <h3 class="faq-question" id="faq6Q">Is Quick NFC completely free and private?</h3>
-                    <p class="faq-answer" id="faq6A">Yes, it is 100% free and open-source under the MIT license. It requires no user account, no subscription, and no Google Cloud API key, and it works completely offline.</p>
+                    <h3 class="faq-question" id="faq6Q">Is Quick NFC really free without an account or API key?</h3>
+                    <p class="faq-answer" id="faq6A">Yes, Quick NFC is 100% free and open-source under the MIT license. Converting Google Maps review links and creating QR codes works right in your browser with no account, subscription, or API key.</p>
                 </div>
             </div>
         </section>
@@ -783,7 +792,7 @@
             <div class="footer-inner">
                 <div class="footer-brand-info">
                     <div class="footer-brand-title">Quick NFC</div>
-                    <p class="footer-brand-desc" id="footerTagline">Fast & simple NFC tool with instant Google Maps review link conversion.</p>
+                    <p class="footer-brand-desc" id="footerTagline">Free Google Maps 5-star review link converter &amp; QR code generator, with a companion Android NFC writer app.</p>
                 </div>
                 <div class="footer-nav-links">
                     <a href="https://github.com/zaid-a-salameh/quick-nfc" target="_blank" rel="noopener noreferrer" id="footerGithubLink">GitHub Repository</a>
@@ -791,6 +800,18 @@
                     <a href="#appContainer" id="footerBackToTop">↑ Back to Top</a>
                 </div>
             </div>
+            <nav class="footer-lang-links" aria-label="Languages">
+                <a href="/" data-lang="en" class="active" aria-current="page">English</a>
+                <a href="/ar/" data-lang="ar">العربية</a>
+                <a href="/de/" data-lang="de">Deutsch</a>
+                <a href="/es/" data-lang="es">Español</a>
+                <a href="/fr/" data-lang="fr">Français</a>
+                <a href="/hi/" data-lang="hi">हिन्दी</a>
+                <a href="/ja/" data-lang="ja">日本語</a>
+                <a href="/pt/" data-lang="pt">Português</a>
+                <a href="/ru/" data-lang="ru">Русский</a>
+                <a href="/zh/" data-lang="zh">简体中文</a>
+            </nav>
             <div class="footer-bottom">
                 <p id="footerCopyright">© 2026 Developed by <a href="https://github.com/zaid-a-salameh" target="_blank" rel="noopener noreferrer">Zaid Salameh</a>. MIT License.</p>
             </div>
