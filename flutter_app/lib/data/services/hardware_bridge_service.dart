@@ -55,12 +55,12 @@ class HardwareBridgeService {
   }
 
   Future<String> getAppVersion() async {
-    if (!_isAndroidNative) return '2.1.1';
+    if (!_isAndroidNative) return '2.2.0';
     try {
       final ver = await _methodChannel.invokeMethod<String>('getAppVersion');
-      return (ver != null && ver.trim().isNotEmpty) ? ver.trim() : '2.1.1';
+      return (ver != null && ver.trim().isNotEmpty) ? ver.trim() : '2.2.0';
     } catch (_) {
-      return '2.1.1';
+      return '2.2.0';
     }
   }
 
@@ -138,6 +138,16 @@ class HardwareBridgeService {
     if (!_isAndroidNative) return false;
     try {
       final ok = await _methodChannel.invokeMethod<bool>('startNfcRead');
+      return ok ?? false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> startNfcInspect() async {
+    if (!_isAndroidNative) return false;
+    try {
+      final ok = await _methodChannel.invokeMethod<bool>('startNfcInspect');
       return ok ?? false;
     } catch (_) {
       return false;

@@ -46,7 +46,7 @@ class FakeHardwareBridgeService extends HardwareBridgeService {
   Future<bool> isNetworkConnected() async => true;
 
   @override
-  Future<String> getAppVersion() async => '2.1.1';
+  Future<String> getAppVersion() async => '2.2.0';
 
   @override
   Future<void> triggerLightHaptic() async {}
@@ -483,9 +483,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(skipBtn, findsOneWidget);
 
-      // Step 3 (Final step)
+      // Step 3
       await tester.tap(nextBtn);
       await tester.pumpAndSettle();
+      expect(skipBtn, findsOneWidget);
+
+      // Step 4 (Final step: Grid customization)
+      await tester.tap(nextBtn);
+      await tester.pumpAndSettle();
+      expect(find.text('Customize Your Grid'), findsOneWidget);
       expect(find.text('Get Started'), findsOneWidget);
       // Skip button must be removed on the final step
       expect(skipBtn, findsNothing);
@@ -524,10 +530,10 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Version pill is visible with current version v2.1.1
+      // Version pill is visible with current version v2.2.0
       final pillFinder = find.byKey(const Key('btn_check_update'));
       expect(pillFinder, findsOneWidget);
-      expect(find.text('v2.1.1'), findsOneWidget);
+      expect(find.text('v2.2.0'), findsOneWidget);
 
       // Tap pill when no update available -> triggers manual check toast
       await tester.tap(pillFinder);
@@ -541,7 +547,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 400));
 
       // Second toast appears: app is up to date
-      expect(find.text('App is up to date (2.1.1)'), findsOneWidget);
+      expect(find.text('App is up to date (2.2.0)'), findsOneWidget);
       await tester.pump(const Duration(seconds: 3));
 
       // Simulate update detected (starts repeating glow animation)

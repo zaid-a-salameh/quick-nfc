@@ -31,6 +31,8 @@ class HomeViewModel extends ChangeNotifier {
         _selectedThemeMode = preferencesService.getSavedThemeMode(),
         _animationsEnabled = preferencesService.isAnimationsEnabled,
         _sequentialWriteEnabled = preferencesService.isSequentialWriteEnabled,
+        _showGridDescriptions =
+            preferencesService.isShowGridDescriptionsEnabled,
         _locale = Locale(preferencesService.getSavedLanguageCode());
 
   final PreferencesService _preferencesService;
@@ -57,6 +59,9 @@ class HomeViewModel extends ChangeNotifier {
 
   bool _sequentialWriteEnabled;
   bool get sequentialWriteEnabled => _sequentialWriteEnabled;
+
+  bool _showGridDescriptions;
+  bool get showGridDescriptions => _showGridDescriptions;
 
   ThemeMode get themeMode {
     switch (_selectedThemeMode) {
@@ -87,6 +92,12 @@ class HomeViewModel extends ChangeNotifier {
   bool _isResolvingLink = false;
   bool get isResolvingLink => _isResolvingLink;
 
+  bool _isResultExpanded = true;
+  bool get isResultExpanded => _isResultExpanded;
+
+  int _resultRevealTick = 0;
+  int get resultRevealTick => _resultRevealTick;
+
   bool _isCopiedFeedback = false;
   bool get isCopiedFeedback => _isCopiedFeedback;
 
@@ -99,7 +110,7 @@ class HomeViewModel extends ChangeNotifier {
   List<PlaceSuggestion> _placeSuggestions = const <PlaceSuggestion>[];
   List<PlaceSuggestion> get placeSuggestions => _placeSuggestions;
 
-  String _currentAppVersion = '2.1.1';
+  String _currentAppVersion = '2.2.0';
   String get currentAppVersion => _currentAppVersion;
 
   AppReleaseInfo? _availableUpdate;
@@ -266,12 +277,29 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setShowGridDescriptions(bool enabled) async {
+    if (_showGridDescriptions == enabled) return;
+    _showGridDescriptions = enabled;
+    await _preferencesService.setShowGridDescriptionsEnabled(enabled);
+    unawaited(_hardwareBridge.triggerLightHaptic());
+    notifyListeners();
+  }
+
   void switchMode(AppInputMode mode) {
     if (_activeMode == mode) return;
     _activeMode = mode;
     if (mode == AppInputMode.link) {
       hideDropdown(notify: false);
     }
+    if (currentResult.isResultActive) {
+      _isResultExpanded = true;
+    }
+    unawaited(_hardwareBridge.triggerLightHaptic());
+    notifyListeners();
+  }
+
+  void toggleResultExpanded() {
+    _isResultExpanded = !_isResultExpanded;
     unawaited(_hardwareBridge.triggerLightHaptic());
     notifyListeners();
   }
@@ -349,6 +377,8 @@ class HomeViewModel extends ChangeNotifier {
         activeType: LinkOutputType.review,
         isResultActive: true,
       );
+      _isResultExpanded = true;
+      _resultRevealTick++;
       notifyListeners();
       if (showFeedbackToast && analysis.isConvertedMapsPlace) {
         showToast(l10n.toastSuccess, type: ToastType.success);
@@ -471,6 +501,8 @@ class HomeViewModel extends ChangeNotifier {
       activeType: LinkOutputType.review,
       isResultActive: true,
     );
+    _isResultExpanded = true;
+    _resultRevealTick++;
     unawaited(_hardwareBridge.triggerLightHaptic());
     notifyListeners();
     showToast(l10n.toastSelectSuccess, type: ToastType.success);

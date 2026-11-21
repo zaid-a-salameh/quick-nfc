@@ -172,7 +172,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qrDownloaded => 'تم تنزيل رمز الـ QR بنجاح';
 
   @override
-  String get lblReadTag => 'قراءة كرت';
+  String get lblReadTag => 'نسخ البطاقة';
 
   @override
   String get lblWifiTag => 'كرت Wi-Fi';
@@ -769,4 +769,199 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get settingsSequentialWriteSub =>
       'العودة تلقائياً لوضع الكتابة بعد 1.5 ثانية من النجاح';
+
+  @override
+  String get lblInspectTag => 'فحص البطاقة';
+
+  @override
+  String get lblInspectTagSub => 'معلومات الشريحة والتوقيع والسجلات';
+
+  @override
+  String get inspectTitle => 'فحص البطاقة';
+
+  @override
+  String get inspectWaitingTitle => 'جاهز للفحص';
+
+  @override
+  String get inspectWaitingDesc =>
+      'قرّب أي شريحة NFC من ظهر الهاتف لقراءة تفاصيلها الكاملة.';
+
+  @override
+  String get inspectLiveBadge => 'مسح مباشر';
+
+  @override
+  String get inspectScanAnotherHint => 'قرّب بطاقة أخرى في أي وقت للتحديث';
+
+  @override
+  String get inspectTagType => 'نوع الشريحة';
+
+  @override
+  String get inspectTechnologies => 'التقنيات المتوفرة';
+
+  @override
+  String get inspectSerialNumber => 'الرقم التسلسلي';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => 'التوقيع الأصلي';
+
+  @override
+  String get inspectSigValid => 'صالح (NXP أصلي)';
+
+  @override
+  String get inspectSigInvalid => 'غير صالح';
+
+  @override
+  String get inspectSigNotSupported => 'غير مدعوم';
+
+  @override
+  String get inspectPasswordProtected => 'محمية بكلمة مرور';
+
+  @override
+  String get inspectMemoryInfo => 'معلومات الذاكرة';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes بايت : $pages صفحة ($pageSize بايت لكل صفحة)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes بايت : $sectors قطاع ($blocks بلوك)';
+  }
+
+  @override
+  String get inspectDataFormat => 'صيغة البيانات';
+
+  @override
+  String get inspectSize => 'الحجم المستخدم';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max بايت';
+  }
+
+  @override
+  String get inspectWritable => 'قابلة للكتابة';
+
+  @override
+  String get inspectCanMakeReadOnly => 'قابلة للقفل للقراءة فقط';
+
+  @override
+  String get inspectRecordsSection => 'سجلات NDEF';
+
+  @override
+  String get inspectNoRecords => 'لا توجد سجلات NDEF على هذه البطاقة';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'سجل $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'نعم';
+
+  @override
+  String get inspectNo => 'لا';
+
+  @override
+  String get inspectUnknown => 'غير معروف';
+
+  @override
+  String get inspectActionCopy => 'نسخ';
+
+  @override
+  String get inspectActionOpen => 'فتح';
+
+  @override
+  String get inspectActionUseUrl => 'استخدام في المحوّل';
+
+  @override
+  String get inspectActionCopyHex => 'نسخ Hex';
+
+  @override
+  String get inspectActionShowHex => 'البيانات الخام';
+
+  @override
+  String get inspectCopiedValue => 'تم النسخ إلى الحافظة';
+
+  @override
+  String get inspectErrorGeneric =>
+      'تعذر فحص البطاقة. ثبّت الهاتف وحاول مجدداً.';
+
+  @override
+  String get resultCollapseTooltip => 'طي النتيجة';
+
+  @override
+  String get resultExpandTooltip => 'توسيع النتيجة';
+
+  @override
+  String get lblToolsHub => 'كل الأدوات';
+
+  @override
+  String get lblToolsHubSub => 'استعرض الأدوات وثبّتها بالرئيسية';
+
+  @override
+  String get lblCloneTagSub => 'نسخ رابط أو شبكة Wi-Fi من بطاقة';
+
+  @override
+  String get lblWifiTagSub => 'كتابة بيانات شبكة Wi-Fi على NFC';
+
+  @override
+  String get lblPinLockSub => 'حماية البطاقة أو فتحها برمز PIN';
+
+  @override
+  String get lblEraseTagSub => 'مسح جميع البيانات المخزنة بالبطاقة';
+
+  @override
+  String get lblPermLockSub => 'قفل البطاقة للقراءة فقط للأبد';
+
+  @override
+  String get gridEditModeHint => 'اسحب للتحريك • اسحب النقاط للتحجيم';
+
+  @override
+  String get gridEditDone => 'تم';
+
+  @override
+  String get gridResetTooltip => 'إعادة الترتيب';
+
+  @override
+  String get gridToolsHubSoonToast =>
+      'صفحة كل الأدوات ستكتمل في المرحلة التالية';
+
+  @override
+  String get toolsHubPinAdded => 'تمت الإضافة إلى الشاشة الرئيسية';
+
+  @override
+  String get nfcTitleUnsupportedCard => 'بطاقة غير مدعومة';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'وصف عناصر الشبكة';
+
+  @override
+  String get settingsGridDescriptionsSub =>
+      'إظهار النص التوضيحي داخل البطاقات الكبيرة';
+
+  @override
+  String get gridCustomizeHint =>
+      'اضغط مطوّلاً على أي بطاقة لتحريكها أو تغيير حجمها';
+
+  @override
+  String get obStep4Title => 'تخصيص الشبكة';
+
+  @override
+  String get obStep4Desc =>
+      'اضغط مطوّلاً على أي أداة لترتيبها أو سحب نقاط الحواف لتغيير حجمها، وافتح «كل الأدوات» لتثبيت ما يناسبك.';
+
+  @override
+  String get toolsHubPinRemoved => 'تمت الإزالة من الشاشة الرئيسية';
+
+  @override
+  String get toolsHubComingSoon =>
+      'سيتم إضافة المزيد من الأدوات والميزات في التحديثات القادمة';
 }

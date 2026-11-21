@@ -171,7 +171,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrDownloaded => 'QR Code downloaded';
 
   @override
-  String get lblReadTag => 'Read Card';
+  String get lblReadTag => 'Clone Card';
 
   @override
   String get lblWifiTag => 'Wi-Fi Card';
@@ -765,4 +765,197 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsSequentialWriteSub =>
       'Auto-ready next card 1.5s after a successful write';
+
+  @override
+  String get lblInspectTag => 'Inspect Card';
+
+  @override
+  String get lblInspectTagSub => 'Full chip info, signature & NDEF records';
+
+  @override
+  String get inspectTitle => 'Card Inspector';
+
+  @override
+  String get inspectWaitingTitle => 'Ready to Inspect';
+
+  @override
+  String get inspectWaitingDesc =>
+      'Hold any NFC tag near the back of your phone to read full chip details.';
+
+  @override
+  String get inspectLiveBadge => 'Live Scan';
+
+  @override
+  String get inspectScanAnotherHint => 'Tap another card anytime to refresh';
+
+  @override
+  String get inspectTagType => 'Tag type';
+
+  @override
+  String get inspectTechnologies => 'Technologies available';
+
+  @override
+  String get inspectSerialNumber => 'Serial number';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => 'Signature';
+
+  @override
+  String get inspectSigValid => 'Valid (Original NXP)';
+
+  @override
+  String get inspectSigInvalid => 'Invalid';
+
+  @override
+  String get inspectSigNotSupported => 'Not supported';
+
+  @override
+  String get inspectPasswordProtected => 'Protected by password';
+
+  @override
+  String get inspectMemoryInfo => 'Memory information';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes bytes : $pages pages ($pageSize bytes each)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes bytes : $sectors sectors ($blocks blocks)';
+  }
+
+  @override
+  String get inspectDataFormat => 'Data format';
+
+  @override
+  String get inspectSize => 'Size';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max Bytes';
+  }
+
+  @override
+  String get inspectWritable => 'Writable';
+
+  @override
+  String get inspectCanMakeReadOnly => 'Can be made Read-Only';
+
+  @override
+  String get inspectRecordsSection => 'NDEF Records';
+
+  @override
+  String get inspectNoRecords => 'No NDEF records found on this tag';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'Record $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'Yes';
+
+  @override
+  String get inspectNo => 'No';
+
+  @override
+  String get inspectUnknown => 'Unknown';
+
+  @override
+  String get inspectActionCopy => 'Copy';
+
+  @override
+  String get inspectActionOpen => 'Open';
+
+  @override
+  String get inspectActionUseUrl => 'Use in Quick NFC';
+
+  @override
+  String get inspectActionCopyHex => 'Copy Hex';
+
+  @override
+  String get inspectActionShowHex => 'Raw Hex';
+
+  @override
+  String get inspectCopiedValue => 'Copied to clipboard';
+
+  @override
+  String get inspectErrorGeneric =>
+      'Could not inspect card. Keep phone steady and try again.';
+
+  @override
+  String get resultCollapseTooltip => 'Collapse result';
+
+  @override
+  String get resultExpandTooltip => 'Expand result';
+
+  @override
+  String get lblToolsHub => 'All Tools';
+
+  @override
+  String get lblToolsHubSub => 'Explore & pin tools to Home';
+
+  @override
+  String get lblCloneTagSub => 'Copy link or Wi-Fi from a card';
+
+  @override
+  String get lblWifiTagSub => 'Write Wi-Fi credentials to NFC';
+
+  @override
+  String get lblPinLockSub => 'Protect or unlock card with PIN';
+
+  @override
+  String get lblEraseTagSub => 'Clear all stored NDEF data';
+
+  @override
+  String get lblPermLockSub => 'Make card permanently read-only';
+
+  @override
+  String get gridEditModeHint => 'Drag to move • Drag dots to resize';
+
+  @override
+  String get gridEditDone => 'Done';
+
+  @override
+  String get gridResetTooltip => 'Reset layout';
+
+  @override
+  String get gridToolsHubSoonToast => 'Tools Hub opens in the next phase';
+
+  @override
+  String get toolsHubPinAdded => 'Added to Home screen';
+
+  @override
+  String get nfcTitleUnsupportedCard => 'Unsupported Card';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'Grid Card Descriptions';
+
+  @override
+  String get settingsGridDescriptionsSub =>
+      'Show helper text inside large grid cards';
+
+  @override
+  String get gridCustomizeHint => 'Long-press any card to reorder or resize it';
+
+  @override
+  String get obStep4Title => 'Customize Your Grid';
+
+  @override
+  String get obStep4Desc =>
+      'Long-press any tool card to move or drag its edge dots to resize, and open All Tools to pin or unpin shortcuts.';
+
+  @override
+  String get toolsHubPinRemoved => 'Removed from Home screen';
+
+  @override
+  String get toolsHubComingSoon =>
+      'More NFC tools and features will be added in upcoming updates';
 }

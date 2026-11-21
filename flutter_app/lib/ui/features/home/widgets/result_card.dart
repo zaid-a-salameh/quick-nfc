@@ -36,30 +36,119 @@ class ResultCard extends StatelessWidget {
     final headerColor = isLocationSelected
         ? AppColors.skyLocationLight
         : AppColors.primaryLight;
+    final expanded = viewModel.isResultExpanded;
 
     return GlassCard(
       key: const Key('result_card'),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // 1. Result Header Row
+          // 1. Result Header Row with Collapse / Expand Control
           Row(
             children: <Widget>[
-              AppSvgIcons.checkmark(size: 16, color: headerColor),
-              const SizedBox(width: 7),
               Expanded(
-                child: LangRollText(
-                  viewModel.resultHeaderLabel(l10n),
-                  style: TextStyle(
-                    color: headerColor,
-                    fontSize: 13.8,
-                    fontWeight: FontWeight.w800,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: viewModel.toggleResultExpanded,
+                  child: Row(
+                    children: <Widget>[
+                      AppSvgIcons.checkmark(size: 16, color: headerColor),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: LangRollText(
+                          viewModel.resultHeaderLabel(l10n),
+                          style: TextStyle(
+                            color: headerColor,
+                            fontSize: 13.8,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              PressableScale(
+                key: const Key('btn_toggle_result_expand'),
+                onTap: viewModel.toggleResultExpanded,
+                child: Tooltip(
+                  message: expanded
+                      ? l10n.resultCollapseTooltip
+                      : l10n.resultExpandTooltip,
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: AppColors.subtleButtonBg,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: AppColors.borderGlass),
+                    ),
+                    child: Center(
+                      child: AnimatedRotation(
+                        turns: expanded ? 0.0 : 0.5,
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 220),
+                        ),
+                        curve: Curves.easeOutCubic,
+                        child: Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          size: 20,
+                          color: AppColors.textSub,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+
+          AnimatedSize(
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 240),
+            ),
+            curve: Curves.easeOutCubic,
+            alignment: Alignment.topCenter,
+            child: !expanded
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: GestureDetector(
+                      onTap: viewModel.toggleResultExpanded,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 13,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.urlBoxBg,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.borderGlass),
+                        ),
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Text(
+                            activeUrl,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'JetBrainsMono',
+                              color: AppColors.textSub,
+                              fontSize: 12.6,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const SizedBox(height: 12),
 
           // 2. Smooth Animated-Height Monospace URL Box (Zero Layout Jump)
           Container(
@@ -258,6 +347,9 @@ class ResultCard extends StatelessWidget {
             icon: AppSvgIcons.qrGrid(size: 18, color: AppColors.textPrimary),
             label: l10n.qrBtn,
             onTap: onOpenQr,
+          ),
+                    ],
+                  ),
           ),
         ],
       ),

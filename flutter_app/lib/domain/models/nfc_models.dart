@@ -1,3 +1,4 @@
+import 'tag_inspection_models.dart';
 import 'wifi_credentials.dart';
 
 enum NfcSubView {
@@ -50,6 +51,7 @@ enum NfcHardwareEventType {
   eraseSuccess,
   wifiRead,
   urlRead,
+  tagInspected,
   permLockSuccess,
   pwdSuccess,
   error,
@@ -63,6 +65,7 @@ class NfcHardwareEvent {
     this.operationCode,
     this.url,
     this.wifiCredentials,
+    this.inspectedTag,
     this.pwdAction,
     this.errorCode,
   });
@@ -72,6 +75,7 @@ class NfcHardwareEvent {
   final String? operationCode;
   final String? url;
   final WifiCredentials? wifiCredentials;
+  final TagInspectionResult? inspectedTag;
   final String? pwdAction;
   final String? errorCode;
 
@@ -117,6 +121,11 @@ class NfcHardwareEvent {
         return NfcHardwareEvent(
           type: NfcHardwareEventType.urlRead,
           url: url,
+        );
+      case 'tag_inspected':
+        return NfcHardwareEvent(
+          type: NfcHardwareEventType.tagInspected,
+          inspectedTag: TagInspectionResult.fromMap(map),
         );
       case 'perm_lock_success':
         return const NfcHardwareEvent(type: NfcHardwareEventType.permLockSuccess);

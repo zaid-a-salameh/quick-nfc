@@ -11,6 +11,7 @@ import 'ui/core/theme/app_theme.dart';
 import 'ui/core/widgets/toast_banner_overlay.dart';
 import 'ui/features/home/view_models/home_view_model.dart';
 import 'ui/features/home/widgets/home_screen.dart';
+import 'ui/features/home_grid/view_models/home_grid_view_model.dart';
 import 'ui/features/nfc/view_models/nfc_view_model.dart';
 
 Future<void> main() async {
@@ -39,6 +40,7 @@ class ReviewLinkGeneratorApp extends StatefulWidget {
     this.hardwareBridge,
     this.homeViewModel,
     this.nfcViewModel,
+    this.homeGridViewModel,
     this.enableAutoOnboarding = true,
     this.enableStartupUpdateCheck = true,
   });
@@ -47,6 +49,7 @@ class ReviewLinkGeneratorApp extends StatefulWidget {
   final HardwareBridgeService? hardwareBridge;
   final HomeViewModel? homeViewModel;
   final NfcViewModel? nfcViewModel;
+  final HomeGridViewModel? homeGridViewModel;
   final bool enableAutoOnboarding;
   final bool enableStartupUpdateCheck;
 
@@ -59,8 +62,10 @@ class _ReviewLinkGeneratorAppState extends State<ReviewLinkGeneratorApp>
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   late final HomeViewModel _homeViewModel;
   late final NfcViewModel _nfcViewModel;
+  late final HomeGridViewModel _homeGridViewModel;
   late final bool _ownsHomeVm;
   late final bool _ownsNfcVm;
+  late final bool _ownsHomeGridVm;
 
   @override
   void initState() {
@@ -97,11 +102,23 @@ class _ReviewLinkGeneratorAppState extends State<ReviewLinkGeneratorApp>
       );
       _ownsNfcVm = true;
     }
+
+    if (widget.homeGridViewModel != null) {
+      _homeGridViewModel = widget.homeGridViewModel!;
+      _ownsHomeGridVm = false;
+    } else {
+      _homeGridViewModel = HomeGridViewModel(
+        preferencesService: widget.preferencesService,
+        hardwareBridge: bridge,
+      );
+      _ownsHomeGridVm = true;
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    if (_ownsHomeGridVm) _homeGridViewModel.dispose();
     if (_ownsNfcVm) _nfcViewModel.dispose();
     if (_ownsHomeVm) _homeViewModel.dispose();
     super.dispose();
@@ -173,6 +190,7 @@ class _ReviewLinkGeneratorAppState extends State<ReviewLinkGeneratorApp>
           home: HomeScreen(
             homeViewModel: _homeViewModel,
             nfcViewModel: _nfcViewModel,
+            homeGridViewModel: _homeGridViewModel,
             enableAutoOnboarding: widget.enableAutoOnboarding,
             enableStartupUpdateCheck: widget.enableStartupUpdateCheck,
           ),

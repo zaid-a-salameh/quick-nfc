@@ -259,6 +259,20 @@ abstract final class AppSvgIcons {
         color: color,
       );
 
+  static Widget chipInspector({double size = 22, Color color = Colors.white}) =>
+      _singlePath(
+        'M9 2v2H7c-1.1 0-2 .9-2 2v2H3v2h2v4H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-4h2V8h-2V6c0-1.1-.9-2-2-2h-2V2h-2v2h-2V2H9zm-2 4h10v12H7V6zm2 2v8h6V8H9zm2 2h2v4h-2v-4z',
+        size: size,
+        color: color,
+      );
+
+  static Widget toolsHubGrid({double size = 22, Color color = Colors.white}) =>
+      _singlePath(
+        'M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm11-2h2v3h3v2h-3v3h-2v-3h-3v-2h3v-3z',
+        size: size,
+        color: color,
+      );
+
   static Widget googleWordmark({double width = 44, double height = 14}) {
     return SvgPicture.string(
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 74 24">'

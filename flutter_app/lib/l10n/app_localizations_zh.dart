@@ -166,7 +166,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get qrDownloaded => '二维码已保存';
 
   @override
-  String get lblReadTag => '读取卡片';
+  String get lblReadTag => '复制卡片';
 
   @override
   String get lblWifiTag => 'Wi-Fi卡片';
@@ -744,4 +744,192 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsSequentialWriteSub => '写入成功 1.5 秒后自动返回准备写入状态';
+
+  @override
+  String get lblInspectTag => '检测卡片';
+
+  @override
+  String get lblInspectTagSub => '完整芯片信息、签名和 NDEF 记录';
+
+  @override
+  String get inspectTitle => '卡片检测器';
+
+  @override
+  String get inspectWaitingTitle => '准备检测';
+
+  @override
+  String get inspectWaitingDesc => '将任意 NFC 标签靠近手机背面以读取完整芯片信息。';
+
+  @override
+  String get inspectLiveBadge => '实时扫描';
+
+  @override
+  String get inspectScanAnotherHint => '随时轻触另一张卡片以刷新';
+
+  @override
+  String get inspectTagType => '标签类型';
+
+  @override
+  String get inspectTechnologies => '可用技术';
+
+  @override
+  String get inspectSerialNumber => '序列号';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => '原厂签名';
+
+  @override
+  String get inspectSigValid => '有效 (NXP 原厂)';
+
+  @override
+  String get inspectSigInvalid => '无效';
+
+  @override
+  String get inspectSigNotSupported => '不支持';
+
+  @override
+  String get inspectPasswordProtected => '密码保护';
+
+  @override
+  String get inspectMemoryInfo => '内存信息';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes 字节 : $pages 页 (每页 $pageSize 字节)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes 字节 : $sectors 扇区 ($blocks 块)';
+  }
+
+  @override
+  String get inspectDataFormat => '数据格式';
+
+  @override
+  String get inspectSize => '已用容量';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max 字节';
+  }
+
+  @override
+  String get inspectWritable => '可写';
+
+  @override
+  String get inspectCanMakeReadOnly => '可设为只读';
+
+  @override
+  String get inspectRecordsSection => 'NDEF 记录';
+
+  @override
+  String get inspectNoRecords => '未在此标签上找到 NDEF 记录';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return '记录 $index - $type';
+  }
+
+  @override
+  String get inspectYes => '是';
+
+  @override
+  String get inspectNo => '否';
+
+  @override
+  String get inspectUnknown => '未知';
+
+  @override
+  String get inspectActionCopy => '复制';
+
+  @override
+  String get inspectActionOpen => '打开';
+
+  @override
+  String get inspectActionUseUrl => '在 Quick NFC 中使用';
+
+  @override
+  String get inspectActionCopyHex => '复制 Hex';
+
+  @override
+  String get inspectActionShowHex => '原始 Hex';
+
+  @override
+  String get inspectCopiedValue => '已复制到剪贴板';
+
+  @override
+  String get inspectErrorGeneric => '无法检测卡片，请保持手机稳定后重试。';
+
+  @override
+  String get resultCollapseTooltip => '收起结果';
+
+  @override
+  String get resultExpandTooltip => '展开结果';
+
+  @override
+  String get lblToolsHub => '全部工具';
+
+  @override
+  String get lblToolsHubSub => '浏览工具并固定到主页';
+
+  @override
+  String get lblCloneTagSub => '从卡片复制链接或 Wi-Fi';
+
+  @override
+  String get lblWifiTagSub => '将 Wi-Fi 凭据写入 NFC';
+
+  @override
+  String get lblPinLockSub => '使用 PIN 保护或解锁卡片';
+
+  @override
+  String get lblEraseTagSub => '清除卡片上的所有 NDEF 数据';
+
+  @override
+  String get lblPermLockSub => '将卡片永久锁定为只读';
+
+  @override
+  String get gridEditModeHint => '拖动移动 • 拖动圆点调整大小';
+
+  @override
+  String get gridEditDone => '完成';
+
+  @override
+  String get gridResetTooltip => '重置布局';
+
+  @override
+  String get gridToolsHubSoonToast => '工具中心将在下一阶段开放';
+
+  @override
+  String get toolsHubPinAdded => '已添加到主屏幕';
+
+  @override
+  String get nfcTitleUnsupportedCard => '不支持的卡片';
+
+  @override
+  String get settingsGridDescriptionsLabel => '网格卡片说明';
+
+  @override
+  String get settingsGridDescriptionsSub => '在大尺寸卡片内显示说明文字';
+
+  @override
+  String get gridCustomizeHint => '长按任意卡片即可拖动排序或调整大小';
+
+  @override
+  String get obStep4Title => '自定义网格布局';
+
+  @override
+  String get obStep4Desc => '长按工具卡片即可移动或拖动边缘圆点调整大小，也可在“全部工具”中自由固定或取消固定。';
+
+  @override
+  String get toolsHubPinRemoved => '已从主屏幕移除';
+
+  @override
+  String get toolsHubComingSoon => '后续更新将持续加入更多实用工具与功能';
 }

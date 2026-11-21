@@ -171,7 +171,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get qrDownloaded => 'Código QR guardado';
 
   @override
-  String get lblReadTag => 'Leer tarjeta';
+  String get lblReadTag => 'Clonar tarjeta';
 
   @override
   String get lblWifiTag => 'Tarjeta Wi-Fi';
@@ -780,4 +780,201 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingsSequentialWriteSub =>
       'Volver automáticamente a escribir 1.5 s tras el éxito';
+
+  @override
+  String get lblInspectTag => 'Inspeccionar tarjeta';
+
+  @override
+  String get lblInspectTagSub => 'Info del chip, firma y registros NDEF';
+
+  @override
+  String get inspectTitle => 'Inspector de tarjeta';
+
+  @override
+  String get inspectWaitingTitle => 'Listo para inspeccionar';
+
+  @override
+  String get inspectWaitingDesc =>
+      'Acerca cualquier etiqueta NFC a la parte trasera del teléfono para leer sus detalles.';
+
+  @override
+  String get inspectLiveBadge => 'Escaneo activo';
+
+  @override
+  String get inspectScanAnotherHint =>
+      'Acerca otra tarjeta en cualquier momento';
+
+  @override
+  String get inspectTagType => 'Tipo de etiqueta';
+
+  @override
+  String get inspectTechnologies => 'Tecnologías disponibles';
+
+  @override
+  String get inspectSerialNumber => 'Número de serie';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => 'Firma';
+
+  @override
+  String get inspectSigValid => 'Válida (NXP original)';
+
+  @override
+  String get inspectSigInvalid => 'Inválida';
+
+  @override
+  String get inspectSigNotSupported => 'No compatible';
+
+  @override
+  String get inspectPasswordProtected => 'Protegida por contraseña';
+
+  @override
+  String get inspectMemoryInfo => 'Información de memoria';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes bytes : $pages páginas ($pageSize bytes c/u)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes bytes : $sectors sectores ($blocks bloques)';
+  }
+
+  @override
+  String get inspectDataFormat => 'Formato de datos';
+
+  @override
+  String get inspectSize => 'Tamaño';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max Bytes';
+  }
+
+  @override
+  String get inspectWritable => 'Escribible';
+
+  @override
+  String get inspectCanMakeReadOnly => 'Se puede hacer de solo lectura';
+
+  @override
+  String get inspectRecordsSection => 'Registros NDEF';
+
+  @override
+  String get inspectNoRecords => 'No se encontraron registros NDEF';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'Registro $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'Sí';
+
+  @override
+  String get inspectNo => 'No';
+
+  @override
+  String get inspectUnknown => 'Desconocido';
+
+  @override
+  String get inspectActionCopy => 'Copiar';
+
+  @override
+  String get inspectActionOpen => 'Abrir';
+
+  @override
+  String get inspectActionUseUrl => 'Usar en Quick NFC';
+
+  @override
+  String get inspectActionCopyHex => 'Copiar Hex';
+
+  @override
+  String get inspectActionShowHex => 'Hex sin formato';
+
+  @override
+  String get inspectCopiedValue => 'Copiado al portapapeles';
+
+  @override
+  String get inspectErrorGeneric =>
+      'No se pudo inspeccionar la tarjeta. Inténtalo de nuevo.';
+
+  @override
+  String get resultCollapseTooltip => 'Contraer resultado';
+
+  @override
+  String get resultExpandTooltip => 'Expandir resultado';
+
+  @override
+  String get lblToolsHub => 'Herramientas';
+
+  @override
+  String get lblToolsHubSub => 'Explora y fija herramientas en el inicio';
+
+  @override
+  String get lblCloneTagSub => 'Copia enlace o Wi-Fi desde una tarjeta';
+
+  @override
+  String get lblWifiTagSub => 'Escribe credenciales Wi-Fi en NFC';
+
+  @override
+  String get lblPinLockSub => 'Protege o desbloquea la tarjeta con PIN';
+
+  @override
+  String get lblEraseTagSub => 'Borra todos los datos NDEF guardados';
+
+  @override
+  String get lblPermLockSub => 'Bloquea la tarjeta como solo lectura';
+
+  @override
+  String get gridEditModeHint =>
+      'Arrastra para mover • Puntos para redimensionar';
+
+  @override
+  String get gridEditDone => 'Listo';
+
+  @override
+  String get gridResetTooltip => 'Restablecer diseño';
+
+  @override
+  String get gridToolsHubSoonToast =>
+      'El centro de herramientas abrirá en la siguiente fase';
+
+  @override
+  String get toolsHubPinAdded => 'Añadido a la pantalla de inicio';
+
+  @override
+  String get nfcTitleUnsupportedCard => 'Tarjeta no compatible';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'Descripciones en la cuadrícula';
+
+  @override
+  String get settingsGridDescriptionsSub =>
+      'Mostrar texto de ayuda en tarjetas grandes';
+
+  @override
+  String get gridCustomizeHint =>
+      'Mantén pulsada cualquier tarjeta para moverla o redimensionarla';
+
+  @override
+  String get obStep4Title => 'Personaliza tu cuadrícula';
+
+  @override
+  String get obStep4Desc =>
+      'Mantén pulsada una tarjeta para moverla o arrastra sus puntos para cambiar el tamaño, y usa Todas las herramientas para fijarlas.';
+
+  @override
+  String get toolsHubPinRemoved => 'Eliminado de la pantalla de inicio';
+
+  @override
+  String get toolsHubComingSoon =>
+      'Se añadirán más herramientas y funciones en próximas actualizaciones';
 }

@@ -166,7 +166,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get qrDownloaded => 'QRコードを保存しました';
 
   @override
-  String get lblReadTag => 'カード読み取り';
+  String get lblReadTag => 'カード複製';
 
   @override
   String get lblWifiTag => 'Wi-Fiカード';
@@ -744,4 +744,193 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settingsSequentialWriteSub => '書き込み成功の1.5秒後に自動で次のカード待機へ戻る';
+
+  @override
+  String get lblInspectTag => 'カード検査';
+
+  @override
+  String get lblInspectTagSub => 'チップ詳細・署名・NDEFレコード';
+
+  @override
+  String get inspectTitle => 'カードインスペクター';
+
+  @override
+  String get inspectWaitingTitle => '検査の準備完了';
+
+  @override
+  String get inspectWaitingDesc => 'NFCタグをスマートフォンの背面にかざしてチップの詳細を読み取ります。';
+
+  @override
+  String get inspectLiveBadge => 'ライブスキャン';
+
+  @override
+  String get inspectScanAnotherHint => '別のカードをかざすとすぐに更新されます';
+
+  @override
+  String get inspectTagType => 'タグタイプ';
+
+  @override
+  String get inspectTechnologies => '対応技術';
+
+  @override
+  String get inspectSerialNumber => 'シリアル番号';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => '署名';
+
+  @override
+  String get inspectSigValid => '有効 (正規 NXP)';
+
+  @override
+  String get inspectSigInvalid => '無効';
+
+  @override
+  String get inspectSigNotSupported => '非対応';
+
+  @override
+  String get inspectPasswordProtected => 'パスワード保護';
+
+  @override
+  String get inspectMemoryInfo => 'メモリ情報';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes バイト : $pages ページ (各 $pageSize バイト)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes バイト : $sectors セクタ ($blocks ブロック)';
+  }
+
+  @override
+  String get inspectDataFormat => 'データ形式';
+
+  @override
+  String get inspectSize => 'サイズ';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max バイト';
+  }
+
+  @override
+  String get inspectWritable => '書き込み可能';
+
+  @override
+  String get inspectCanMakeReadOnly => '読み取り専用に設定可能';
+
+  @override
+  String get inspectRecordsSection => 'NDEF レコード';
+
+  @override
+  String get inspectNoRecords => 'NDEF レコードが見つかりません';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'レコード $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'はい';
+
+  @override
+  String get inspectNo => 'いいえ';
+
+  @override
+  String get inspectUnknown => '不明';
+
+  @override
+  String get inspectActionCopy => 'コピー';
+
+  @override
+  String get inspectActionOpen => '開く';
+
+  @override
+  String get inspectActionUseUrl => 'Quick NFC で使う';
+
+  @override
+  String get inspectActionCopyHex => 'Hex コピー';
+
+  @override
+  String get inspectActionShowHex => '生 Hex';
+
+  @override
+  String get inspectCopiedValue => 'クリップボードにコピーしました';
+
+  @override
+  String get inspectErrorGeneric => 'カードを検査できませんでした。もう一度お試しください。';
+
+  @override
+  String get resultCollapseTooltip => '結果を折りたたむ';
+
+  @override
+  String get resultExpandTooltip => '結果を展開する';
+
+  @override
+  String get lblToolsHub => 'すべてのツール';
+
+  @override
+  String get lblToolsHubSub => 'ツールを探してホームに追加';
+
+  @override
+  String get lblCloneTagSub => 'カードからリンクやWi-Fiをコピー';
+
+  @override
+  String get lblWifiTagSub => 'Wi-Fi情報をNFCに書き込み';
+
+  @override
+  String get lblPinLockSub => 'PINでカードを保護または解除';
+
+  @override
+  String get lblEraseTagSub => '保存されたNDEFデータを消去';
+
+  @override
+  String get lblPermLockSub => 'カードを永久に読み取り専用に設定';
+
+  @override
+  String get gridEditModeHint => 'ドラッグで移動 • ドットでサイズ変更';
+
+  @override
+  String get gridEditDone => '完了';
+
+  @override
+  String get gridResetTooltip => 'レイアウトをリセット';
+
+  @override
+  String get gridToolsHubSoonToast => 'ツールハブは次のフェーズで公開されます';
+
+  @override
+  String get toolsHubPinAdded => 'ホーム画面に追加しました';
+
+  @override
+  String get nfcTitleUnsupportedCard => '未対応のカード';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'グリッドカードの説明';
+
+  @override
+  String get settingsGridDescriptionsSub => '大きなカード内に説明文を表示';
+
+  @override
+  String get gridCustomizeHint => 'カードを長押しして並べ替えやサイズ変更ができます';
+
+  @override
+  String get obStep4Title => 'グリッドをカスタマイズ';
+
+  @override
+  String get obStep4Desc =>
+      'ツールカードを長押しして移動や端のドットでサイズ変更でき、「すべてのツール」から追加・削除も可能です。';
+
+  @override
+  String get toolsHubPinRemoved => 'ホーム画面から削除しました';
+
+  @override
+  String get toolsHubComingSoon => '今後のアップデートでさらに多くのツールや機能が追加されます';
 }

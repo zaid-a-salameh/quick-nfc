@@ -8,14 +8,18 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_motion.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/ambient_glow_scaffold.dart';
+import '../../home_grid/models/grid_tile_models.dart';
+import '../../home_grid/view_models/home_grid_view_model.dart';
+import '../../home_grid/widgets/interactive_home_grid.dart';
 import '../../nfc/view_models/nfc_view_model.dart';
 import '../../nfc/widgets/nfc_modal_dialog.dart';
 import '../../onboarding/onboarding_modal_dialog.dart';
 import '../../qr/qr_modal_dialog.dart';
 import '../../settings/widgets/settings_screen.dart';
+import '../../tag_inspector/widgets/tag_inspector_screen.dart';
+import '../../tools_hub/widgets/tools_hub_screen.dart';
 import '../../updater/update_modal_dialog.dart';
 import '../view_models/home_view_model.dart';
-import 'card_tools_grid.dart';
 import 'github_dock_button.dart';
 import 'header_widget.dart';
 import 'main_input_card.dart';
@@ -27,12 +31,14 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.homeViewModel,
     required this.nfcViewModel,
+    required this.homeGridViewModel,
     this.enableAutoOnboarding = true,
     this.enableStartupUpdateCheck = true,
   });
 
   final HomeViewModel homeViewModel;
   final NfcViewModel nfcViewModel;
+  final HomeGridViewModel homeGridViewModel;
   final bool enableAutoOnboarding;
   final bool enableStartupUpdateCheck;
 
@@ -42,17 +48,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   late final ScrollController _scrollController;
+  final GlobalKey _resultCardAnchorKey = GlobalKey();
   Timer? _onboardingTimer;
-  Timer? _smoothScrollTimer;
-  String? _lastActiveUrl;
+  int _lastResultRevealTick = 0;
+  bool _wasGridEditing = false;
+  bool _wasGridScrollLocked = false;
+
+  bool get _gridScrollLocked =>
+      widget.homeGridViewModel.draggingTileId != null ||
+      widget.homeGridViewModel.resizingTileId != null;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _lastActiveUrl = widget.homeViewModel.activeGeneratedUrl;
     WidgetsBinding.instance.addObserver(this);
-    widget.homeViewModel.addListener(_handleViewModelUpdates);
+    _lastResultRevealTick = widget.homeViewModel.resultRevealTick;
+    _wasGridEditing = widget.homeGridViewModel.isEditing;
+    _wasGridScrollLocked = _gridScrollLocked;
+    widget.homeViewModel.addListener(_handleHomeViewModelChanged);
+    widget.homeGridViewModel.addListener(_handleHomeGridChanged);
 
     if (widget.enableAutoOnboarding &&
         widget.homeViewModel.shouldAutoShowOnboarding) {
@@ -78,45 +93,45 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    widget.homeViewModel.removeListener(_handleViewModelUpdates);
+    widget.homeViewModel.removeListener(_handleHomeViewModelChanged);
+    widget.homeGridViewModel.removeListener(_handleHomeGridChanged);
     _scrollController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _onboardingTimer?.cancel();
-    _smoothScrollTimer?.cancel();
     super.dispose();
   }
 
-  void _handleViewModelUpdates() {
-    final currentUrl = widget.homeViewModel.activeGeneratedUrl;
-    final isResultActive = widget.homeViewModel.currentResult.isResultActive;
-    if (isResultActive &&
-        currentUrl != null &&
-        currentUrl.isNotEmpty &&
-        currentUrl != _lastActiveUrl) {
-      _scrollToBottomSmoothly();
-    }
-    _lastActiveUrl = currentUrl;
+  void _handleHomeViewModelChanged() {
+    final tick = widget.homeViewModel.resultRevealTick;
+    if (tick == _lastResultRevealTick) return;
+    _lastResultRevealTick = tick;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final targetCtx = _resultCardAnchorKey.currentContext;
+      if (targetCtx == null || !targetCtx.mounted) return;
+      Scrollable.ensureVisible(
+        targetCtx,
+        alignment: 0.12,
+        duration: AppMotion.duration(
+          context,
+          const Duration(milliseconds: 420),
+        ),
+        curve: Curves.easeOutCubic,
+      );
+    });
   }
 
-  void _scrollToBottomSmoothly() {
-    _smoothScrollTimer?.cancel();
-    final reduced = AppMotion.isReduced(context);
-    _smoothScrollTimer = Timer(
-      reduced ? Duration.zero : const Duration(milliseconds: 220),
-      () {
-        if (!mounted || !_scrollController.hasClients) return;
-        final maxExtent = _scrollController.position.maxScrollExtent;
-        if (AppMotion.isReduced(context)) {
-          _scrollController.jumpTo(maxExtent);
-        } else {
-          _scrollController.animateTo(
-            maxExtent,
-            duration: const Duration(milliseconds: 650),
-            curve: Curves.easeInOutCubic,
-          );
-        }
-      },
-    );
+  void _handleHomeGridChanged() {
+    final editing = widget.homeGridViewModel.isEditing;
+    final locked = _gridScrollLocked;
+    if (editing != _wasGridEditing || locked != _wasGridScrollLocked) {
+      _wasGridEditing = editing;
+      _wasGridScrollLocked = locked;
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -131,6 +146,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     FocusScope.of(context).unfocus();
     FocusManager.instance.primaryFocus?.unfocus();
     SystemChannels.textInput.invokeMethod('TextInput.hide');
+    if (widget.homeGridViewModel.isEditing) {
+      widget.homeGridViewModel.clearSelection();
+    }
   }
 
   Future<void> _handleCheckUpdate() async {
@@ -213,11 +231,40 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (mounted) _unfocusAll();
   }
 
-  Future<void> _handleReadNfc() async {
+  Future<void> _openTagInspector({BuildContext? launchContext}) async {
+    final activeContext = launchContext ?? context;
+    _unfocusAll();
+    final l10n = AppLocalizations.of(context)!;
+    final reduced = AppMotion.isReduced(activeContext);
+    Widget buildInspector(BuildContext _) => TagInspectorScreen(
+          hardwareBridge: widget.homeViewModel.hardwareBridge,
+          onShowToast: widget.homeViewModel.showToast,
+          isArabic: widget.homeViewModel.isArabic,
+          onUseUrl: (String url) async {
+            await widget.homeViewModel.importUrlFromNfcTag(url, l10n);
+          },
+        );
+
+    await Navigator.of(activeContext).push(
+      reduced
+          ? PageRouteBuilder<void>(
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+              pageBuilder: (ctx, _, _) => buildInspector(ctx),
+            )
+          : MaterialPageRoute<void>(builder: buildInspector),
+    );
+    if (mounted) {
+      _unfocusAll();
+      setState(() {});
+    }
+  }
+
+  Future<void> _handleReadNfc({BuildContext? launchContext}) async {
     _unfocusAll();
     widget.nfcViewModel.prepareReadCard();
     await showNfcOperationModal(
-      context: context,
+      context: launchContext ?? context,
       viewModel: widget.nfcViewModel,
       hardwareBridge: widget.homeViewModel.hardwareBridge,
       onShowToast: widget.homeViewModel.showToast,
@@ -225,11 +272,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (mounted) _unfocusAll();
   }
 
-  Future<void> _handleOpenWifiWizard() async {
+  Future<void> _handleOpenWifiWizard({BuildContext? launchContext}) async {
     _unfocusAll();
     widget.nfcViewModel.prepareWifiWizard();
     await showNfcOperationModal(
-      context: context,
+      context: launchContext ?? context,
       viewModel: widget.nfcViewModel,
       hardwareBridge: widget.homeViewModel.hardwareBridge,
       onShowToast: widget.homeViewModel.showToast,
@@ -237,11 +284,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (mounted) _unfocusAll();
   }
 
-  Future<void> _handleOpenPinModal() async {
+  Future<void> _handleOpenPinModal({BuildContext? launchContext}) async {
     _unfocusAll();
     widget.nfcViewModel.preparePinProtection();
     await showNfcOperationModal(
-      context: context,
+      context: launchContext ?? context,
       viewModel: widget.nfcViewModel,
       hardwareBridge: widget.homeViewModel.hardwareBridge,
       onShowToast: widget.homeViewModel.showToast,
@@ -249,11 +296,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (mounted) _unfocusAll();
   }
 
-  Future<void> _handleOpenPermLockModal() async {
+  Future<void> _handleOpenPermLockModal({BuildContext? launchContext}) async {
     _unfocusAll();
     widget.nfcViewModel.preparePermLockConfirm();
     await showNfcOperationModal(
-      context: context,
+      context: launchContext ?? context,
       viewModel: widget.nfcViewModel,
       hardwareBridge: widget.homeViewModel.hardwareBridge,
       onShowToast: widget.homeViewModel.showToast,
@@ -261,11 +308,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (mounted) _unfocusAll();
   }
 
-  Future<void> _handleOpenEraseModal() async {
+  Future<void> _handleOpenEraseModal({BuildContext? launchContext}) async {
     _unfocusAll();
     widget.nfcViewModel.prepareEraseConfirm();
     await showNfcOperationModal(
-      context: context,
+      context: launchContext ?? context,
       viewModel: widget.nfcViewModel,
       hardwareBridge: widget.homeViewModel.hardwareBridge,
       onShowToast: widget.homeViewModel.showToast,
@@ -276,6 +323,58 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void _handleSupportTapped(AppLocalizations l10n) {
     _unfocusAll();
     widget.homeViewModel.openSupportPage();
+  }
+
+  Future<void> _openToolsHub(AppLocalizations l10n) async {
+    _unfocusAll();
+    final reduced = AppMotion.isReduced(context);
+    Widget buildHub(BuildContext _) => ToolsHubScreen(
+          gridViewModel: widget.homeGridViewModel,
+          onShowToast: widget.homeViewModel.showToast,
+          isArabic: widget.homeViewModel.isArabic,
+          onLaunchTool: (BuildContext hubCtx, HomeToolId toolId) =>
+              _handleGridToolInvocation(
+            toolId,
+            l10n,
+            launchContext: hubCtx,
+          ),
+        );
+
+    await Navigator.of(context).push<void>(
+      reduced
+          ? PageRouteBuilder<void>(
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+              pageBuilder: (ctx, _, _) => buildHub(ctx),
+            )
+          : MaterialPageRoute<void>(builder: buildHub),
+    );
+    if (!mounted) return;
+    _unfocusAll();
+    setState(() {});
+  }
+
+  Future<void> _handleGridToolInvocation(
+    HomeToolId toolId,
+    AppLocalizations l10n, {
+    BuildContext? launchContext,
+  }) async {
+    switch (toolId) {
+      case HomeToolId.inspectCard:
+        await _openTagInspector(launchContext: launchContext);
+      case HomeToolId.cloneCard:
+        await _handleReadNfc(launchContext: launchContext);
+      case HomeToolId.wifiCard:
+        await _handleOpenWifiWizard(launchContext: launchContext);
+      case HomeToolId.pinLock:
+        await _handleOpenPinModal(launchContext: launchContext);
+      case HomeToolId.eraseCard:
+        await _handleOpenEraseModal(launchContext: launchContext);
+      case HomeToolId.permLock:
+        await _handleOpenPermLockModal(launchContext: launchContext);
+      case HomeToolId.toolsHub:
+        await _openToolsHub(l10n);
+    }
   }
 
   Future<void> _handleOpenQrModal(AppLocalizations l10n) async {
@@ -316,10 +415,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: AppTheme.currentOverlayStyle,
           child: PopScope(
-            canPop: !vm.isDropdownOpen,
+            canPop: !vm.isDropdownOpen && !widget.homeGridViewModel.isEditing,
             onPopInvokedWithResult: (bool didPop, dynamic _) {
-              if (!didPop && vm.isDropdownOpen) {
-                vm.hideDropdown();
+              if (!didPop) {
+                if (widget.homeGridViewModel.isEditing) {
+                  widget.homeGridViewModel.clearSelection();
+                } else if (vm.isDropdownOpen) {
+                  vm.hideDropdown();
+                }
               }
             },
             child: AmbientGlowScaffold(
@@ -333,6 +436,9 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       constraints: const BoxConstraints(maxWidth: 480),
                       child: SingleChildScrollView(
                         controller: _scrollController,
+                        physics: _gridScrollLocked
+                            ? const NeverScrollableScrollPhysics()
+                            : null,
                         keyboardDismissBehavior:
                             ScrollViewKeyboardDismissBehavior.onDrag,
                         padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
@@ -352,27 +458,64 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                               key: ValueKey<String>('header_$isLight'),
                             ),
                             MainInputCard(viewModel: vm),
-                            CardToolsGrid(
-                              key: ValueKey<String>('tools_grid_$isLight'),
-                              onReadCard: _handleReadNfc,
-                              onOpenWifiWizard: _handleOpenWifiWizard,
-                              onOpenPinSecurity: _handleOpenPinModal,
-                              onOpenErase: _handleOpenEraseModal,
-                              onOpenPermLock: _handleOpenPermLockModal,
+                            KeyedSubtree(
+                              key: _resultCardAnchorKey,
+                              child: AnimatedSize(
+                                duration: AppMotion.duration(
+                                  context,
+                                  const Duration(milliseconds: 320),
+                                ),
+                                curve: Curves.easeOutCubic,
+                                alignment: Alignment.topCenter,
+                                child: AnimatedSwitcher(
+                                  duration: AppMotion.duration(
+                                    context,
+                                    const Duration(milliseconds: 280),
+                                  ),
+                                  switchInCurve: Curves.easeOutCubic,
+                                  switchOutCurve: Curves.easeInCubic,
+                                  transitionBuilder: (
+                                    Widget child,
+                                    Animation<double> animation,
+                                  ) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(0, -0.06),
+                                          end: Offset.zero,
+                                        ).animate(animation),
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                  child: (vm.currentResult.isResultActive &&
+                                          (vm.activeGeneratedUrl?.isNotEmpty ??
+                                              false))
+                                      ? ResultCard(
+                                          key: ValueKey<String>(
+                                            'result_card_active_$isLight',
+                                          ),
+                                          viewModel: vm,
+                                          onWriteNfc: () =>
+                                              _handleWriteNfc(l10n),
+                                          onOpenQr: () =>
+                                              _handleOpenQrModal(l10n),
+                                        )
+                                      : const SizedBox.shrink(
+                                          key: ValueKey<String>(
+                                            'result_card_empty',
+                                          ),
+                                        ),
+                                ),
+                              ),
                             ),
-                            AnimatedSize(
-                              duration: AppMotion.duration(
-                                context,
-                                const Duration(milliseconds: 200),
-                              ),
-                              curve: Curves.easeOutCubic,
-                              alignment: Alignment.topCenter,
-                              child: ResultCard(
-                                key: ValueKey<String>('result_card_$isLight'),
-                                viewModel: vm,
-                                onWriteNfc: () => _handleWriteNfc(l10n),
-                                onOpenQr: () => _handleOpenQrModal(l10n),
-                              ),
+                            InteractiveHomeGrid(
+                              key: ValueKey<String>('tools_grid_$isLight'),
+                              viewModel: widget.homeGridViewModel,
+                              showDescriptions: vm.showGridDescriptions,
+                              onInvokeTool: (HomeToolId id) =>
+                                  _handleGridToolInvocation(id, l10n),
                             ),
                             if (!keyboardOpen)
                               GithubDockButton(

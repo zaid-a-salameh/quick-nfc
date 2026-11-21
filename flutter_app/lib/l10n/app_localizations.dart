@@ -429,7 +429,7 @@ abstract class AppLocalizations {
   /// No description provided for @lblReadTag.
   ///
   /// In en, this message translates to:
-  /// **'Read Card'**
+  /// **'Clone Card'**
   String get lblReadTag;
 
   /// No description provided for @lblWifiTag.
@@ -1541,6 +1541,366 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Auto-ready next card 1.5s after a successful write'**
   String get settingsSequentialWriteSub;
+
+  /// No description provided for @lblInspectTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect Card'**
+  String get lblInspectTag;
+
+  /// No description provided for @lblInspectTagSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Full chip info, signature & NDEF records'**
+  String get lblInspectTagSub;
+
+  /// No description provided for @inspectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Inspector'**
+  String get inspectTitle;
+
+  /// No description provided for @inspectWaitingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to Inspect'**
+  String get inspectWaitingTitle;
+
+  /// No description provided for @inspectWaitingDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold any NFC tag near the back of your phone to read full chip details.'**
+  String get inspectWaitingDesc;
+
+  /// No description provided for @inspectLiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Scan'**
+  String get inspectLiveBadge;
+
+  /// No description provided for @inspectScanAnotherHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap another card anytime to refresh'**
+  String get inspectScanAnotherHint;
+
+  /// No description provided for @inspectTagType.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag type'**
+  String get inspectTagType;
+
+  /// No description provided for @inspectTechnologies.
+  ///
+  /// In en, this message translates to:
+  /// **'Technologies available'**
+  String get inspectTechnologies;
+
+  /// No description provided for @inspectSerialNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial number'**
+  String get inspectSerialNumber;
+
+  /// No description provided for @inspectAtqa.
+  ///
+  /// In en, this message translates to:
+  /// **'ATQA'**
+  String get inspectAtqa;
+
+  /// No description provided for @inspectSak.
+  ///
+  /// In en, this message translates to:
+  /// **'SAK'**
+  String get inspectSak;
+
+  /// No description provided for @inspectSignature.
+  ///
+  /// In en, this message translates to:
+  /// **'Signature'**
+  String get inspectSignature;
+
+  /// No description provided for @inspectSigValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid (Original NXP)'**
+  String get inspectSigValid;
+
+  /// No description provided for @inspectSigInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get inspectSigInvalid;
+
+  /// No description provided for @inspectSigNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Not supported'**
+  String get inspectSigNotSupported;
+
+  /// No description provided for @inspectPasswordProtected.
+  ///
+  /// In en, this message translates to:
+  /// **'Protected by password'**
+  String get inspectPasswordProtected;
+
+  /// No description provided for @inspectMemoryInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory information'**
+  String get inspectMemoryInfo;
+
+  /// No description provided for @inspectMemoryPagesFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{totalBytes} bytes : {pages} pages ({pageSize} bytes each)'**
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize);
+
+  /// No description provided for @inspectMemorySectorsFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{totalBytes} bytes : {sectors} sectors ({blocks} blocks)'**
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks);
+
+  /// No description provided for @inspectDataFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Data format'**
+  String get inspectDataFormat;
+
+  /// No description provided for @inspectSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get inspectSize;
+
+  /// No description provided for @inspectSizeBytesFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} / {max} Bytes'**
+  String inspectSizeBytesFormat(int used, int max);
+
+  /// No description provided for @inspectWritable.
+  ///
+  /// In en, this message translates to:
+  /// **'Writable'**
+  String get inspectWritable;
+
+  /// No description provided for @inspectCanMakeReadOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Can be made Read-Only'**
+  String get inspectCanMakeReadOnly;
+
+  /// No description provided for @inspectRecordsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'NDEF Records'**
+  String get inspectRecordsSection;
+
+  /// No description provided for @inspectNoRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'No NDEF records found on this tag'**
+  String get inspectNoRecords;
+
+  /// No description provided for @inspectRecordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record {index} - {type}'**
+  String inspectRecordTitle(int index, String type);
+
+  /// No description provided for @inspectYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get inspectYes;
+
+  /// No description provided for @inspectNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get inspectNo;
+
+  /// No description provided for @inspectUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get inspectUnknown;
+
+  /// No description provided for @inspectActionCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get inspectActionCopy;
+
+  /// No description provided for @inspectActionOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get inspectActionOpen;
+
+  /// No description provided for @inspectActionUseUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Use in Quick NFC'**
+  String get inspectActionUseUrl;
+
+  /// No description provided for @inspectActionCopyHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Hex'**
+  String get inspectActionCopyHex;
+
+  /// No description provided for @inspectActionShowHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Raw Hex'**
+  String get inspectActionShowHex;
+
+  /// No description provided for @inspectCopiedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get inspectCopiedValue;
+
+  /// No description provided for @inspectErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not inspect card. Keep phone steady and try again.'**
+  String get inspectErrorGeneric;
+
+  /// No description provided for @resultCollapseTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse result'**
+  String get resultCollapseTooltip;
+
+  /// No description provided for @resultExpandTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand result'**
+  String get resultExpandTooltip;
+
+  /// No description provided for @lblToolsHub.
+  ///
+  /// In en, this message translates to:
+  /// **'All Tools'**
+  String get lblToolsHub;
+
+  /// No description provided for @lblToolsHubSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore & pin tools to Home'**
+  String get lblToolsHubSub;
+
+  /// No description provided for @lblCloneTagSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy link or Wi-Fi from a card'**
+  String get lblCloneTagSub;
+
+  /// No description provided for @lblWifiTagSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Write Wi-Fi credentials to NFC'**
+  String get lblWifiTagSub;
+
+  /// No description provided for @lblPinLockSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect or unlock card with PIN'**
+  String get lblPinLockSub;
+
+  /// No description provided for @lblEraseTagSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all stored NDEF data'**
+  String get lblEraseTagSub;
+
+  /// No description provided for @lblPermLockSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Make card permanently read-only'**
+  String get lblPermLockSub;
+
+  /// No description provided for @gridEditModeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to move • Drag dots to resize'**
+  String get gridEditModeHint;
+
+  /// No description provided for @gridEditDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get gridEditDone;
+
+  /// No description provided for @gridResetTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset layout'**
+  String get gridResetTooltip;
+
+  /// No description provided for @gridToolsHubSoonToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools Hub opens in the next phase'**
+  String get gridToolsHubSoonToast;
+
+  /// No description provided for @toolsHubPinAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to Home screen'**
+  String get toolsHubPinAdded;
+
+  /// No description provided for @nfcTitleUnsupportedCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported Card'**
+  String get nfcTitleUnsupportedCard;
+
+  /// No description provided for @settingsGridDescriptionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Grid Card Descriptions'**
+  String get settingsGridDescriptionsLabel;
+
+  /// No description provided for @settingsGridDescriptionsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Show helper text inside large grid cards'**
+  String get settingsGridDescriptionsSub;
+
+  /// No description provided for @gridCustomizeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press any card to reorder or resize it'**
+  String get gridCustomizeHint;
+
+  /// No description provided for @obStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize Your Grid'**
+  String get obStep4Title;
+
+  /// No description provided for @obStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press any tool card to move or drag its edge dots to resize, and open All Tools to pin or unpin shortcuts.'**
+  String get obStep4Desc;
+
+  /// No description provided for @toolsHubPinRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from Home screen'**
+  String get toolsHubPinRemoved;
+
+  /// No description provided for @toolsHubComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'More NFC tools and features will be added in upcoming updates'**
+  String get toolsHubComingSoon;
 }
 
 class _AppLocalizationsDelegate

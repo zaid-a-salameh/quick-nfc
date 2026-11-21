@@ -262,6 +262,9 @@ class _NfcSensorViewState extends State<NfcSensorView>
             return l10n.nfcTitleCapacity;
           case 'EMPTY_TAG':
             return l10n.nfcTitleEmptyTag;
+          case 'UNSUPPORTED':
+          case 'PWD_UNSUPPORTED':
+            return l10n.nfcTitleUnsupportedCard;
           default:
             return vm.operation == NfcOperation.writeUrl
                 ? l10n.nfcTitleError

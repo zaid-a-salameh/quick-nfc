@@ -8,8 +8,12 @@ class PreferencesService {
   static const String _keyAnimationsEnabled = 'app_animations_enabled';
   static const String _keySequentialWriteEnabled =
       'app_sequential_write_enabled';
+  static const String _keyShowGridDescriptions = 'app_show_grid_descriptions';
   static const String _keyOnboardingCompleted =
       'review_link_flutter_onboarding_v1';
+  static const String _keyHomeGridLayout = 'home_grid_layout_v1';
+  static const String _keyGridCustomizeHintDismissed =
+      'home_grid_customize_hint_dismissed_v1';
 
   static const List<String> supportedThemeModes = <String>[
     'system',
@@ -85,5 +89,29 @@ class PreferencesService {
 
   Future<void> setSequentialWriteEnabled(bool enabled) async {
     await _prefs.setBool(_keySequentialWriteEnabled, enabled);
+  }
+
+  bool get isShowGridDescriptionsEnabled =>
+      _prefs.getBool(_keyShowGridDescriptions) ?? true;
+
+  Future<void> setShowGridDescriptionsEnabled(bool enabled) async {
+    await _prefs.setBool(_keyShowGridDescriptions, enabled);
+  }
+
+  String? getSavedHomeGridLayoutJson() => _prefs.getString(_keyHomeGridLayout);
+
+  Future<void> setHomeGridLayoutJson(String json) async {
+    await _prefs.setString(_keyHomeGridLayout, json);
+  }
+
+  Future<void> clearHomeGridLayout() async {
+    await _prefs.remove(_keyHomeGridLayout);
+  }
+
+  bool get isGridCustomizeHintDismissed =>
+      _prefs.getBool(_keyGridCustomizeHintDismissed) ?? false;
+
+  Future<void> markGridCustomizeHintDismissed() async {
+    await _prefs.setBool(_keyGridCustomizeHintDismissed, true);
   }
 }

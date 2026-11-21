@@ -35,7 +35,7 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
   int _direction = 1;
 
   void _goToStep(int target) {
-    if (target == _step || target < 0 || target > 2) return;
+    if (target == _step || target < 0 || target > 3) return;
     setState(() {
       _direction = target > _step ? 1 : -1;
       _step = target;
@@ -53,8 +53,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
         return AppColors.primary;
       case 1:
         return AppColors.skyLocation;
-      default:
+      case 2:
         return AppColors.amberWifi;
+      default:
+        return AppColors.success;
     }
   }
 
@@ -68,8 +70,10 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
           end: Alignment.bottomRight,
           colors: <Color>[AppColors.skyLocationDark, AppColors.skyLocationLight],
         );
-      default:
+      case 2:
         return AppColors.wifiAmberGradient;
+      default:
+        return AppColors.emeraldUnlockGradient;
     }
   }
 
@@ -79,11 +83,13 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
         return AppSvgIcons.linkChain(size: 30, color: Colors.white);
       case 1:
         return AppSvgIcons.searchMagnifier(size: 30, color: Colors.white);
-      default:
+      case 2:
         return AppSvgIcons.nfcSensorWaves(
           size: 30,
           color: const Color(0xFF140F0A),
         );
+      default:
+        return AppSvgIcons.toolsHubGrid(size: 30, color: Colors.white);
     }
   }
 
@@ -97,11 +103,13 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
       l10n.obStep1Title,
       l10n.obStep2Title,
       l10n.obStep3Title,
+      l10n.obStep4Title,
     ];
     final descriptions = <String>[
       l10n.obStep1Desc,
       l10n.obStep2Desc,
       l10n.obStep3Desc,
+      l10n.obStep4Desc,
     ];
 
     return PopScope(
@@ -213,7 +221,7 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                     ),
                     const SizedBox(height: 18),
 
-                    // Stepper Dots 1 - 2 - 3
+                    // Stepper Dots 1 - 2 - 3 - 4
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -222,6 +230,8 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                         _buildStepCircle(1, accent),
                         _buildStepLine(_step >= 2, accent),
                         _buildStepCircle(2, accent),
+                        _buildStepLine(_step >= 3, accent),
+                        _buildStepCircle(3, accent),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -294,7 +304,7 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                     PressableScale(
                       key: const Key('btn_onboarding_next'),
                       onTap: () {
-                        if (_step < 2) {
+                        if (_step < 3) {
                           _goToStep(_step + 1);
                         } else {
                           _finishTour();
@@ -320,7 +330,7 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          _step < 2 ? l10n.obBtnNext : l10n.obBtnStart,
+                          _step < 3 ? l10n.obBtnNext : l10n.obBtnStart,
                           style: TextStyle(
                             color: _step == 2
                                 ? const Color(0xFF140F0A)
@@ -331,7 +341,7 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
                         ),
                       ),
                     ),
-                    if (_step < 2) ...<Widget>[
+                    if (_step < 3) ...<Widget>[
                       const SizedBox(height: 10),
                       PressableScale(
                         key: const Key('btn_onboarding_skip'),
@@ -414,9 +424,9 @@ class _OnboardingModalDialogState extends State<OnboardingModalDialog> {
         context,
         const Duration(milliseconds: 240),
       ),
-      width: 34,
+      width: 24,
       height: 2.5,
-      margin: const EdgeInsets.symmetric(horizontal: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         color: active ? accent : AppColors.borderGlass,
         borderRadius: BorderRadius.circular(2),

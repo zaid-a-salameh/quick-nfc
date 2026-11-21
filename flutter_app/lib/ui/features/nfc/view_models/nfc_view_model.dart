@@ -725,6 +725,9 @@ class NfcViewModel extends ChangeNotifier {
           unawaited(onUrlTagRead!(readUrl));
         }
 
+      case NfcHardwareEventType.tagInspected:
+        break;
+
       case NfcHardwareEventType.permLockSuccess:
         _permLockBatchCount += 1;
         _sensorState = NfcSensorState.permLockStandby;

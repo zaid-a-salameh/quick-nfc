@@ -725,6 +725,29 @@ class _SettingsScreenState extends State<SettingsScreen>
                                         onChanged:
                                             vm.setSequentialWriteEnabled,
                                       ),
+
+                                      const SizedBox(height: 14),
+                                      Divider(
+                                        height: 1,
+                                        color: AppColors.borderGlass,
+                                      ),
+                                      const SizedBox(height: 14),
+
+                                      // 5. Grid Card Descriptions Toggle
+                                      _buildToggleSettingRow(
+                                        switchKey: const Key(
+                                          'switch_grid_descriptions',
+                                        ),
+                                        icon: Icons.short_text_rounded,
+                                        title:
+                                            l10n.settingsGridDescriptionsLabel,
+                                        subtitle:
+                                            l10n.settingsGridDescriptionsSub,
+                                        isArabic: isArabic,
+                                        value: vm.showGridDescriptions,
+                                        onChanged:
+                                            vm.setShowGridDescriptions,
+                                      ),
                                     ],
                                   ),
                                 ),

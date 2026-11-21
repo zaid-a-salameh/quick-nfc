@@ -171,7 +171,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get qrDownloaded => 'QR-код сохранён';
 
   @override
-  String get lblReadTag => 'Считать карту';
+  String get lblReadTag => 'Клонировать карту';
 
   @override
   String get lblWifiTag => 'Wi-Fi карта';
@@ -768,4 +768,199 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get settingsSequentialWriteSub =>
       'Автовозврат к записи через 1,5 с после успеха';
+
+  @override
+  String get lblInspectTag => 'Проверка чипа';
+
+  @override
+  String get lblInspectTagSub => 'Данные чипа, подпись и записи NDEF';
+
+  @override
+  String get inspectTitle => 'Инспектор карты';
+
+  @override
+  String get inspectWaitingTitle => 'Готово к проверке';
+
+  @override
+  String get inspectWaitingDesc =>
+      'Поднесите любую NFC-метку к задней панели телефона для чтения всех характеристик.';
+
+  @override
+  String get inspectLiveBadge => 'Сканирование';
+
+  @override
+  String get inspectScanAnotherHint => 'Поднесите другую карту для обновления';
+
+  @override
+  String get inspectTagType => 'Тип метки';
+
+  @override
+  String get inspectTechnologies => 'Доступные технологии';
+
+  @override
+  String get inspectSerialNumber => 'Серийный номер';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => 'Подпись';
+
+  @override
+  String get inspectSigValid => 'Действительна (NXP)';
+
+  @override
+  String get inspectSigInvalid => 'Недействительна';
+
+  @override
+  String get inspectSigNotSupported => 'Не поддерживается';
+
+  @override
+  String get inspectPasswordProtected => 'Защита паролем';
+
+  @override
+  String get inspectMemoryInfo => 'Память';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes байт : $pages стр. (по $pageSize байт)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes байт : $sectors сект. ($blocks блоков)';
+  }
+
+  @override
+  String get inspectDataFormat => 'Формат данных';
+
+  @override
+  String get inspectSize => 'Размер';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max байт';
+  }
+
+  @override
+  String get inspectWritable => 'Доступна запись';
+
+  @override
+  String get inspectCanMakeReadOnly => 'Блокировка чтения (Read-Only)';
+
+  @override
+  String get inspectRecordsSection => 'Записи NDEF';
+
+  @override
+  String get inspectNoRecords => 'На этой метке нет записей NDEF';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'Запись $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'Да';
+
+  @override
+  String get inspectNo => 'Нет';
+
+  @override
+  String get inspectUnknown => 'Неизвестно';
+
+  @override
+  String get inspectActionCopy => 'Копировать';
+
+  @override
+  String get inspectActionOpen => 'Открыть';
+
+  @override
+  String get inspectActionUseUrl => 'В Quick NFC';
+
+  @override
+  String get inspectActionCopyHex => 'Копировать Hex';
+
+  @override
+  String get inspectActionShowHex => 'Hex данные';
+
+  @override
+  String get inspectCopiedValue => 'Скопировано в буфер';
+
+  @override
+  String get inspectErrorGeneric =>
+      'Не удалось проверить карту. Повторите попытку.';
+
+  @override
+  String get resultCollapseTooltip => 'Свернуть результат';
+
+  @override
+  String get resultExpandTooltip => 'Развернуть результат';
+
+  @override
+  String get lblToolsHub => 'Все инструменты';
+
+  @override
+  String get lblToolsHubSub => 'Открыть каталог и закрепить на главной';
+
+  @override
+  String get lblCloneTagSub => 'Скопировать ссылку или Wi-Fi с карты';
+
+  @override
+  String get lblWifiTagSub => 'Записать данные Wi-Fi на NFC-метку';
+
+  @override
+  String get lblPinLockSub => 'Защита и разблокировка карты по PIN';
+
+  @override
+  String get lblEraseTagSub => 'Удалить все сохранённые данные NDEF';
+
+  @override
+  String get lblPermLockSub => 'Навсегда заблокировать только для чтения';
+
+  @override
+  String get gridEditModeHint => 'Тяните для перемещения • Точки для размера';
+
+  @override
+  String get gridEditDone => 'Готово';
+
+  @override
+  String get gridResetTooltip => 'Сбросить сетку';
+
+  @override
+  String get gridToolsHubSoonToast =>
+      'Каталог инструментов откроется на следующем этапе';
+
+  @override
+  String get toolsHubPinAdded => 'Добавлено на главный экран';
+
+  @override
+  String get nfcTitleUnsupportedCard => 'Неподдерживаемая карта';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'Описания карточек';
+
+  @override
+  String get settingsGridDescriptionsSub =>
+      'Показывать подсказки в крупных карточках';
+
+  @override
+  String get gridCustomizeHint =>
+      'Удерживайте карточку, чтобы переместить или изменить размер';
+
+  @override
+  String get obStep4Title => 'Настройка сетки';
+
+  @override
+  String get obStep4Desc =>
+      'Удерживайте любую плитку для перемещения или потяните за крайние точки для изменения размера, а в «Все инструменты» можно управлять ярлыками.';
+
+  @override
+  String get toolsHubPinRemoved => 'Удалено с главного экрана';
+
+  @override
+  String get toolsHubComingSoon =>
+      'В будущих обновлениях появится ещё больше инструментов и функций';
 }

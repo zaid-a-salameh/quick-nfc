@@ -169,7 +169,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get qrDownloaded => 'QR कोड सेव हो गया';
 
   @override
-  String get lblReadTag => 'कार्ड पढ़ें';
+  String get lblReadTag => 'कार्ड क्लोन करें';
 
   @override
   String get lblWifiTag => 'Wi-Fi कार्ड';
@@ -769,4 +769,200 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get settingsSequentialWriteSub =>
       'सफलता के 1.5 सेकंड बाद स्वतः अगले कार्ड के लिए तैयार';
+
+  @override
+  String get lblInspectTag => 'कार्ड जांचें';
+
+  @override
+  String get lblInspectTagSub => 'चिप जानकारी, सिग्नेचर और NDEF रिकॉर्ड';
+
+  @override
+  String get inspectTitle => 'कार्ड इंस्पेक्टर';
+
+  @override
+  String get inspectWaitingTitle => 'जांच के लिए तैयार';
+
+  @override
+  String get inspectWaitingDesc =>
+      'पूरी चिप जानकारी पढ़ने के लिए फ़ोन के पीछे किसी भी NFC टैग को पास लाएं।';
+
+  @override
+  String get inspectLiveBadge => 'लाइव स्कैन';
+
+  @override
+  String get inspectScanAnotherHint =>
+      'रीफ़्रेश करने के लिए कभी भी दूसरा कार्ड टैप करें';
+
+  @override
+  String get inspectTagType => 'टैग प्रकार';
+
+  @override
+  String get inspectTechnologies => 'उपलब्ध तकनीकें';
+
+  @override
+  String get inspectSerialNumber => 'सीरियल नंबर';
+
+  @override
+  String get inspectAtqa => 'ATQA';
+
+  @override
+  String get inspectSak => 'SAK';
+
+  @override
+  String get inspectSignature => 'सिग्नेचर';
+
+  @override
+  String get inspectSigValid => 'मान्य (मूल NXP)';
+
+  @override
+  String get inspectSigInvalid => 'अमान्य';
+
+  @override
+  String get inspectSigNotSupported => 'समर्थित नहीं';
+
+  @override
+  String get inspectPasswordProtected => 'पासवर्ड से सुरक्षित';
+
+  @override
+  String get inspectMemoryInfo => 'मेमोरी जानकारी';
+
+  @override
+  String inspectMemoryPagesFormat(int totalBytes, int pages, int pageSize) {
+    return '$totalBytes बाइट्स : $pages पेज ($pageSize बाइट्स प्रत्येक)';
+  }
+
+  @override
+  String inspectMemorySectorsFormat(int totalBytes, int sectors, int blocks) {
+    return '$totalBytes बाइट्स : $sectors सेक्टर ($blocks ब्लॉक)';
+  }
+
+  @override
+  String get inspectDataFormat => 'डेटा फ़ॉर्मेट';
+
+  @override
+  String get inspectSize => 'आकार';
+
+  @override
+  String inspectSizeBytesFormat(int used, int max) {
+    return '$used / $max बाइट्स';
+  }
+
+  @override
+  String get inspectWritable => 'लिखने योग्य';
+
+  @override
+  String get inspectCanMakeReadOnly => 'रीड-ओनली बनाया जा सकता है';
+
+  @override
+  String get inspectRecordsSection => 'NDEF रिकॉर्ड';
+
+  @override
+  String get inspectNoRecords => 'इस टैग पर कोई NDEF रिकॉर्ड नहीं मिला';
+
+  @override
+  String inspectRecordTitle(int index, String type) {
+    return 'रिकॉर्ड $index - $type';
+  }
+
+  @override
+  String get inspectYes => 'हाँ';
+
+  @override
+  String get inspectNo => 'नहीं';
+
+  @override
+  String get inspectUnknown => 'अज्ञात';
+
+  @override
+  String get inspectActionCopy => 'कॉपी करें';
+
+  @override
+  String get inspectActionOpen => 'खोलें';
+
+  @override
+  String get inspectActionUseUrl => 'Quick NFC में उपयोग करें';
+
+  @override
+  String get inspectActionCopyHex => 'Hex कॉपी करें';
+
+  @override
+  String get inspectActionShowHex => 'रॉ Hex';
+
+  @override
+  String get inspectCopiedValue => 'क्लिपबोर्ड पर कॉपी किया गया';
+
+  @override
+  String get inspectErrorGeneric =>
+      'कार्ड की जांच नहीं हो सकी। फ़ोन स्थिर रखें और पुनः प्रयास करें।';
+
+  @override
+  String get resultCollapseTooltip => 'परिणाम समेटें';
+
+  @override
+  String get resultExpandTooltip => 'परिणाम फैलाएं';
+
+  @override
+  String get lblToolsHub => 'सभी उपकरण';
+
+  @override
+  String get lblToolsHubSub => 'टूल्स देखें और होम स्क्रीन पर पिन करें';
+
+  @override
+  String get lblCloneTagSub => 'कार्ड से लिंक या Wi-Fi कॉपी करें';
+
+  @override
+  String get lblWifiTagSub => 'NFC पर Wi-Fi विवरण लिखें';
+
+  @override
+  String get lblPinLockSub => 'PIN से कार्ड सुरक्षित करें या अनलॉक करें';
+
+  @override
+  String get lblEraseTagSub => 'कार्ड का सारा NDEF डेटा मिटाएँ';
+
+  @override
+  String get lblPermLockSub => 'कार्ड को स्थायी रूप से रीड-ओनली बनाएं';
+
+  @override
+  String get gridEditModeHint =>
+      'हिलाने के लिए खींचें • आकार के लिए बिंदु खींचें';
+
+  @override
+  String get gridEditDone => 'हो गया';
+
+  @override
+  String get gridResetTooltip => 'लेआउट रीसेट करें';
+
+  @override
+  String get gridToolsHubSoonToast => 'टूल हब अगले चरण में खुलेगा';
+
+  @override
+  String get toolsHubPinAdded => 'होम स्क्रीन पर जोड़ा गया';
+
+  @override
+  String get nfcTitleUnsupportedCard => 'असमर्थित कार्ड';
+
+  @override
+  String get settingsGridDescriptionsLabel => 'ग्रिड कार्ड विवरण';
+
+  @override
+  String get settingsGridDescriptionsSub =>
+      'बड़े ग्रिड कार्ड में सहायक टेक्स्ट दिखाएं';
+
+  @override
+  String get gridCustomizeHint =>
+      'कार्ड को घुमाने या आकार बदलने के लिए देर तक दबाएं';
+
+  @override
+  String get obStep4Title => 'ग्रिड कस्टमाइज़ करें';
+
+  @override
+  String get obStep4Desc =>
+      'किसी भी टूल कार्ड को घुमाने या किनारों से आकार बदलने के लिए देर तक दबाएं, और शॉर्टकट पिन करने के लिए सभी टूल्स खोलें।';
+
+  @override
+  String get toolsHubPinRemoved => 'होम स्क्रीन से हटाया गया';
+
+  @override
+  String get toolsHubComingSoon =>
+      'आगामी अपडेट में और अधिक टूल्स और सुविधाएँ जोड़ी जाएँगी';
 }

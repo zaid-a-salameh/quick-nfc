@@ -39,7 +39,7 @@ class _StubHardwareBridgeService extends HardwareBridgeService {
   Future<bool> isNetworkConnected() async => true;
 
   @override
-  Future<String> getAppVersion() async => '2.1.1';
+  Future<String> getAppVersion() async => '2.2.0';
 
   @override
   Future<void> triggerLightHaptic() async {}
@@ -100,13 +100,16 @@ void main() {
 
       expect(vm.animationsEnabled, isTrue);
       expect(vm.sequentialWriteEnabled, isFalse);
+      expect(vm.showGridDescriptions, isTrue);
 
       await vm.setAnimationsEnabled(false);
       await vm.setSequentialWriteEnabled(true);
+      await vm.setShowGridDescriptions(false);
 
       final reloadedPrefs = await PreferencesService.create();
       expect(reloadedPrefs.isAnimationsEnabled, isFalse);
       expect(reloadedPrefs.isSequentialWriteEnabled, isTrue);
+      expect(reloadedPrefs.isShowGridDescriptionsEnabled, isFalse);
     });
   });
 

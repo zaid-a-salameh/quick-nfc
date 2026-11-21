@@ -52,7 +52,7 @@
   "qrDownloadBtn": "Save QR",
   "qrCloseBtn": "Close",
   "qrDownloaded": "QR Code downloaded",
-  "lblReadTag": "Read Card",
+  "lblReadTag": "Clone Card",
   "lblWifiTag": "Wi-Fi Card",
   "lblPwdLockTag": "PIN Lock / Unlock",
   "lblEraseTag": "Erase Card",
@@ -314,5 +314,111 @@
   "settingsAnimationsLabel": "Animations",
   "settingsAnimationsSub": "Turn motion and transition effects on or off",
   "settingsSequentialWriteLabel": "Sequential Write",
-  "settingsSequentialWriteSub": "Auto-ready next card 1.5s after a successful write"
+  "settingsSequentialWriteSub": "Auto-ready next card 1.5s after a successful write",
+  "lblInspectTag": "Inspect Card",
+  "lblInspectTagSub": "Full chip info, signature & NDEF records",
+  "inspectTitle": "Card Inspector",
+  "inspectWaitingTitle": "Ready to Inspect",
+  "inspectWaitingDesc": "Hold any NFC tag near the back of your phone to read full chip details.",
+  "inspectLiveBadge": "Live Scan",
+  "inspectScanAnotherHint": "Tap another card anytime to refresh",
+  "inspectTagType": "Tag type",
+  "inspectTechnologies": "Technologies available",
+  "inspectSerialNumber": "Serial number",
+  "inspectAtqa": "ATQA",
+  "inspectSak": "SAK",
+  "inspectSignature": "Signature",
+  "inspectSigValid": "Valid (Original NXP)",
+  "inspectSigInvalid": "Invalid",
+  "inspectSigNotSupported": "Not supported",
+  "inspectPasswordProtected": "Protected by password",
+  "inspectMemoryInfo": "Memory information",
+  "inspectMemoryPagesFormat": "{totalBytes} bytes : {pages} pages ({pageSize} bytes each)",
+  "@inspectMemoryPagesFormat": {
+    "placeholders": {
+      "totalBytes": {
+        "type": "int"
+      },
+      "pages": {
+        "type": "int"
+      },
+      "pageSize": {
+        "type": "int"
+      }
+    }
+  },
+  "inspectMemorySectorsFormat": "{totalBytes} bytes : {sectors} sectors ({blocks} blocks)",
+  "@inspectMemorySectorsFormat": {
+    "placeholders": {
+      "totalBytes": {
+        "type": "int"
+      },
+      "sectors": {
+        "type": "int"
+      },
+      "blocks": {
+        "type": "int"
+      }
+    }
+  },
+  "inspectDataFormat": "Data format",
+  "inspectSize": "Size",
+  "inspectSizeBytesFormat": "{used} / {max} Bytes",
+  "@inspectSizeBytesFormat": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inspectWritable": "Writable",
+  "inspectCanMakeReadOnly": "Can be made Read-Only",
+  "inspectRecordsSection": "NDEF Records",
+  "inspectNoRecords": "No NDEF records found on this tag",
+  "inspectRecordTitle": "Record {index} - {type}",
+  "@inspectRecordTitle": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "inspectYes": "Yes",
+  "inspectNo": "No",
+  "inspectUnknown": "Unknown",
+  "inspectActionCopy": "Copy",
+  "inspectActionOpen": "Open",
+  "inspectActionUseUrl": "Use in Quick NFC",
+  "inspectActionCopyHex": "Copy Hex",
+  "inspectActionShowHex": "Raw Hex",
+  "inspectCopiedValue": "Copied to clipboard",
+  "inspectErrorGeneric": "Could not inspect card. Keep phone steady and try again.",
+  "resultCollapseTooltip": "Collapse result",
+  "resultExpandTooltip": "Expand result",
+  "lblToolsHub": "All Tools",
+  "lblToolsHubSub": "Explore & pin tools to Home",
+  "lblCloneTagSub": "Copy link or Wi-Fi from a card",
+  "lblWifiTagSub": "Write Wi-Fi credentials to NFC",
+  "lblPinLockSub": "Protect or unlock card with PIN",
+  "lblEraseTagSub": "Clear all stored NDEF data",
+  "lblPermLockSub": "Make card permanently read-only",
+  "gridEditModeHint": "Drag to move • Drag dots to resize",
+  "gridEditDone": "Done",
+  "gridResetTooltip": "Reset layout",
+  "gridToolsHubSoonToast": "Tools Hub opens in the next phase",
+  "toolsHubPinAdded": "Added to Home screen",
+  "nfcTitleUnsupportedCard": "Unsupported Card",
+  "settingsGridDescriptionsLabel": "Grid Card Descriptions",
+  "settingsGridDescriptionsSub": "Show helper text inside large grid cards",
+  "gridCustomizeHint": "Long-press any card to reorder or resize it",
+  "obStep4Title": "Customize Your Grid",
+  "obStep4Desc": "Long-press any tool card to move or drag its edge dots to resize, and open All Tools to pin or unpin shortcuts.",
+  "toolsHubPinRemoved": "Removed from Home screen",
+  "toolsHubComingSoon": "More NFC tools and features will be added in upcoming updates"
 }
